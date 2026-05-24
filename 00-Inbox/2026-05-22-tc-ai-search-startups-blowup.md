@@ -1,27 +1,27 @@
 ---
-title: "AI search startups are blowing up"
+title: "AI検索スタートアップが急成長中"
 date: 2026-05-22
 source: "https://techcrunch.com/2026/05/20/ai-search-startups-are-blowing-up/"
 source-type: article
 domain: deeptech
 tech-tags: [AI]
 companies-mentioned: [Exa Labs, Parallel Web Systems, Google, Andreessen Horowitz, Sequoia Capital, Tavily, TinyFish]
-investment-implication: "Google's public pivot to AI-native search is validating the AI search segment; Exa's 3x valuation jump in under a year suggests the infrastructure layer (embeddings, retrieval APIs) may capture durable value ahead of consumer-facing wrappers."
+investment-implication: "GoogleがAIネイティブ検索への公式転換を表明したことでAI検索セグメントの正当性が高まった。Exaの評価額が1年未満で3倍になったことから、消費者向けラッパーより先に、インフラ層（埋め込み・検索API）が持続的な価値を獲得する可能性がある。"
 signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-Google's move toward an AI-powered search experience is triggering a funding surge in AI search startups, with Exa Labs raising $250M at $2.2B (3× its valuation from ~6 months prior) and Parag Agrawal's Parallel Web raising $100M at $2B from Sequoia.
+## 主な主張
+GoogleがAI搭載の検索体験へと舵を切ったことで、AI検索スタートアップへの資金調達が急増している。Exa Labsは22億ドル評価額で2億5000万ドルを調達（約6ヶ月前の3倍超）、Parag AgrawalのParallel WebはSequoiaから20億ドル評価額で1億ドルを調達した。
 
-## Evidence / Context
-- **Exa Labs**: $250M Series C at $2.2B valuation; backed by Andreessen Horowitz; valuation more than tripled since its $85M round at ~$700M last fall
-- **Parallel Web Systems**: $100M at $2B valuation; led by Sequoia Capital; founded by former Twitter CEO Parag Agrawal
-- Other active competitors in the space: Tavily, TinyFish
-- Google is actively transforming traditional Search toward an AI-powered experience, creating a narrative tailwind for the entire category
+## 根拠・背景
+- **Exa Labs**: 22億ドル評価額でシリーズC 2億5000万ドル調達。a16z出資。昨秋の7億ドル評価額からのラウンドより3倍超に上昇
+- **Parallel Web Systems**: 20億ドル評価額で1億ドル調達。Sequoia主導。旧Twitter CEO Parag Agrawal創業
+- 他の主要競合: Tavily、TinyFish
+- GoogleがAI型検索へ本格移行しており、カテゴリ全体の追い風になっている
 
-## My Take
-<!-- fill in later -->
+## 私の見解
+<!-- あとで記入 -->
 
-## Links
-<!-- fill in later -->
+## リンク
+<!-- あとで記入 -->

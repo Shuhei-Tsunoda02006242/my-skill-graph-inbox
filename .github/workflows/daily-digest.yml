@@ -1,0 +1,59 @@
+name: Daily Digest Email
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "00-Inbox/**.md"
+
+jobs:
+  send-digest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Build digest body
+        id: digest
+        run: |
+          NEW_FILES=$(git diff --name-only HEAD~1 HEAD -- '00-Inbox/*.md' | grep -v README)
+          COUNT=$(echo "$NEW_FILES" | grep -c '\.md' || true)
+
+          BODY="📥 Skill Graph Inbox 新着 ${COUNT}件\n\n"
+
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            TITLE=$(grep '^title:' "$file" | sed 's/title: *"\?\(.*\)"\?/\1/' | tr -d '"')
+            CLAIM=$(awk '/^## 主な主張/{found=1; next} found && /^##/{exit} found{print}' "$file" | sed '/^$/d' | head -5)
+            IMPLICATION=$(grep '^investment-implication:' "$file" | sed 's/investment-implication: *"\?\(.*\)"\?/\1/' | tr -d '"')
+            SIGNAL=$(grep '^signal-strength:' "$file" | sed 's/signal-strength: *//')
+
+            BODY="${BODY}---\n"
+            BODY="${BODY}📌 ${TITLE}\n"
+            BODY="${BODY}シグナル強度: ${SIGNAL}\n\n"
+            BODY="${BODY}【主な主張】\n${CLAIM}\n\n"
+            BODY="${BODY}【投資含意】\n${IMPLICATION}\n\n"
+          done <<< "$NEW_FILES"
+
+          # GitHub Actions multiline output
+          echo "count=${COUNT}" >> $GITHUB_OUTPUT
+          {
+            echo "body<<EOF"
+            echo -e "$BODY"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+
+      - name: Send email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_USERNAME }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: "📥 Skill Graph 新着 ${{ steps.digest.outputs.count }}件 — ${{ github.event.head_commit.message }}"
+          to: ${{ secrets.GMAIL_USERNAME }}
+          from: Skill Graph Inbox <${{ secrets.GMAIL_USERNAME }}>
+          body: ${{ steps.digest.outputs.body }}
+          content_type: text/plain; charset=utf-8
