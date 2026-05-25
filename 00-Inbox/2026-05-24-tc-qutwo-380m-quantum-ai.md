@@ -1,30 +1,30 @@
 ---
-title: "Peter Sarlin's QuTwo reaches $380M valuation in angel round"
+title: "Peter Sarlin の QuTwo がエンジェルラウンドで 3 億 8,000 万ドルの評価額に到達"
 date: 2026-05-24
 source: "https://techcrunch.com/2026/05/05/peter-sarlins-qutwo-reaches-380m-valuation-in-angel-round/"
 source-type: article
 domain: deeptech
 tech-tags: [AI, quantum]
 companies-mentioned: [QuTwo, Silo AI, AMD, Zalando, IQM]
-investment-implication: "QuTwo's quantum-classical hybrid OS model and €325M angel valuation signal growing investor appetite for 'quantum-ready' enterprise infrastructure plays ahead of fault-tolerant quantum hardware."
+investment-implication: "QuTwo の量子古典ハイブリッド OS モデルと 3 億 2,500 万ユーロのエンジェル評価は、フォールトトレラントな量子ハードウェアに先駆けて「量子対応」エンタープライズ インフラストラクチャに対する投資家の意欲が高まっていることを示しています。"
 signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-Finnish AI lab QuTwo, founded by former Silo AI CEO Peter Sarlin (whose prior company sold to AMD for $665M), reached a €325M (~$380M) valuation on a €25M angel round by positioning its QuTwo OS as an orchestration layer directing tasks across classical, quantum-inspired, and quantum architectures.
+## 主な主張
+Silo AI の元 CEO、Peter Sarlin (前会社を 6 億 6,500 万ドルで AMD に売却) によって設立されたフィンランドの AI ラボ QuTwo は、その QuTwo OS を古典的、量子にインスピレーションを受けた、および量子アーキテクチャにわたるタスクを指示するオーケストレーション層として位置付けることにより、2,500 万ユーロのエンジェルラウンドで 3 億 2,500 万ユーロ (約 3 億 8,000 万ドル) の評価額に達しました。
 
-## Evidence / Context
-- €25M (~$29M) raised at €325M (~$380M) valuation in an angel round
-- Investors include Yuri Milner, Xavier Niel, Nico Rosberg, Dieter Schwarz, Niklas Zennström, and founders from Hugging Face, Skype, Supercell, Wolt
-- $23M in committed revenue via design partnerships (e.g., built AI assistants for Zalando)
-- Core product: QuTwo OS — directs tasks to classical, quantum-inspired (classical chips simulating quantum), or actual quantum hardware
-- Team of ~50 quantum and AI scientists; co-founders include ex-Silo and IQM co-founders
-- Sarlin explicitly avoided Europe's "OpenAI challenger" playbook, preferring infrastructure and enterprise services
-- Peter Sarlin's previous company Silo AI was acquired by AMD for $665M in 2024
+## 根拠・背景
+- エンジェルラウンドで3億2,500万ユーロ（〜3億8,000万ドル）の評価額で2,500万ユーロ（〜2,900万ドル）を調達
+- 投資家には、Yuri Milner、Xavier Niel、Nico Rosberg、Dieter Schwarz、Niklas Zennstrom、および Hugging Face、Skype、Supercell、Wolt の創設者が含まれます
+- 設計パートナーシップによる確約収益 2,300 万ドル (例: Zalando 向け AI アシスタントの構築)
+- コア製品: QuTwo OS — タスクを古典的、量子にインスピレーションを得た (量子をシミュレートする古典的なチップ)、または実際の量子ハードウェアに指示します。
+- 約 50 人の量子および AI 科学者からなるチーム。共同創設者には、元 Silo および IQM の共同創設者が含まれます
+- サーリン氏は、欧州の「OpenAIチャレンジャー」戦略を明確に回避し、インフラストラクチャとエンタープライズサービスを好みました。
+- Peter Sarlin の前の会社 Silo AI は、2024 年に AMD に 6 億 6,500 万ドルで買収されました
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
