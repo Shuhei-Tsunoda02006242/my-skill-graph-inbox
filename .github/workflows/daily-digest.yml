@@ -18,10 +18,19 @@ jobs:
       - name: Build digest body
         id: digest
         run: |
-          NEW_FILES=$(git diff --name-only HEAD~1 HEAD -- '00-Inbox/*.md' | grep -v README)
-          COUNT=$(echo "$NEW_FILES" | grep -c '\.md' || true)
+          # push時は差分ファイル、手動実行時はInbox全件を対象にする
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TARGET_FILES=$(ls 00-Inbox/*.md 2>/dev/null | grep -v README)
+            SUBJECT_SUFFIX="手動実行 — Inbox全件"
+          else
+            TARGET_FILES=$(git diff --name-only HEAD~1 HEAD -- '00-Inbox/*.md' | grep -v README)
+            SUBJECT_SUFFIX="新着"
+          fi
 
-          BODY="📥 Skill Graph Inbox 新着 ${COUNT}件\n\n"
+          COUNT=$(echo "$TARGET_FILES" | grep -c '\.md' || true)
+          TODAY=$(date '+%Y-%m-%d')
+
+          BODY="📥 Skill Graph Inbox ${SUBJECT_SUFFIX} ${COUNT}件（${TODAY}）\n\n"
 
           while IFS= read -r file; do
             [ -z "$file" ] && continue
@@ -35,10 +44,10 @@ jobs:
             BODY="${BODY}シグナル強度: ${SIGNAL}\n\n"
             BODY="${BODY}【主な主張】\n${CLAIM}\n\n"
             BODY="${BODY}【投資含意】\n${IMPLICATION}\n\n"
-          done <<< "$NEW_FILES"
+          done <<< "$TARGET_FILES"
 
-          # GitHub Actions multiline output
           echo "count=${COUNT}" >> $GITHUB_OUTPUT
+          echo "suffix=${SUBJECT_SUFFIX}" >> $GITHUB_OUTPUT
           {
             echo "body<<EOF"
             echo -e "$BODY"
@@ -53,7 +62,7 @@ jobs:
           secure: true
           username: ${{ secrets.GMAIL_USERNAME }}
           password: ${{ secrets.GMAIL_APP_PASSWORD }}
-          subject: "📥 Skill Graph 新着 ${{ steps.digest.outputs.count }}件 — ${{ github.event.head_commit.message }}"
+          subject: "📥 Skill Graph ${{ steps.digest.outputs.suffix }} ${{ steps.digest.outputs.count }}件"
           to: ${{ secrets.GMAIL_USERNAME }}
           from: Skill Graph Inbox <${{ secrets.GMAIL_USERNAME }}>
           body: ${{ steps.digest.outputs.body }}
