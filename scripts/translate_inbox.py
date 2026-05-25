@@ -6,10 +6,10 @@
 import os
 import sys
 import re
-import google.generativeai as genai
+from google import genai
 
-genai.configure(api_key=os.environ["GEMINI_API_KEY"])
-model = genai.GenerativeModel("gemini-1.5-flash")
+client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+MODEL = "gemini-2.0-flash"
 
 SEPARATOR = "===FILE==="
 
@@ -22,7 +22,6 @@ def needs_translation(path: str) -> bool:
 def batch_translate(files: list[str]) -> dict[str, str]:
     """全ファイルを1リクエストで翻訳して {filename: translated_content} を返す。"""
 
-    # ファイルを区切り文字で連結
     combined = ""
     for path in files:
         combined += f"{SEPARATOR} {os.path.basename(path)}\n"
@@ -43,13 +42,11 @@ def batch_translate(files: list[str]) -> dict[str, str]:
 
 {combined}"""
 
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(model=MODEL, contents=prompt)
     text = response.text.strip()
 
-    # レスポンスをファイルごとに分割
     result = {}
     parts = re.split(rf"{re.escape(SEPARATOR)}\s+(\S+\.md)", text)
-    # parts = ["", filename1, content1, filename2, content2, ...]
     for i in range(1, len(parts) - 1, 2):
         filename = parts[i].strip()
         content = parts[i + 1].strip()
