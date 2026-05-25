@@ -29,6 +29,34 @@ jobs:
           echo "count=$(echo $FILES | wc -w)" >> $GITHUB_OUTPUT
           echo "suffix=$SUFFIX" >> $GITHUB_OUTPUT
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -q google-generativeai
+
+      - name: Translate to Japanese
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          FILES="${{ steps.files.outputs.files }}"
+          if [ -n "$FILES" ]; then
+            python3 scripts/translate_inbox.py $FILES
+          fi
+
+      - name: Commit translated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add 00-Inbox/
+          if git diff --staged --quiet; then
+            echo "Already translated, nothing to commit"
+          else
+            git commit -m "translate: Inbox notes to Japanese"
+            git push
+          fi
+
       - name: Build digest body
         id: digest
         run: |
