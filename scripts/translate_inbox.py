@@ -1,17 +1,30 @@
 #!/usr/bin/env python3
 """
-新着 .md ファイルを全件まとめて1回のGemini APIコールで日本語翻訳する。
+新着 .md ファイルを deep-translator (Google Translate) で日本語翻訳する。
+APIキー不要・完全無料。
 """
 
 import os
 import sys
 import re
-from google import genai
+from deep_translator import GoogleTranslator
 
-client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
-MODEL = "gemini-2.0-flash"
+translator = GoogleTranslator(source="en", target="ja")
 
-SEPARATOR = "===FILE==="
+SECTION_MAP = {
+    "## Key Claim": "## 主な主張",
+    "## Evidence / Context": "## 根拠・背景",
+    "## My Take": "## 私の見解",
+    "## Links": "## リンク",
+}
+
+
+def translate_text(text: str) -> str:
+    """4500文字ごとにチャンクして翻訳（Google上限対応）。"""
+    if not text.strip():
+        return text
+    chunks = [text[i:i+4500] for i in range(0, len(text), 4500)]
+    return "".join(translator.translate(c) for c in chunks)
 
 
 def needs_translation(path: str) -> bool:
@@ -19,40 +32,44 @@ def needs_translation(path: str) -> bool:
     return "主な主張" not in content and "根拠・背景" not in content
 
 
-def batch_translate(files: list[str]) -> dict[str, str]:
-    """全ファイルを1リクエストで翻訳して {filename: translated_content} を返す。"""
+def translate_frontmatter_field(field: str, content: str) -> str:
+    pattern = rf'^({re.escape(field)}:\s*")([^"]+)(")'
+    m = re.search(pattern, content, re.MULTILINE)
+    if m:
+        translated = translate_text(m.group(2))
+        content = content[:m.start()] + f'{m.group(1)}{translated}{m.group(3)}' + content[m.end():]
+    return content
 
-    combined = ""
-    for path in files:
-        combined += f"{SEPARATOR} {os.path.basename(path)}\n"
-        combined += open(path).read()
-        combined += "\n"
 
-    prompt = f"""以下は複数のMarkdownファイルです。各ファイルを日本語に翻訳してください。
+def translate_section_body(header_ja: str, content: str) -> str:
+    """セクション本文（コメント以外）を翻訳する。"""
+    pattern = rf"(^{re.escape(header_ja)}\n)(.*?)(?=\n## |\Z)"
+    m = re.search(pattern, content, re.MULTILINE | re.DOTALL)
+    if m:
+        body = m.group(2).strip()
+        if body and not body.startswith("<!--"):
+            translated_body = translate_text(body)
+            content = content[:m.start(2)] + translated_body + "\n" + content[m.end(2):]
+    return content
 
-翻訳ルール：
-- フロントマターの title と investment-implication の値を日本語に翻訳する
-- ## Key Claim → ## 主な主張 に変更し本文を翻訳
-- ## Evidence / Context → ## 根拠・背景 に変更し本文を翻訳
-- ## My Take → ## 私の見解（<!-- fill in later --> はそのまま）
-- ## Links → ## リンク（<!-- fill in later --> はそのまま）
-- フロントマターのキー名・tech-tags・companies-mentioned・数値・URLは変更しない
-- 各ファイルの区切りは "{SEPARATOR} ファイル名" の形式をそのまま維持する
-- ファイル全体（フロントマター含む）を出力すること
 
-{combined}"""
+def process_file(path: str) -> None:
+    content = open(path).read()
 
-    response = client.models.generate_content(model=MODEL, contents=prompt)
-    text = response.text.strip()
+    # フロントマター翻訳
+    content = translate_frontmatter_field("title", content)
+    content = translate_frontmatter_field("investment-implication", content)
 
-    result = {}
-    parts = re.split(rf"{re.escape(SEPARATOR)}\s+(\S+\.md)", text)
-    for i in range(1, len(parts) - 1, 2):
-        filename = parts[i].strip()
-        content = parts[i + 1].strip()
-        result[filename] = content
+    # セクションヘッダー置換
+    for en, ja in SECTION_MAP.items():
+        content = content.replace(en, ja)
 
-    return result
+    # 本文翻訳
+    content = translate_section_body("## 主な主張", content)
+    content = translate_section_body("## 根拠・背景", content)
+
+    open(path, "w").write(content)
+    print(f"  ✓ {os.path.basename(path)}")
 
 
 if __name__ == "__main__":
@@ -67,13 +84,6 @@ if __name__ == "__main__":
         print("All files already translated.")
         sys.exit(0)
 
-    print(f"Translating {len(to_translate)} file(s) in 1 API call...")
-    translated = batch_translate(to_translate)
-
+    print(f"Translating {len(to_translate)} file(s)...")
     for path in to_translate:
-        filename = os.path.basename(path)
-        if filename in translated:
-            open(path, "w").write(translated[filename])
-            print(f"  ✓ {filename}")
-        else:
-            print(f"  ✗ {filename} (not found in response)")
+        process_file(path)

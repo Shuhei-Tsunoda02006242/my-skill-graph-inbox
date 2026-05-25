@@ -34,11 +34,9 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: pip install -q google-genai
+        run: pip install -q deep-translator
 
       - name: Translate to Japanese
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           FILES="${{ steps.files.outputs.files }}"
           if [ -n "$FILES" ]; then
