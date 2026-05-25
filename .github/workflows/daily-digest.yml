@@ -15,39 +15,35 @@ jobs:
         with:
           fetch-depth: 2
 
+      - name: Detect target files
+        id: files
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            FILES=$(ls 00-Inbox/*.md 2>/dev/null | grep -v README | tr '\n' ' ')
+            SUFFIX="手動実行 — Inbox全件"
+          else
+            FILES=$(git diff --name-only HEAD~1 HEAD -- '00-Inbox/*.md' | grep -v README | tr '\n' ' ')
+            SUFFIX="新着"
+          fi
+          echo "files=$FILES" >> $GITHUB_OUTPUT
+          echo "count=$(echo $FILES | wc -w)" >> $GITHUB_OUTPUT
+          echo "suffix=$SUFFIX" >> $GITHUB_OUTPUT
+
       - name: Build digest body
         id: digest
         run: |
-          # push時は差分ファイル、手動実行時はInbox全件を対象にする
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            TARGET_FILES=$(ls 00-Inbox/*.md 2>/dev/null | grep -v README)
-            SUBJECT_SUFFIX="手動実行 — Inbox全件"
-          else
-            TARGET_FILES=$(git diff --name-only HEAD~1 HEAD -- '00-Inbox/*.md' | grep -v README)
-            SUBJECT_SUFFIX="新着"
-          fi
-
-          COUNT=$(echo "$TARGET_FILES" | grep -c '\.md' || true)
           TODAY=$(date '+%Y-%m-%d')
+          BODY="📥 Skill Graph Inbox ${{ steps.files.outputs.suffix }} ${{ steps.files.outputs.count }}件（${TODAY}）\n\n"
 
-          BODY="📥 Skill Graph Inbox ${SUBJECT_SUFFIX} ${COUNT}件（${TODAY}）\n\n"
-
-          while IFS= read -r file; do
-            [ -z "$file" ] && continue
+          for file in ${{ steps.files.outputs.files }}; do
+            [ -f "$file" ] || continue
             TITLE=$(grep '^title:' "$file" | sed 's/title: *"\?\(.*\)"\?/\1/' | tr -d '"')
             CLAIM=$(awk '/^## 主な主張/{found=1; next} found && /^##/{exit} found{print}' "$file" | sed '/^$/d' | head -5)
             IMPLICATION=$(grep '^investment-implication:' "$file" | sed 's/investment-implication: *"\?\(.*\)"\?/\1/' | tr -d '"')
             SIGNAL=$(grep '^signal-strength:' "$file" | sed 's/signal-strength: *//')
+            BODY="${BODY}---\n📌 ${TITLE}\nシグナル強度: ${SIGNAL}\n\n【主な主張】\n${CLAIM}\n\n【投資含意】\n${IMPLICATION}\n\n"
+          done
 
-            BODY="${BODY}---\n"
-            BODY="${BODY}📌 ${TITLE}\n"
-            BODY="${BODY}シグナル強度: ${SIGNAL}\n\n"
-            BODY="${BODY}【主な主張】\n${CLAIM}\n\n"
-            BODY="${BODY}【投資含意】\n${IMPLICATION}\n\n"
-          done <<< "$TARGET_FILES"
-
-          echo "count=${COUNT}" >> $GITHUB_OUTPUT
-          echo "suffix=${SUBJECT_SUFFIX}" >> $GITHUB_OUTPUT
           {
             echo "body<<EOF"
             echo -e "$BODY"
@@ -62,7 +58,7 @@ jobs:
           secure: true
           username: ${{ secrets.GMAIL_USERNAME }}
           password: ${{ secrets.GMAIL_APP_PASSWORD }}
-          subject: "📥 Skill Graph ${{ steps.digest.outputs.suffix }} ${{ steps.digest.outputs.count }}件"
+          subject: "📥 Skill Graph ${{ steps.files.outputs.suffix }} ${{ steps.files.outputs.count }}件"
           to: ${{ secrets.GMAIL_USERNAME }}
           from: Skill Graph Inbox <${{ secrets.GMAIL_USERNAME }}>
           body: ${{ steps.digest.outputs.body }}
