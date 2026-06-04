@@ -1,29 +1,29 @@
 ---
-title: "Is Silicon Valley ready to put robots in people's homes? Hello Robot is."
+title: "シリコンバレーは人々の家にロボットを導入する準備ができていますか?こんにちはロボットです。"
 date: 2026-06-04
 source: "https://techcrunch.com/2026/06/04/is-silicon-valley-ready-to-put-robots-in-peoples-homes-hello-robot-is/"
 source-type: article
 domain: deeptech
 tech-tags: [AI]
 companies-mentioned: [Hello Robot, Google]
-investment-implication: "Hello Robot's human-in-the-loop Stretch robot targets the aging-population home care market rather than full autonomy, a potentially faster path to revenue than humanoid competitors."
+investment-implication: "Hello Robot の人間参加型ストレッチ ロボットは、完全自律型ではなく、高齢化が進む在宅ケア市場をターゲットにしており、人間型の競合他社よりも収益への近道となる可能性があります。"
 signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-Hello Robot, founded in 2017 by former Google robotics director Aaron Edsinger and Georgia Tech professor Charlie Kemp, is deploying its Stretch 4 robot into real homes — not labs — using a deliberately human-in-the-loop design philosophy.
+## 主な主張
+元 Google ロボット工学ディレクターのアーロン・エドシンガー氏とジョージア工科大学教授チャーリー・ケンプ氏によって 2017 年に設立された Hello Robot は、意図的に人間参加型の設計哲学を使用して、そのストレッチ 4 ロボットを研究室ではなく実際の家庭に導入しています。
 
-## Evidence / Context
-- Stretch 4 launched May 2026; features telescoping arm, sensor-studded head, omnidirectional wheeled base
-- Controlled via voice-operated iPhone app: user commands autonomous movement then takes direct control for object manipulation
-- Design philosophy: "Being in control is a feature" — intentionally keeps humans in the loop rather than pursuing full autonomy
-- Actively deployed in real households including elderly care use cases (e.g., serving protein shakes, helping mobility-limited couples remain at home)
-- Company is based in Martinez, CA (not Silicon Valley proper)
-- Unlike humanoid robots, Stretch is compact and built for practical household tasks in real, unstructured environments
+## 根拠・背景
+- ストレッチ 4 は 2026 年 5 月に発売されました。伸縮アーム、センサーを散りばめたヘッド、全方向性ホイールベースを備えています。
+- 音声操作の iPhone アプリ経由で制御: ユーザーは自律的な動きを命令し、オブジェクトの操作を直接制御します。
+- 設計哲学: 「制御することが機能である」 - 完全な自律性を追求するのではなく、意図的に人間を常に最新の状態に保ちます。
+- 高齢者介護のユースケースを含む実際の家庭に積極的に導入（プロテインシェイクの提供、移動が制限されているカップルの在宅支援など）
+- 会社はカリフォルニア州マルティネスに拠点を置いています (シリコンバレーそのものではありません)
+- 人型ロボットとは異なり、ストレッチはコンパクトで、実際の非構造化環境での実用的な家事用に構築されています。
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->

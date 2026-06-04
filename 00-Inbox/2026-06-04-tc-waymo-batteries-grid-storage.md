@@ -1,29 +1,29 @@
 ---
-title: "Waymo's spent robotaxi batteries will be used as grid storage"
+title: "Waymoの使用済みロボタクシーバッテリーはグリッドストレージとして使用される"
 date: 2026-06-04
 source: "https://techcrunch.com/2026/06/04/waymos-spent-robotaxi-batteries-will-be-used-as-grid-storage/"
 source-type: article
 domain: deeptech
 tech-tags: [energy]
 companies-mentioned: [Waymo, B2U Storage Solutions]
-investment-implication: "B2U's second-life battery model could become a capital-light energy storage play as AV fleets scale — using cheaper retired packs rather than new materials to undercut incumbent grid storage costs."
+investment-implication: "B2U のセカンドライフ バッテリー モデルは、AV 車両の規模が拡大するにつれ、資本をあまり使わないエネルギー貯蔵戦略となる可能性があります。新しい材料ではなく、より安価な廃棄パックを使用して、既存のグリッド ストレージ コストを削減します。"
 signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-Waymo has partnered with B2U Storage Solutions to repurpose retired robotaxi battery packs as grid-connected energy storage systems serving California and Texas electricity grids.
+## 主な主張
+Waymo は B2U Storage Solutions と提携し、廃止されたロボタクシーのバッテリー パックをカリフォルニアとテキサスの電力網にサービスを提供するグリッド接続エネルギー貯蔵システムとして再利用しています。
 
-## Evidence / Context
-- Partnership targets "hundreds of megawatts of storage capacity" — no further specifics disclosed
-- Batteries pulled from Waymo's electric robotaxi fleet once no longer suitable for driving
-- B2U installs retired packs into stationary grid storage systems that dispatch electricity when demand is high
-- B2U argues repurposed batteries lower costs vs. building storage from newly manufactured materials
-- Creates an alternative to battery recycling — a second-life pipeline with immediate economic use
-- Announcement covered simultaneously by TechCrunch and Electrek (June 4, 2026)
+## 根拠・背景
+- パートナーシップは「数百メガワットのストレージ容量」を目標にしている - 詳細は明らかにされていない
+- Waymoの電動ロボットタクシー車両からバッテリーが撤去され、走行に適さなくなった
+- B2U は、需要が高いときに電力を供給する定置型グリッド蓄電システムに廃棄されたパックを設置します。
+- B2Uは、新たに製造された材料から貯蔵所を建設するよりも再利用されたバッテリーの方がコストが低いと主張
+- バッテリーのリサイクルに代わる手段、つまり即時に経済的に利用できるセカンドライフのパイプラインを作成します。
+- TechCrunch と Electrek が同時に取り上げた発表 (2026 年 6 月 4 日)
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
