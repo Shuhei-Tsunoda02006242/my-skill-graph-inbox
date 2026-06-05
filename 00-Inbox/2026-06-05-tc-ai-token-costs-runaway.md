@@ -1,30 +1,30 @@
 ---
-title: "The token bill comes due: Inside the industry scramble to manage AI's runaway costs"
+title: "トークン法案の期限が迫る: AI の暴走コストを管理するための業界内での争奪戦"
 date: 2026-06-05
 source: "https://techcrunch.com/2026/06/05/the-token-bill-comes-due-inside-the-industry-scramble-to-manage-ais-runaway-costs/"
 source-type: article
 domain: deeptech
 tech-tags: [AI]
 companies-mentioned: [Uber, Microsoft, Anthropic, Priceline, FinOps Foundation]
-investment-implication: "Companies building AI cost-management tooling and token optimization layers are positioned to capture enterprise spend as agentic AI drives runaway consumption."
+investment-implication: "AI コスト管理ツールとトークン最適化レイヤーを構築している企業は、エージェント AI が消費の暴走を促す中、企業支出を獲得する立場にあります。"
 signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-Despite a 98% drop in per-token prices, enterprise AI bills are tripling because agentic tools are driving 18.6x higher token consumption per developer — creating an acute cost-governance crisis across the industry.
+## 主な主張
+トークンあたりの価格が 98% 下がっているにもかかわらず、エンタープライズ AI の請求額は 3 倍になっています。これは、エージェント ツールによって開発者あたりのトークン消費量が 18.6 倍増加しているためであり、業界全体で深刻なコスト ガバナンス危機を引き起こしています。
 
-## Evidence / Context
-- Uber burned through its entire 2026 AI coding budget by April
-- Microsoft revoked developers' Claude Code licenses months after enabling them
-- One company reportedly accumulated a $500M Claude bill after forgetting to set employee usage limits
-- Priceline saw a 4–5x jump on a routine Cursor contract renewal
-- J.R. Storment (FinOps Foundation exec director): "In April and May, I started hearing from companies: 'Oh my god, we are 3x over our entire 2026 token budget and it's only April'"
-- Per-token prices fell ~98% from peak, but agentic AI consumption per developer rose 18.6x, more than erasing the savings
-- Startups, established vendors, and a new standards body are racing to provide guardrails and cost-tracking tools
+## 根拠・背景
+- Uber は 2026 年の AI コーディング予算を 4 月までに使い果たしました
+- Microsoftは、開発者のClaude Codeライセンスを有効にしてから数か月後に取り消しました。
+- ある企業は、従業員の使用制限を設定するのを忘れたために、5 億ドルのクロード請求書が蓄積されたと報告されています
+- 定期的な Cursor 契約更新で価格が 4 ～ 5 倍に跳ね上がった
+- J.R. Storment (FinOps Foundation エグゼクティブディレクター): 「4 月と 5 月に、企業から『なんと、2026 年のトークン予算全体の 3 倍を超えているのに、まだ 4 月になったばかりだ』という話を聞き始めました。」
+- トークンあたりの価格はピーク時から最大 98% 下落しましたが、開発者あたりのエージェント AI の消費量は 18.6 倍に増加し、節約額を打ち消す以上に増加しました。
+- 新興企業、既存のベンダー、新しい標準化団体が、ガードレールとコスト追跡ツールの提供を競っています。
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
