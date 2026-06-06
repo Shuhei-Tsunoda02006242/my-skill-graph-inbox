@@ -1,28 +1,28 @@
 ---
-title: "OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks"
+title: "OpenAI、プロンプトインジェクション攻撃から機密データを保護するロックダウンモードを発表"
 date: 2026-06-06
 source: "https://techcrunch.com/2026/06/06/openai-unveils-lockdown-mode-to-protect-sensitive-data-from-prompt-injection-attacks/"
 source-type: article
 domain: deeptech
 tech-tags: [AI]
 companies-mentioned: [OpenAI]
-investment-implication: "As frontier labs ship blunt-instrument fixes like disabling browsing and agent mode, there's an open lane for startups building finer-grained prompt-injection detection and data-exfiltration defenses for agentic AI systems."
+investment-implication: "フロンティア ラボがブラウジングやエージェント モードの無効化などの鈍器な修正を出荷しているため、エージェント AI システム向けのよりきめの細かいプロンプト インジェクション検出やデータ漏洩防御を構築するスタートアップ企業に道が開かれています。"
 signal-strength: weak
 status: fleeting
 ---
 
-## Key Claim
-OpenAI rolled out a "Lockdown Mode" across every ChatGPT tier — including free accounts — that disables live browsing, image retrieval, deep research, and agent mode to curb the risk that hidden instructions in web content exfiltrate sensitive data via prompt injection, while admitting the underlying vulnerability remains unsolved.
+## 主な主張
+OpenAI は、根本的な脆弱性が未解決のままであることを認めながら、Web コンテンツ内の隠された命令がプロンプト インジェクションによって機密データを漏洩するリスクを抑制するために、無料アカウントを含むすべての ChatGPT 層に「ロックダウン モード」を展開しました。これにより、ライブ ブラウジング、画像検索、詳細調査、およびエージェント モードが無効になります。
 
-## Evidence / Context
-- Lockdown Mode turns off live web browsing (cached content only), retrieval/display of images from the web, deep research, and agent mode
-- Aimed at users and organizations handling sensitive data who want stricter protection against data-exfiltration risk tied to prompt injection
-- Available across Free, Plus, Pro, Go, and self-serve Business accounts
-- OpenAI itself cautions that prompt injections embedded in cached web content or uploaded files can still influence ChatGPT's behavior or accuracy even with Lockdown Mode enabled — the feature reduces exposure rather than closing the hole
-- Underscores that prompt injection remains a structural, unresolved weakness as agentic LLM products gain broader web and tool access
+## 根拠・背景
+- ロックダウン モードでは、ライブ Web ブラウジング (キャッシュされたコンテンツのみ)、Web からの画像の取得/表示、詳細な調査、およびエージェント モードがオフになります。
+- 機密データを扱う、迅速なインジェクションに伴うデータ漏洩リスクに対するより厳格な保護を必要とするユーザーおよび組織を対象としています。
+- Free、Plus、Pro、Go、セルフサービス ビジネス アカウントで利用可能
+- OpenAI 自体は、キャッシュされた Web コンテンツまたはアップロードされたファイルに埋め込まれたプロンプト インジェクションは、ロックダウン モードが有効になっていても ChatGPT の動作や精度に影響を与える可能性があると警告しています。この機能は穴を塞ぐのではなく、露出を減らします。
+- エージェント LLM 製品がより広範な Web およびツールにアクセスできるようになるにつれて、インジェクションを促すアンダースコアは依然として構造的かつ未解決の弱点のままです
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
