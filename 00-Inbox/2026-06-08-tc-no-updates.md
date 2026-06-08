@@ -1,5 +1,5 @@
 ---
-title: "No qualifying DeepTech articles — 2026-06-08"
+title: "該当する DeepTech 記事はありません — 2026-06-08"
 date: 2026-06-08
 source: "https://techcrunch.com/"
 source-type: meta
