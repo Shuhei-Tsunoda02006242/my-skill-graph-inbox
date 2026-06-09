@@ -1,28 +1,28 @@
 ---
-title: "How an e-scooter founder raised $5 million to build space data centers"
+title: "eスクーターの創設者が宇宙データセンター建設のために500万ドルを調達した方法"
 date: 2026-06-09
 source: "https://techcrunch.com/2026/06/09/how-an-e-scooter-founder-raised-5-million-to-build-space-data-centers/"
 source-type: article
 domain: deeptech
 tech-tags: [AI]
 companies-mentioned: [Orbital, a16z, SpaceX]
-investment-implication: "Orbital's Starship-dependent bet on orbital AI inference is a high-conviction, long-duration deep tech play — credible only if SpaceX achieves commercial Starship operations and per-kg launch costs collapse."
+investment-implication: "オービタルのスターシップ依存の軌道AI推論への賭けは、確信度の高い長期にわたるディープテクノロジー戦略であり、スペースXがスターシップの商用運用を達成し、1kg当たりの打ち上げコストが崩壊した場合にのみ信頼できるものだ。"
 signal-strength: weak
 status: fleeting
 ---
 
-## Key Claim
-Orbital, founded by ex-Spin CEO Euwyn Poon and backed by a16z Speedrun, raised an oversubscribed $5M pre-seed to build a constellation of 10,000 satellites providing 1 gigawatt of distributed AI inference compute in orbit — where solar power is available 24/7.
+## 主な主張
+元 Spin CEO の Euwyn Poon によって設立され、a16z Speedrun の支援を受けている Orbital は、太陽光発電が 24 時間 365 日利用できる軌道上で 1 ギガワットの分散型 AI 推論計算を提供する 10,000 個の衛星群を構築するために、応募超過の 500 万ドルのプレシードを調達しました。
 
-## Evidence / Context
-- Target architecture: 10,000 satellites × 100 kW each = 1 GW of orbital compute
-- Emerged from a16z's Speedrun accelerator; a16z partner Andrew Chen cited Poon's track record scaling 250,000 scooters across 100 cities at Spin (sold to Ford)
-- Explicitly Starship-dependent: "We will get to full scale when Starship comes online" — Poon
-- Value proposition: unlimited solar power in orbit eliminates the land, cooling, and grid constraints of terrestrial data centers
-- Focus on AI inference workloads specifically; seed round was oversubscribed at pre-seed stage
+## 根拠・背景
+- ターゲット アーキテクチャ: 10,000 個の衛星 × 各 100 kW = 1 GW の軌道計算能力
+- a16z の Speedrun アクセラレータから出現; a16zのパートナー、アンドリュー・チェン氏は、スピン（フォードに売却）で100都市に25万台のスクーターを展開したプーンの実績を引用した。
+- 明らかに Starship に依存: 「Starship がオンラインになったら、本格的に取り組むつもりです」 — Poon
+- 価値提案: 軌道上での無制限の太陽光発電により、地上データセンターの土地、冷却、送電網の制約が解消されます。
+- 特に AI 推論ワークロードに焦点を当てます。シードラウンドはプレシード段階で定員を超えました
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
