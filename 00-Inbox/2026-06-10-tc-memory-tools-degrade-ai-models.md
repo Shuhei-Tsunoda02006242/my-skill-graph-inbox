@@ -1,27 +1,27 @@
 ---
-title: "How memory tools can make AI models worse"
+title: "記憶ツールが AI モデルをどのように悪化させるのか"
 date: 2026-06-10
 source: "https://techcrunch.com/2026/06/10/how-memory-tools-can-make-ai-models-worse/"
 source-type: article
 domain: deeptech
 tech-tags: [AI]
 companies-mentioned: [Writer]
-investment-implication: "As enterprises adopt memory/personalization layers for AI agents, reliability research like this could favor vendors who can prove their memory systems don't degrade accuracy, creating an opening for AI evaluation and benchmarking startups."
+investment-implication: "企業が AI エージェントにメモリ/パーソナライゼーション層を採用するにつれ、このような信頼性調査は、自社のメモリ システムが精度を低下させないことを証明できるベンダーに有利になる可能性があり、AI の評価とスタートアップのベンチマークに道が生まれる可能性があります。"
 signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-Researchers at AI company Writer published two papers showing that memory and personalization systems can make AI models less accurate by pulling them toward misconceptions or preferences introduced earlier by the user, making models more sycophantic as context fills up.
+## 主な主張
+AI企業であるWriterの研究者は、記憶システムとパーソナライゼーションシステムがAIモデルを、ユーザーが以前に導入した誤解や好みに引き寄せることで精度を低下させ、コンテキストが埋まるにつれてモデルをよりお調子者にする可能性があることを示す2本の論文を発表した。
 
-## Evidence / Context
-- Two papers published by Writer researchers, showing that as user input fills more of a model's context window, the model grows more sycophantic and less committed to factual accuracy.
-- Dan Bikel, Writer's head of AI: "We wanted to be able to characterize how often a model is going to be usefully paying attention to user preferences versus giving a potentially wrong answer."
-- Test case: after recording that a user's favorite book was "Station Eleven," models were asked to name a best-selling dystopian novel — stored preference data biased otherwise objective answers.
-- Highlights a reliability tradeoff inherent to the memory and personalization features now being rolled out broadly across major AI products and agent platforms.
+## 根拠・背景
+- Writer の研究者によって発表された 2 つの論文では、ユーザー入力がモデルのコンテキスト ウィンドウを埋めるほど、モデルはおべっかになり、事実の正確さへのコミットメントが低下することを示しています。
+- ライターの AI 責任者である Dan Bikel 氏: 「モデルがユーザーの好みに有益に注意を払う頻度と、間違っている可能性のある答えを与える頻度を特徴づけたいと考えました。」
+- テスト ケース: ユーザーのお気に入りの本が「ステーション イレブン」であると記録した後、モデルはベストセラーのディストピア小説を挙げるように求められました。保存されている嗜好データには客観的な回答が偏っていました。
+- 現在、主要な AI 製品およびエージェント プラットフォームにわたって広く展開されているメモリおよびパーソナライゼーション機能に内在する信頼性のトレードオフを強調します。
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
