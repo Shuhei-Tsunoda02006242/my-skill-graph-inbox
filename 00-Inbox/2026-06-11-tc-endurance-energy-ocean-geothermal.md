@@ -1,28 +1,28 @@
 ---
-title: "Endurance Energy raises $54M to harness a massive untapped energy source"
+title: "Endurance Energy が未開発の巨大なエネルギー源を活用するために 5,400 万ドルを調達"
 date: 2026-06-11
 source: "https://techcrunch.com/2026/06/11/endurance-energy-raises-54m-to-harness-a-massive-untapped-energy-source/"
 source-type: article
 domain: deeptech
 tech-tags: [energy]
 companies-mentioned: [Endurance Energy, Founders Fund, Felicis, Voyager Ventures, Riot Ventures, Construct Capital, Point72 Ventures, First Round Capital, Ascend, SpaceX]
-investment-implication: "A Founders Fund-led round for a first-principles, SpaceX-style hardware approach to deep-sea volcanic geothermal signals growing VC appetite for capital-intensive climate hardware that promises terawatt-scale baseload power."
+investment-implication: "ファウンダーズ・ファンド主導の深海の火山地熱に対する第一原理のSpaceXスタイルのハードウェア・アプローチのラウンドは、テラワット規模のベースロード電力を約束する資本集約型の気候ハードウェアに対するVCの需要が高まっていることを示している。"
 signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-Endurance Energy, founded by ex-SpaceX engineer Andrew Redd, raised a $54 million Series A to develop generators that tap geothermal energy from deep-sea volcanic systems, which it says could provide terawatts of untapped clean power.
+## 主な主張
+元スペースXエンジニアのアンドリュー・レッド氏が設立したエンデュランス・エナジーは、深海の火山系から地熱エネルギーを利用する発電機を開発するため、シリーズAで5,400万ドルを調達し、これにより数テラワットの未利用のクリーン電力を供給できるとしている。
 
-## Evidence / Context
-- Founded in 2024 by Andrew Redd, a former Dragon and Starship engineer at SpaceX, who applied a first-principles "SpaceX playbook" to energy hardware.
-- Has completed four prototype deployments to deep-sea volcanoes up to nearly 1,000 feet below the surface, where volcanic systems heat water to 728°F.
-- Next milestone: deploying a 100 kilowatt generator called "Adelie" to the Juan de Fuca ridge off the coast of Washington and Oregon — its first complete system capable of drilling under the ocean and generating power.
-- Round led by Founders Fund, with new investors Felicis, Voyager Ventures, Riot Ventures, and Construct Capital, plus returning backers Point72 Ventures, First Round Capital, and Ascend.
-- Team of 25, with 12 employees previously from SpaceX.
+## 根拠・背景
+- SpaceX の元 Dragon および Starship エンジニアである Andrew Redd によって 2024 年に設立され、彼は第一原理「SpaceX プレイブック」をエネルギーハードウェアに適用しました。
+- 火山系が水を728°Fまで加熱する、地表下1,000フィート近くまでの深海火山への4つのプロトタイプ展開を完了しました。
+- 次のマイルストーン：「アデリー」と呼ばれる100キロワットの発電機をワシントン州とオレゴン州の海岸沖のフアン・デ・フカ尾根に配備する。これは海底で掘削して発電できる初の完全なシステムである。
+- Founders Fund が主導するラウンド。新規投資家として Felicis、Voyager Ventures、Riot Ventures、Construct Capital に加え、復帰支援者の Point72 Ventures、First Round Capital、Ascend が参加します。
+- チームは 25 名で、うち 12 名は SpaceX からの社員でした。
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
