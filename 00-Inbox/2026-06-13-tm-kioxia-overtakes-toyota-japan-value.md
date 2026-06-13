@@ -1,27 +1,27 @@
 ---
-title: "Kioxia Becomes Japan's Most Valuable Firm as AI Memory Demand Surges"
+title: "AIメモリ需要の急増でキオクシアが日本で最も価値ある企業に"
 date: 2026-06-13
 source: "https://www.bloomberg.com/news/articles/2026-06-12/kioxia-becomes-japan-s-most-valuable-firm-as-ai-mania-goes-on"
 source-type: article
 domain: deeptech
 tech-tags: [semiconductor, AI]
 companies-mentioned: [Kioxia, Toyota]
-investment-implication: "AI-driven memory demand is repricing semiconductor manufacturers ahead of legacy industrials, signaling a structural shift in where capital rewards exposure to the AI infrastructure buildout."
+investment-implication: "AI主導のメモリ需要により、半導体メーカーは従来の産業に先駆けて価格を改定しており、AIインフラ整備へのエクスポージャーに資本が報いるという構造変化を示唆している。"
 signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-Memory chipmaker Kioxia Holdings overtook Toyota Motor to become Japan's most valuable publicly traded company by market capitalization, just 18 months after its stock market debut, driven by surging AI data center demand for memory chips.
+## 主な主張
+メモリチップメーカーのキオクシアホールディングスは、AIデータセンターにおけるメモリチップの需要の急増に後押しされ、株式市場デビューからわずか18カ月で時価総額でトヨタ自動車を抜いて日本で最も価値のある上場企業となった。
 
-## Evidence / Context
-- Kioxia shares surged 7.6% on Friday, pushing its market value above ¥44 trillion (~$274B), versus Toyota's ¥43.8 trillion.
-- Kioxia stock is up more than 670% year-to-date, making it the best performer on the MSCI World Index.
-- The shift reflects investors rotating toward semiconductor companies as AI data center chip demand climbs globally.
-- Kioxia listed on the Tokyo Stock Exchange roughly 18 months ago after spinning out of Toshiba's memory business.
+## 根拠・背景
+- キオクシア株は金曜日に7.6%上昇し、時価総額が44兆円（約2,740億ドル）を超えたのに対し、トヨタの43.8兆円を超えた。
+- キオクシア株は年初から670%以上上昇しており、MSCIワールドインデックスで最高のパフォーマンスをあげています。
+- この変化は、AIデータセンターチップの需要が世界的に高まる中、投資家が半導体企業にシフトしていることを反映している。
+- キオクシアは東芝のメモリ事業から独立した後、約18か月前に東京証券取引所に上場した。
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
