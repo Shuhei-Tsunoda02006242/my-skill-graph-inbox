@@ -1,26 +1,26 @@
 ---
-title: "How Justin Ernest invested nearly $500M into hot startups without a traditional VC fund"
+title: "Justin Ernest が従来の VC ファンドなしで注目のスタートアップに 5 億ドル近くを投資した方法"
 date: 2026-06-13
 source: "https://techcrunch.com/2026/06/09/how-justin-ernest-invested-nearly-500m-into-hot-startups-without-a-traditional-vc-fund/"
 source-type: article
 domain: deeptech
 tech-tags: [quantum, AI]
 companies-mentioned: [Sabertooth Capital, PsiQuantum, Anthropic, Base Power, Databricks, SpaceX]
-investment-implication: "Family-office capital flooding into late-stage deeptech via SPVs -- even when companies like PsiQuantum can choose their investors -- signals intense oversubscription in quantum and AI infrastructure rounds."
+investment-implication: "PsiQuantumのような企業が投資家を選べる場合でも、SPVを介してファミリーオフィスの資金が後期段階のディープテックに流入していることは、量子およびAIインフラストラクチャラウンドにおける激しいオーバーサブスクリプションの兆候である。"
 signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-Atlanta-based investor Justin Ernest, through his vehicle Sabertooth Capital, deployed nearly $500M across 10 late-stage deeptech and AI companies (including PsiQuantum, Anthropic, and SpaceX) over 12 months using SPVs instead of launching a traditional VC fund.
+## 主な主張
+アトランタを拠点とする投資家ジャスティン・アーネストは、自身の事業会社であるセイバートゥース・キャピタルを通じて、従来のVCファンドを立ち上げる代わりにSPVを利用し、12カ月にわたって後期ディープテックおよびAI企業10社（PsiQuantum、Anthropic、SpaceXを含む）に5億ドル近くを投資した。
 
-## Evidence / Context
-- ~$500M invested into 10 companies over the last 12 months, including Anthropic, Base Power, Databricks, PsiQuantum, and SpaceX.
-- Used SPVs, single-asset funds, and nominee structures to offer deals to a network of ~30 smaller institutional investors and family offices, bypassing the 12-18 months it typically takes new managers to launch a formal fund.
-- PsiQuantum, the quantum computing startup last valued at $7B, had its CFO redirect a prospective direct investor to invest through Sabertooth instead -- a sign of the credibility Ernest has built with high-profile startups.
+## 根拠・背景
+- 過去 12 か月間で、Anthropic、Base Power、Databricks、PsiQuantum、SpaceX を含む 10 社に約 5 億ドルが投資されました。
+- SPV、シングルアセットファンド、ノミニーストラクチャーを利用して、約30の小規模な機関投資家やファミリーオフィスのネットワークに取引を提案し、新任マネージャーが正式なファンドを立ち上げるまでに通常かかる12～18か月を回避した。
+- 前回の評価額が70億ドルだった量子コンピューティングの新興企業PsiQuantumは、同社のCFOが将来の直接投資家を代わりにSabertooth経由で投資するよう誘導した。これはアーネストが著名な新興企業と築いてきた信頼の表れだ。
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
