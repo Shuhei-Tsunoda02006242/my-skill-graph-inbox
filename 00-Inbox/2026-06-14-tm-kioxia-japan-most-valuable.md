@@ -1,28 +1,28 @@
 ---
-title: "Kioxia caps years of uncertainty to become Japan's most valuable company"
+title: "キオクシア、長年にわたる不確実性を乗り越え、日本で最も価値のある企業に"
 date: 2026-06-14
 source: "https://asia.nikkei.com/business/tech/semiconductors/kioxia-caps-years-of-uncertainty-to-become-japan-s-most-valuable-company"
 source-type: article
 domain: deeptech
 tech-tags: [AI, semiconductor]
 companies-mentioned: [Kioxia, Toyota, Toshiba, Bain Capital, Samsung, SK Hynix]
-investment-implication: "AI-driven memory chip demand is re-rating NAND/HBM makers like Kioxia, reinforcing the memory supercycle thesis relevant to Samsung, SK Hynix, and Micron."
+investment-implication: "AI主導のメモリチップ需要により、キオクシアなどのNAND/HBMメーカーの評価が再評価されており、サムスン、SKハイニックス、マイクロンに関連するメモリスーパーサイクル理論が強化されている。"
 signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-Memory chipmaker Kioxia Holdings overtook Toyota to become Japan's most valuable company by market capitalization, with its stock up more than 670% in 2026 on surging AI-driven demand for NAND and HBM memory.
+## 主な主張
+メモリチップメーカーのキオクシアホールディングスは時価総額でトヨタを抜いて日本で最も価値のある企業となり、AIによるNANDおよびHBMメモリの需要の急増により2026年には株価が670％以上上昇した。
 
-## Evidence / Context
-- Kioxia shares rose 7.6% on Friday, pushing market value above ¥44 trillion (~$274B)
-- Stock is up over 670% year-to-date, the best performer on the MSCI World Index
-- Milestone comes just 18 months after Kioxia's IPO, following years of delayed listings and uncertainty
-- Kioxia originated as Toshiba's NAND flash memory business, spun off and acquired by a Bain Capital-led consortium in 2018, rebranded in 2019
-- Highlights how AI data center buildout is reshaping valuations across the memory chip supply chain (vs. Samsung, SK Hynix)
+## 根拠・背景
+- 金曜日、キオクシア株は7.6%上昇し、時価総額は44兆円（約2,740億ドル）を超えた
+- 株価は年初から670%以上上昇しており、MSCIワールドインデックスで最高のパフォーマーとなっている
+- 長年にわたる上場の遅れと不確実性を経て、キオクシアのIPOからわずか18か月で節目となる
+- キオクシアは東芝の NAND フラッシュ メモリ事業として誕生し、2018 年に分離されてベイン キャピタル主導のコンソーシアムに買収され、2019 年にブランド変更されました。
+- AI データセンターの構築がメモリ チップ サプライ チェーン全体の評価をどのように再形成しているかを強調します (対サムスン、SK ハイニックス)
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
