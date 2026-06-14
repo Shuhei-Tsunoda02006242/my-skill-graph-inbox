@@ -1,28 +1,28 @@
 ---
-title: "Helion raises $465M at $15.5B valuation to build fusion power plant for Microsoft"
+title: "Helion が Microsoft の核融合発電所建設のために 155 億ドルの評価額で 4 億 6,500 万ドルを調達"
 date: 2026-06-14
 source: "https://techcrunch.com/2026/06/04/helion-the-sam-altman-backed-fusion-startup-raises-465m-to-build-a-power-plant-for-microsoft/"
 source-type: article
 domain: deeptech
 tech-tags: [energy, AI]
 companies-mentioned: [Helion, Microsoft, OpenAI, Sam Altman]
-investment-implication: "A $15.5B valuation for a pre-commercial fusion startup underscores how AI-driven power demand is pulling forward investor risk tolerance for next-gen energy infrastructure tied directly to AI data center buildouts."
+investment-implication: "商業化前の核融合スタートアップに対する155億ドルの評価額は、AI主導の電力需要がAIデータセンターの構築に直接結びついた次世代エネルギーインフラに対する投資家のリスク許容度をいかに引き上げているかを浮き彫りにしている。"
 signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-Sam Altman-backed fusion startup Helion raised $465M at a $15.5B valuation, advancing toward its goal of delivering fusion power to Microsoft's grid by 2028 -- directly linking next-gen energy infrastructure to AI data center power demand.
+## 主な主張
+サム・アルトマン氏が支援する核融合スタートアップ Helion は、評価額 155 億ドルで 4 億 6,500 万ドルを調達し、2028 年までに核融合発電をマイクロソフトの電力網に供給するという目標に向けて前進し、次世代エネルギーインフラを AI データセンターの電力需要に直接結び付けました。
 
-## Evidence / Context
-- New $465M round values Helion at $15.5B; total raised to date is now $1.5B (previous round was $425M in January 2025)
-- Helion's first power plant, Orion, is targeted to begin supplying power as early as 2028 under its existing deal with Microsoft
-- Technology approach: magnets compress fuel; when fusion occurs in the plasma, it expands against the magnetic fields, and that force is captured directly as electricity (akin to regenerative braking)
-- Separately, Helion has been reported in talks to sell power to OpenAI, with Sam Altman sitting on both companies' boards
-- Rising AI data center electricity demand is cited as a key driver of investor interest in fusion
+## 根拠・背景
+- 新しい 4 億 6,500 万ドルのラウンドでは、Helion の価値は 155 億ドルとなります。現在までの調達総額は 15 億ドルです (前回のラウンドは 2025 年 1 月に 4 億 2,500 万ドルでした)
+- Helion の最初の発電所である Orion は、Microsoft との既存の契約に基づき、早ければ 2028 年に電力供給を開始することを目標としています
+- 技術的アプローチ: 磁石は燃料を圧縮します。プラズマ内で核融合が起こると、磁場に抗して膨張し、その力が電気として直接取り込まれます（回生ブレーキに似ています）
+- これとは別に、Helion は OpenAI に電力を売却する交渉を行っており、サム・アルトマン氏が両社の取締役に就任していると報じられている。
+- AIデータセンターの電力需要の増加が、融合に対する投資家の関心の主な要因として挙げられている
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
