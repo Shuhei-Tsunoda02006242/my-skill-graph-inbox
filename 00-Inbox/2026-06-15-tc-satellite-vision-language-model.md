@@ -1,27 +1,27 @@
 ---
-title: "A satellite just learned to find things on its own — here's what that means"
+title: "衛星は自ら物を見つけることを学んだばかりです — これが何を意味しますか"
 date: 2026-06-15
 source: "https://techcrunch.com/2026/06/15/a-satellite-just-learned-to-find-things-on-its-own-heres-what-that-means/"
 source-type: article
 domain: deeptech
 tech-tags: [AI]
 companies-mentioned: [Loft Orbital, NASA JPL]
-investment-implication: "On-orbit AI inference (running vision-language models directly on satellites) could shift value in the space-data chain from ground-based analytics toward edge compute hardware and software deployed on spacecraft."
+investment-implication: "軌道上の AI 推論 (ビジョン言語モデルを衛星上で直接実行する) は、宇宙データ チェーンの価値を地上ベースの分析から宇宙船に配備されるエッジ コンピューティング ハードウェアおよびソフトウェアへとシフトさせる可能性があります。"
 signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-For the first time, an Earth observation satellite identified objects of interest on its own, without ground-based human analysts, using a vision-language model running onboard — the first reported case of on-orbit LLM-style inference responding to natural language queries.
+## 主な主張
+初めて、地球観測衛星は、地上の人間の分析者なしで、衛星上で実行される視覚言語モデルを使用して、独自に対象天体を識別しました。これは、自然言語のクエリに応答する軌道上での LLM スタイルの推論の最初の報告例です。
 
-## Evidence / Context
-- The milestone occurred in April aboard Yam-9, a spacecraft built by space infrastructure company Loft Orbital.
-- The onboard software package was built by NASA's Jet Propulsion Laboratory (JPL) and identified areas of interest in response to natural language queries, rather than downlinking raw imagery for ground analysts to process.
-- Traditionally, satellites must download large volumes of data to Earth for human analysts or ground-based ML pipelines to interpret.
-- The longer-term goal is a constellation providing real-time coverage of anywhere on Earth, estimated to require 50-100 satellites like Yam-9.
+## 根拠・背景
+- このマイルストーンは、宇宙インフラ会社ロフト・オービタルが建造した宇宙船ヤム9号で4月に起きた。
+- 搭載ソフトウェア パッケージは NASA のジェット推進研究所 (JPL) によって構築され、地上分析者が処理するために生の画像をダウンリンクするのではなく、自然言語クエリに応じて関心のある領域を特定しました。
+- 従来、人間のアナリストや地上の ML パイプラインが解釈できるように、衛星は大量のデータを地球にダウンロードする必要がありました。
+- 長期的な目標は、地球上のあらゆる場所をリアルタイムでカバーできる衛星群を構築することであり、Yam-9 のような衛星が 50 ～ 100 基必要になると推定されています。
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
