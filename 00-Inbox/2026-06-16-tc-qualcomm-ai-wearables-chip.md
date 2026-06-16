@@ -1,28 +1,28 @@
 ---
-title: "Qualcomm wants to be the chip inside whatever replaces your smartphone, and it just announced two products toward that end"
+title: "クアルコムは、スマートフォンに代わるあらゆるものの内部のチップになりたいと考えており、その目標に向けて 2 つの製品を発表したばかりです"
 date: 2026-06-16
 source: "https://techcrunch.com/2026/06/16/qualcomm-wants-to-be-the-chip-inside-whatever-replaces-your-smartphone-and-it-just-announced-two-products-toward-that-end/"
 source-type: article
 domain: deeptech
 tech-tags: [AI, semiconductor]
 companies-mentioned: [Qualcomm, XREAL]
-investment-implication: "Qualcomm is positioning as the silicon backbone of the post-smartphone AI wearable era; success hinges on smart-glasses consumer adoption, which remains unproven at scale"
+investment-implication: "クアルコムはポストスマートフォン AI ウェアラブル時代のシリコン バックボーンとしての地位を確立しています。成功はスマートグラスの消費者への採用にかかっていますが、それはまだ大規模に証明されていません"
 signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-Qualcomm announced Snapdragon Reality Elite (XR chip) and a new Snapdragon Wear Elite (wearables platform with the industry's first on-device NPU), targeting 40+ AI device designs — smart glasses, camera earbuds, rings, pins — as they bet the next computing platform is not a phone.
+## 主な主張
+クアルコムは、次のコンピューティング プラットフォームは電話ではないと確信しているため、40 以上の AI デバイス設計 (スマート グラス、カメラ イヤフォン、リング、ピン) を対象とした、Snapdragon Reality Elite (XR チップ) と新しい Snapdragon Wear Elite (業界初のオンデバイス NPU を備えたウェアラブル プラットフォーム) を発表しました。
 
-## Evidence / Context
-- Snapdragon Reality Elite: flagship XR processor for Android XR devices; XREAL AURA will be the first device, launching Fall 2026
-- Snapdragon Wear Elite: first wearable chip with a dedicated NPU, running AI models up to 2B parameters on-device; 30% longer battery life; hexa-connectivity (5G, Wi-Fi, BT 6.0, UWB, GNSS, satellite)
-- CEO Cristiano Amon: Qualcomm is working on 40+ AI wearable device designs across categories
-- Qualcomm stock jumped on the announcement (Gurufocus)
-- Market context: smart glasses positioned as hands-free AI complement/replacement for smartphones
+## 根拠・背景
+- Snapdragon Reality Elite: Android XR デバイス用の主力 XR プロセッサ。 XREAL AURA は最初のデバイスとなり、2026 年秋に発売されます
+- Snapdragon Wear Elite: 専用 NPU を備えた初のウェアラブル チップで、デバイス上で最大 2B パラメーターの AI モデルを実行します。バッテリー寿命が 30% 長くなりました。ヘキサ接続 (5G、Wi-Fi、BT 6.0、UWB、GNSS、衛星)
+- CEO クリスティアーノ・アモン氏: クアルコムは、さまざまなカテゴリーにわたって 40 以上の AI ウェアラブル デバイスの設計に取り組んでいます。
+- この発表を受けてクアルコム株が急騰（Gurufocus）
+- 市場の状況: スマートフォンのハンズフリー AI 補完/代替として位置付けられるスマート グラス
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
