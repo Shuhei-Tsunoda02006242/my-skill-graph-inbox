@@ -1,30 +1,30 @@
 ---
-title: "SEMI: Global Semiconductor Equipment Billings Hit Record $36.55B in Q1 2026, Up 14% YoY"
+title: "SEMI: 2026 年第 1 四半期の世界の半導体装置の請求額は過去最高の 365 億 5000 万ドルに達し、前年比 14% 増加"
 date: 2026-06-16
 source: "https://www.prnewswire.com/news-releases/semi-reports-global-semiconductor-equipment-billings-increased-14-year-over-year-in-q1-2026-302790838.html"
 source-type: article
 domain: deeptech
 tech-tags: [semiconductor, AI]
 companies-mentioned: [SEMI, TSMC, Samsung, Nvidia]
-investment-implication: "Record AI-driven equipment CapEx ($36.55B in a single quarter, China alone $10.99B) confirms a sustained multi-year semiconductor supercycle; primary beneficiaries are equipment makers ASML, Tokyo Electron, Applied Materials, and Lam Research, plus advanced packaging specialists."
+investment-implication: "AI駆動型の機器設備投資の記録（単一四半期で365億5000万ドル、中国単独で109億9000万ドル）は、複数年にわたる持続的な半導体スーパーサイクルを裏付ける。主な受益者は、装置メーカー ASML、東京エレクトロン、アプライド マテリアルズ、ラム リサーチに加え、高度なパッケージング専門家です。"
 signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-Global semiconductor manufacturing equipment billings reached a record $36.55 billion in Q1 2026, up 14% year-over-year and 1% quarter-over-quarter, driven entirely by AI-related investment in advanced logic, DRAM, and advanced packaging — per SEMI's Worldwide Semiconductor Equipment Market Statistics report.
+## 主な主張
+SEMIの世界半導体製造装置市場統計レポートによれば、世界の半導体製造装置の請求額は、2026年第1四半期に過去最高の365億5,000万ドルに達し、前年同期比14%増、前四半期比1%増となった。これは完全に先進ロジック、DRAM、先進パッケージングへのAI関連投資によるものである。
 
-## Evidence / Context
-- Q1 2026 total: $36.55B (record high); +14% YoY; +1% QoQ
-- Regional breakdown: China $10.99B (largest market), Korea $8.93B, Taiwan $8.77B
-- Investment is concentrated in leading-edge logic (AI GPUs/CPUs), DRAM capacity expansion, and advanced packaging (CoWoS, SoIC, HBM stacks)
-- Full-year 2027 global equipment sales projected at $156B — another record
-- SIA/Deloitte report estimates AI data center chip revenue could exceed $1.2 trillion annually by 2028, nearly 10x in four years; 2026 AI chip market estimated at ~$500B
-- Semiconductors account for 95% of an AI data server rack's total value, per SIA/Deloitte analysis released this week
-- China remaining the #1 equipment buyer despite export controls reflects continued domestic fab build-out
+## 根拠・背景
+- 2026年第1四半期の総額：365億5000万ドル（過去最高）。前年比 +14%;前四半期比 +1%
+- 地域内訳: 中国 109 億 9000 万ドル (最大市場)、韓国 89 億 3000 万ドル、台湾 87 億 7000 万ドル
+- 投資は最先端のロジック (AI GPU/CPU)、DRAM 容量の拡張、および高度なパッケージング (CoWoS、SoIC、HBM スタック) に集中しています。
+- 2027 年通年の世界機器売上高は 1,560 億ドルと予測され、新たな記録を達成
+- SIA/Deloitte のレポートでは、AI データセンター チップの収益は 2028 年までに年間 1 兆 2,000 億ドルを超える可能性があり、これは 4 年間でほぼ 10 倍になると推定されています。 2026 年の AI チップ市場は約 5,000 億ドルと推定
+- 今週発表された SIA/Deloitte の分析によると、AI データ サーバー ラックの合計価値の 95% を半導体が占めています
+- 輸出規制にもかかわらず、中国が引き続き最大の機器購入国であることは、国内工場の建設が続いていることを反映している
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
