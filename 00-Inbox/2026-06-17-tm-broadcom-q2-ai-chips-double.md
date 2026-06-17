@@ -1,31 +1,31 @@
 ---
-title: "Broadcom Q2 2026 earnings: AI chip revenue doubles, stock sinks"
+title: "Broadcom 2026 年第 2 四半期決算：AI チップの収益は 2 倍、株価は下落"
 date: 2026-06-17
 source: "https://www.cnbc.com/2026/06/03/broadcom-avgo-earnings-report-q2-2026.html"
 source-type: article
 domain: deeptech
 tech-tags: [AI, semiconductor]
 companies-mentioned: [Broadcom]
-investment-implication: "Broadcom's Q3 AI semiconductor guidance of $16B (+200% YoY) missed the $17.2B consensus, triggering a 12% selloff — but the full-year $56B AI chip target and $100B+ 2027 projection confirm the custom-accelerator buildout is structurally intact despite near-term guidance noise."
+investment-implication: "Broadcom の第 3 四半期 AI 半導体ガイダンス 160 億ドル (前年比 +200%) は、コンセンサスである 172 億ドルを下回り、12% の下落を引き起こしました。しかし、通期の AI チップ目標である 560 億ドルと 2027 年に 1,000 億ドル以上の予測は、短期的なガイダンスノイズにもかかわらず、カスタム アクセラレータの構築が構造的に無傷であることを裏付けています。"
 signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-Broadcom's Q2 2026 results showed AI chip revenue surging 143% YoY to $10.8B, but Q3 guidance landed below Wall Street consensus, sending the stock down 12% after hours — a classic case of beat-and-lower in a hyper-growth AI infrastructure name.
+## 主な主張
+Broadcom の 2026 年第 2 四半期決算では、AI チップの収益が前年比 143% 増の 108 億ドルに達しましたが、第 3 四半期のガイダンスはウォール街のコンセンサスを下回り、時間外株価は 12% 下落しました。これは、急成長する AI インフラストラクチャの名前が負ける典型的なケースです。
 
-## Evidence / Context
-- Q2 total revenue: $22.2B, +48% YoY (record)
-- Q2 AI semiconductor revenue: $10.8B, +143% YoY; primarily custom AI accelerators and AI networking
-- Q3 guidance: AI chip revenue $16B (+200% YoY) vs. analyst consensus of $17.2B
-- Q3 total revenue guidance: $29.4B, +84% YoY
-- FY2026 AI semiconductor revenue target: $56B
-- FY2027 AI semiconductor revenue projection: >$100B
-- Adjusted EBITDA Q2: $15.2B, +52% YoY, representing 69% margin
-- Stock reaction: -12% after-hours on Q3 guidance shortfall despite strong Q2 beat
+## 根拠・背景
+- 第 2 四半期の総収益: 222 億ドル、前年比 +48% (記録)
+- 第 2 四半期 AI 半導体収益: 108 億ドル、前年比 143% 増加。主にカスタム AI アクセラレータと AI ネットワーキング
+- 第 3 四半期ガイダンス: AI チップの収益は 160 億ドル (前年比 200% 増)、アナリストのコンセンサスは 172 億ドル
+- 第 3 四半期の総収益ガイダンス: 294 億ドル、前年比 +84%
+- 2026年度のAI半導体収益目標：560億ドル
+- 2027 年度 AI 半導体収益予測: > 1,000 億ドル
+- 第 2 四半期の調整後 EBITDA: 152 億ドル、前年比 +52%、マージン 69% に相当
+- 在庫反応: 第 2 四半期の好調にもかかわらず、第 3 四半期ガイダンス未達により時間外で -12%
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
