@@ -1,28 +1,28 @@
 ---
-title: "Amazon hopes to challenge Nvidia more directly by selling its AI chips"
+title: "AmazonはAIチップを販売することでNvidiaにもっと直接的に挑戦したいと考えている"
 date: 2026-06-18
 source: "https://techcrunch.com/2026/06/18/amazon-hopes-to-challenge-nvidia-more-directly-by-selling-its-ai-chips/"
 source-type: article
 domain: deeptech
 tech-tags: [AI, semiconductor]
 companies-mentioned: [Amazon, AWS, Nvidia, OpenAI, Anthropic, Uber]
-investment-implication: "Amazon selling Trainium externally could compress Nvidia's data center AI chip margins and validate non-Nvidia AI infrastructure at scale."
+investment-implication: "Amazon が Trainium を外部に販売すれば、Nvidia のデータセンター AI チップのマージンを圧縮し、Nvidia 以外の AI インフラストラクチャを大規模に検証できる可能性があります。"
 signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-Amazon is in early-stage talks to sell its proprietary Trainium AI chips to external companies for data center use, marking its most direct challenge yet to Nvidia's dominance in the AI chip market.
+## 主な主張
+Amazonは独自のTrainium AIチップをデータセンター向けに外部企業に販売するための初期段階の交渉を進めており、AIチップ市場におけるNvidiaの優位性に対するこれまでで最も直接的な挑戦となっている。
 
-## Evidence / Context
-- Amazon's AI chief Peter DeSantis disclosed to Bloomberg that AWS is in talks to sell Trainium chips to outside data center operators.
-- Sales commitments for Trainium — including from OpenAI, Anthropic, and Uber — have reached $225 billion.
-- Amazon now claims to be "one of the top three data center chip companies in the world."
-- Trainium and Inferentia chips can reduce AI inference computing costs by up to 80% compared to Nvidia's H100.
-- The move stems from CEO Andy Jassy's April 2026 shareholder letter, where he first floated the idea of external chip sales.
+## 根拠・背景
+- AmazonのAI責任者ピーター・デサンティス氏は、AWSがTrainiumチップを外部のデータセンター運営者に販売する交渉を行っていることをブルームバーグに明らかにした。
+- OpenAI、Anthropic、Uber を含む Trainium の販売約束は 2,250 億ドルに達しました。
+- Amazon は現在、「世界トップ 3 のデータセンターチップ企業の 1 つ」であると主張しています。
+- Trainium および Inferentia チップは、Nvidia の H100 と比較して AI 推論コンピューティングのコストを最大 80% 削減できます。
+- この動きは、CEO Andy Jassy の 2026 年 4 月の株主への手紙に端を発しており、同氏はそこでチップの外部販売のアイデアを初めて提起しました。
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
