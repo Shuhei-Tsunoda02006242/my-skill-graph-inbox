@@ -1,28 +1,28 @@
 ---
-title: "Element Six and Orbray Scale Diamond Wafers to Volume Production"
+title: "Element Six と Orbray がダイヤモンドウェーハを量産化"
 date: 2026-06-19
 source: "https://www.semiconductor-today.com/news_items/2026/jun/elementsix-orbray-160626.shtml"
 source-type: article
 domain: deeptech
 tech-tags: [semiconductor, quantum]
 companies-mentioned: [Element Six, Orbray]
-investment-implication: "CVD diamond wafers at 3-inch scale are a potential enabling material for 6G RF, high-power GaN, and quantum hardware thermal management — Element Six (De Beers subsidiary) gaining volume manufacturing capability is a key supply-chain unlock for these markets."
+investment-implication: "3 インチ スケールの CVD ダイヤモンド ウェーハは、6G RF、高出力 GaN、および量子ハードウェアの熱管理を実現する可能性のある材料です。Element Six (デビアスの子会社) が量産能力を獲得することは、これらの市場にとって重要なサプライチェーンのロックを解除することになります。"
 signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-Element Six and Orbray have achieved reproducible manufacturing of 3-inch wafer-scale single-crystal synthetic diamond substrates and are developing 4-inch options, marking the shift from R&D to volume production of a material with thermal conductivity exceeding 2200 W/m·K.
+## 主な主張
+Element SixとOrbrayは、3インチのウェハスケールの単結晶合成ダイヤモンド基板の再現可能な製造を達成し、4インチのオプションを開発中であり、2200W/m・Kを超える熱伝導率を持つ材料の研究開発から量産への移行を示している。
 
-## Evidence / Context
-- Wafer specs: thermal conductivity >2200 W/m·K (vs. silicon ~150 W/m·K), surface roughness <0.5 nm, flatness <10 µm — suitable for direct bonding to GaN next-gen semiconductors
-- Target applications: 6G wireless RF components, high-power RF military, deep-space sensing, thermal management for AI chips, and quantum hardware platforms
-- Element Six is a De Beers Group subsidiary; Orbray (Japan) specialises in synthetic diamond CVD growth
-- The partnership began in 2024 with initial R&D; the June 2026 milestone formalises the shift to commercial-scale volume manufacturing
-- Ultra-wide bandgap semiconductor properties of diamond are also being explored for transistor channels, not just heat spreaders
+## 根拠・背景
+- ウェハ仕様: 熱伝導率 >2200 W/m・K (対シリコン ~150 W/m・K)、表面粗さ <0.5 nm、平坦度 <10 µm — GaN 次世代半導体への直接接合に適しています
+- 対象アプリケーション: 6G ワイヤレス RF コンポーネント、高出力 RF 軍事、深宇宙センシング、AI チップの熱管理、および量子ハードウェア プラットフォーム
+- Element Six はデビアス グループの子会社です。 Orbray (日本) は合成ダイヤモンドの CVD 成長を専門としています。
+- パートナーシップは 2024 年に初期の研究開発から始まりました。 2026 年 6 月のマイルストーンにより、商業規模の大量生産への移行が正式に決定される
+- ダイヤモンドの超ワイドバンドギャップ半導体特性は、ヒートスプレッダだけでなく、トランジスタチャネルでも研究されています
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->

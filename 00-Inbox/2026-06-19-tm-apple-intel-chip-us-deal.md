@@ -1,29 +1,29 @@
 ---
-title: "Apple to Partner with Intel on US Chip Design and Manufacturing"
+title: "Apple、米国のチップ設計と製造でIntelと提携"
 date: 2026-06-19
 source: "https://www.tuaw.com/2026/06/19/apple-intel-chip-deal-signals-major-shift-in-u-s-manufacturing"
 source-type: article
 domain: deeptech
 tech-tags: [semiconductor]
 companies-mentioned: [Apple, Intel, TSMC]
-investment-implication: "Intel gains a marquee domestic customer that validates its 18A-P foundry strategy; even a partial Apple order shifts the narrative for Intel Foundry's commercial viability and could displace volume from TSMC."
+investment-implication: "インテルは、同社の 18A-P ファウンドリ戦略を正当化する有力な国内顧客を獲得しました。たとえ部分的に Apple に発注されたとしても、Intel Foundry の商業的実行可能性に関する物語は変わり、TSMC からの生産量が奪われる可能性がある。"
 signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-President Trump announced on June 18–19 that Apple will partner with Intel to design and manufacture chips in the United States, confirming a deal that had been in preliminary discussion since at least May 2026 per WSJ reporting.
+## 主な主張
+WSJの報道によると、トランプ大統領は6月18日から19日にかけて、アップルが米国でチップを設計・製造するためにインテルと提携すると発表し、少なくとも2026年5月から予備交渉が行われていた合意を確認した。
 
-## Evidence / Context
-- Trump announced the partnership via Truth Social; Apple has since confirmed collaboration on chip design and production on US soil
-- Financial terms, specific chip families, and production volumes remain undisclosed
-- Industry analysts expect Intel to manufacture mature designs (older M-series, possibly MacBook Air / iPad Pro chips) rather than cutting-edge silicon; Apple's most advanced processors will likely remain on TSMC N2
-- Intel shares rose ~6.5% in pre-market on the news; ASML hit a 52-week high on the same day as Intel 18A-P risk production corroborates foundry readiness
-- The Trump administration has been actively brokering similar deals between Intel and Nvidia, SpaceX, and others to anchor US semiconductor supply chains
-- Intel's 18A-P node (recently entered risk production) offers 9% performance improvement at iso-power and is positioned as the manufacturing platform for such deals
+## 根拠・背景
+- トランプ大統領はTruth Socialを通じて提携を発表。 Appleはその後、米国本土でのチップ設計と生産に関する協力を確認した
+- 金銭的条件、特定のチップファミリー、生産量は未公開のままです
+- 業界アナリストは、Intel が最先端のシリコンではなく、成熟した設計 (古い M シリーズ、おそらく MacBook Air / iPad Pro チップ) を製造すると予想しています。 Apple の最も先進的なプロセッサは TSMC N2 に残る可能性が高い
+- このニュースを受けて、インテル株は市場前に最大6.5%上昇した。 Intel 18A-Pリスク生産がファウンドリの準備を裏付けるのと同じ日に、ASMLは52週間の高値を記録した
+- トランプ政権は、米国の半導体サプライチェーンを強化するために、インテルとエヌビディア、スペースXなどとの間の同様の取引を積極的に仲介している。
+- Intel の 18A-P ノード (最近リスク生産に参入) は、等電力で 9% のパフォーマンス向上を実現し、そのような取引の製造プラットフォームとして位置付けられています
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
