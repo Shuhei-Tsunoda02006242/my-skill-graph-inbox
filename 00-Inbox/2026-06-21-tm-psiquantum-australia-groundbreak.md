@@ -1,31 +1,31 @@
 ---
-title: "PsiQuantum Breaks Ground on World's First Utility-Scale Quantum Computer"
+title: "PsiQuantum が世界初の実用規模の量子コンピューターの開発に着手"
 date: 2026-06-21
 source: "https://www.businesswire.com/news/home/20260617018403/en/PsiQuantum-Breaks-Ground-in-Australia-on-Site-of-Worlds-First-Utility-Scale-Quantum-Computer"
 source-type: article
 domain: deeptech
 tech-tags: [quantum]
 companies-mentioned: [PsiQuantum, Australian Government, Queensland Government, Griffith University]
-investment-implication: "First physical construction of a utility-scale fault-tolerant quantum computer validates PsiQuantum's silicon-photonic approach and sets a 2029 operational target that could mark the first commercially relevant quantum advantage."
+investment-implication: "実用規模のフォールトトレラント量子コンピュータの最初の物理的構築は、PsiQuantum のシリコンフォトニックアプローチを検証し、最初の商業的に関連する量子の利点を示す可能性のある 2029 年の運用目標を設定します。"
 signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-PsiQuantum broke ground on June 17 at Moreton Bay Central (Petrie, Queensland) on what it calls the world's first utility-scale, fault-tolerant quantum computer — backed by AU$940M (~US$620M) in combined Australian and Queensland government funding.
+## 主な主張
+PsiQuantum は 6 月 17 日、モートン ベイ セントラル (クイーンズランド州ペトリー) で、オーストラリアとクイーンズランド州政府の合計 9 億 4,000 万オーストラリアドル (約 6 億 2,000 万ドル) の資金援助を受けて、世界初の実用規模のフォールトトレラント量子コンピューターと呼ばれるものの起工式を行いました。
 
-## Evidence / Context
-- Site: Moreton Bay Central, ~30 km north of Brisbane CBD
-- Technology: Silicon-photonic qubits requiring a massive industrial cryogenic plant; facility will house tens of thousands of silicon-photonic chips
-- Funding: Joint AU$940M (~US$620M) investment from Australian federal and Queensland state governments
-- Operational timeline: Originally targeted end-2027; now pushed to 2029
-- Milestone in May 2026: PsiQuantum opened a Test and Validation Lab at Griffith University in Brisbane prior to the groundbreaking
-- CEO Victor Peng and Co-Founder Prof. Jeremy O'Brien attended the ceremony alongside Minister for Science Tim Ayres and Queensland Minister Andrew Powell
-- PsiQuantum's approach uses standard semiconductor manufacturing processes (CMOS-compatible) at scale, differentiating it from competitors using superconducting or trapped-ion qubits
-- The facility will be developed in phases
+## 根拠・背景
+- 場所: モートン ベイ セントラル、ブリスベン CBD の北約 30 km
+- 技術: シリコンフォトニック量子ビットは大規模な産業用極低温プラントを必要とします。この施設には数万個のシリコンフォトニックチップが収容される予定
+- 資金調達: オーストラリア連邦政府とクイーンズランド州政府からの共同出資 9 億 4,000 万オーストラリアドル (約 6 億 2,000 万米ドル)
+- 運用スケジュール: 当初の目標は 2027 年末。 2029年に延期されました
+- 2026 年 5 月のマイルストーン: PsiQuantum は起工に先立ち、ブリスベンのグリフィス大学にテストおよび検証ラボを開設しました
+- CEOのビクター・ペン氏と共同創設者のジェレミー・オブライエン教授が、ティム・エアーズ科学大臣、アンドリュー・パウエル・クイーンズランド州大臣とともに式典に出席した。
+- PsiQuantum のアプローチは、標準的な半導体製造プロセス (CMOS 互換) を大規模に使用し、超伝導またはトラップされたイオン量子ビットを使用する競合他社との差別化を図っています。
+- 施設は段階的に開発されます
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->

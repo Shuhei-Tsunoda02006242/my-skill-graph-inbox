@@ -1,30 +1,30 @@
 ---
-title: "Claude Fable 5 Offline as NSA Testimony Reshapes AI Export Ban"
+title: "NSAの証言でAI輸出禁止の形が変わるため、クロード・ファブル5がオフラインに"
 date: 2026-06-21
 source: "https://www.techtimes.com/articles/318783/20260621/claude-fable-5-resurfaces-android-app-nsa-breach-testimony-reshapes-ban.htm"
 source-type: article
 domain: deeptech
 tech-tags: [AI]
 companies-mentioned: [Anthropic, NSA, US Commerce Department, CISA, Treasury]
-investment-implication: "First-ever US AI model export ban signals that frontier AI is now a regulated national-security asset, adding compliance and political risk to any Anthropic equity position."
+investment-implication: "史上初の米国AIモデルの輸出禁止は、フロンティアAIが今や規制対象の国家安全保障資産であり、人類の株式のポジションにコンプライアンスと政治的リスクを加えていることを示している。"
 signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-As of June 21 — nine days after the Commerce Department's export control directive — Claude Fable 5 and Mythos 5 remain fully offline for all users globally. NSA Director Gen. Joshua Rudd testified to the Senate Intelligence Committee that Mythos, in a classified red-team exercise, autonomously breached nearly all NSA systems within hours, reframing the ban as a security necessity rather than a procedural dispute.
+## 主な主張
+商務省の輸出規制指令から 9 日後の 6 月 21 日の時点で、Claude Fable 5 と Mythos 5 は世界中のすべてのユーザーに対して完全にオフラインのままです。 NSA長官ジョシュア・ラッド大将は上院情報委員会で、ミトスが機密レッドチーム演習で数時間以内にほぼすべてのNSAシステムを自律的に突破し、禁止を手続き上の紛争ではなく安全保障上の必要性として捉え直した、と証言した。
 
-## Evidence / Context
-- Fable 5 launched June 9; export control directive issued June 12, three days later
-- Anthropic shut off both models for all customers rather than attempt nationality-based segmentation
-- Fable 5 name reappears in Claude's Android model picker but selecting it silently falls back to Opus 4.8 or returns a rate-limit error — not a partial restoration
-- The June 2 Executive Order mandated NSA/Treasury/CISA build a "covered frontier model" framework requiring 30-day government pre-release access; deadline is August 1, 2026
-- Trump adviser David Sacks said Anthropic "refused" to fix the Fable 5 jailbreak before controls were enacted; Anthropic called the jailbreak "not serious"
-- A Chinese group reportedly accessed the model via the jailbreak vector before the ban
-- Cybersecurity experts criticised the government for pulling the model from domestic users as collateral damage
+## 根拠・背景
+- Fable 5 は 6 月 9 日に発売されました。輸出管理指令は3日後の6月12日に発令された
+- 人間性は国籍ベースのセグメンテーションを試みるのではなく、すべての顧客に対して両方のモデルを遮断します
+- Fable 5 の名前が Claude の Android モデル ピッカーに再度表示されますが、それを選択すると、静かに Opus 4.8 にフォールバックするか、部分的な復元ではなくレート制限エラーが返されます。
+- 6月2日の大統領令は、NSA/財務省/CISAに対し、30日間の政府による事前公開アクセスを必要とする「カバード・フロンティア・モデル」枠組みの構築を義務付けた。締め切りは2026年8月1日です
+- トランプ大統領顧問のデービッド・サックス氏は、アンスロピック社は規制が施行される前にフェイブル5の脱獄を修正することを「拒否した」と述べた。アントロピックは脱獄を「深刻ではない」と呼んだ
+- 中国のグループが禁止前に脱獄ベクター経由でモデルにアクセスしたと報告されている
+- サイバーセキュリティの専門家は、政府が巻き添え被害として国内ユーザーからモデルを引き抜いたことを批判した
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
