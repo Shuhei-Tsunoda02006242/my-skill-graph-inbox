@@ -10,6 +10,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: daily-digest-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   send-digest:
     runs-on: ubuntu-latest
@@ -64,7 +68,7 @@ jobs:
             echo "Already translated, nothing to commit"
           else
             git commit -m "translate: Inbox notes to Japanese"
-            git push
+            git pull --rebase origin main && git push
           fi
 
       - name: Build digest body
