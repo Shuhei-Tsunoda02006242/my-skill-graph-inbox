@@ -1,29 +1,29 @@
 ---
-title: "SpaceX inks compute deal with Reflection AI, an open source AI lab"
+title: "SpaceX インク、オープンソース AI ラボである Reflection AI と計算取引を締結"
 date: 2026-06-22
 source: "https://techcrunch.com/2026/06/22/spacex-inks-compute-deal-with-reflection-ai-an-open-source-ai-lab/"
 source-type: article
 domain: deeptech
 tech-tags: [AI]
 companies-mentioned: [SpaceX, Reflection AI, Nvidia, xAI, Anthropic, Google, OpenAI]
-investment-implication: "SpaceX is quietly becoming the infrastructure backbone for frontier AI labs, commanding premium compute rates rivaling hyperscalers."
+investment-implication: "SpaceX は、密かにフロンティア AI ラボのインフラストラクチャ バックボーンとなりつつあり、ハイパースケーラーに匹敵するプレミアムなコンピューティング レートを実現しています。"
 signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-Reflection AI will pay SpaceX $150M/month — totaling up to $6.3B through 2029 — for exclusive access to Nvidia GB300 AI chips at the Colossus 2 data center near Memphis, Tennessee, making it one of the largest compute deals ever for an open-source AI lab.
+## 主な主張
+Reflection AI は、テネシー州メンフィス近郊の Colossus 2 データセンターにある Nvidia GB300 AI チップへの独占的アクセスに対して、SpaceX に月額 1 億 5,000 万ドル (2029 年まで総額最大 63 億ドル) を支払う予定で、これはオープンソース AI ラボにとって史上最大のコンピューティング取引の 1 つとなります。
 
-## Evidence / Context
-- Deal value: $150M/month beginning July 1, 2026, running through 2029 (~$6.3B total)
-- Hardware: Nvidia's latest GB300 AI chips hosted at SpaceX's Colossus 2 data center (Memphis, TN)
-- Either party can exit with 90 days' notice after the first three months
-- Reflection AI is last valued at $25B; goal is to build open-source frontier models competitive with OpenAI, Anthropic, and Google
-- Deal is smaller than SpaceX's Anthropic deal ($1.25B/month) and Google deal ($920M/month)
-- Colossus was originally built by xAI (now part of SpaceX) for internal use; SpaceX pivoted to renting capacity as xAI's internal AI efforts faltered
+## 根拠・背景
+- 取引額: 2026 年 7 月 1 日から月額 1 億 5,000 万ドル、2029 年まで (合計約 63 億ドル)
+- ハードウェア: SpaceX の Colossus 2 データセンター (テネシー州メンフィス) でホストされる Nvidia の最新 GB300 AI チップ
+- どちらの当事者も最初の 3 か月後に 90 日前までに通知すれば離脱できる
+- Reflection AI の最終評価額は 250 億ドルです。目標は、OpenAI、Anthropic、Google と競争できるオープンソースのフロンティア モデルを構築することです
+- 契約はSpaceXのAnthropic契約（月額12億5000万ドル）やGoogleの契約（月額9億2000万ドル）よりも小さい
+- Colossus はもともと内部使用のために xAI (現在は SpaceX の一部) によって構築されました。 xAIの社内AIへの取り組みが行き詰まる中、SpaceXはキャパシティのレンタルに軸足を移した
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
