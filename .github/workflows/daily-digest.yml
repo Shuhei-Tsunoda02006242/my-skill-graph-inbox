@@ -28,9 +28,18 @@ jobs:
             FILES=$(git diff --name-only HEAD~1 HEAD -- '00-Inbox/*.md' | grep -v README | tr '\n' ' ')
             SUFFIX="新着"
           fi
+          # ファイル名プレフィクスからソース名を判定
+          FIRST=$(echo $FILES | awk '{print $1}' | xargs -I{} basename {})
+          if echo "$FIRST" | grep -q '^tc-'; then SOURCE="TechCrunch"
+          elif echo "$FIRST" | grep -q '^tm-'; then SOURCE="Techmeme"
+          elif echo "$FIRST" | grep -q '^sn-'; then SOURCE="STAT News"
+          elif echo "$FIRST" | grep -q '^is-'; then SOURCE="IEEE Spectrum"
+          else SOURCE="Skill Graph"
+          fi
           echo "files=$FILES" >> $GITHUB_OUTPUT
           echo "count=$(echo $FILES | wc -w)" >> $GITHUB_OUTPUT
           echo "suffix=$SUFFIX" >> $GITHUB_OUTPUT
+          echo "source=$SOURCE" >> $GITHUB_OUTPUT
 
       - uses: actions/setup-python@v5
         with:
@@ -70,7 +79,8 @@ jobs:
             CLAIM=$(awk '/^## 主な主張/{found=1; next} found && /^##/{exit} found{print}' "$file" | sed '/^$/d' | head -5)
             IMPLICATION=$(grep '^investment-implication:' "$file" | sed 's/investment-implication: *"\?\(.*\)"\?/\1/' | tr -d '"')
             SIGNAL=$(grep '^signal-strength:' "$file" | sed 's/signal-strength: *//')
-            BODY="${BODY}---\n📌 ${TITLE}\nシグナル強度: ${SIGNAL}\n\n【主な主張】\n${CLAIM}\n\n【投資含意】\n${IMPLICATION}\n\n"
+            URL=$(grep '^source:' "$file" | sed 's/source: *"\?\(.*\)"\?/\1/' | tr -d '"')
+            BODY="${BODY}---\n📌 ${TITLE}\nシグナル強度: ${SIGNAL}\n\n【主な主張】\n${CLAIM}\n\n【投資含意】\n${IMPLICATION}\n\n🔗 ${URL}\n\n"
           done
 
           {
@@ -87,7 +97,7 @@ jobs:
           secure: true
           username: ${{ secrets.GMAIL_USERNAME }}
           password: ${{ secrets.GMAIL_APP_PASSWORD }}
-          subject: "📥 Skill Graph ${{ steps.files.outputs.suffix }} ${{ steps.files.outputs.count }}件"
+          subject: "📥 [${{ steps.files.outputs.source }}] ${{ steps.files.outputs.suffix }} ${{ steps.files.outputs.count }}件"
           to: ${{ secrets.GMAIL_USERNAME }}
           from: Skill Graph Inbox <${{ secrets.GMAIL_USERNAME }}>
           body: ${{ steps.digest.outputs.body }}
