@@ -32,12 +32,12 @@ jobs:
             FILES=$(git diff --name-only HEAD~1 HEAD -- '00-Inbox/*.md' | grep -v README | tr '\n' ' ')
             SUFFIX="新着"
           fi
-          # ファイル名プレフィクスからソース名を判定
+          # ファイル名（YYYY-MM-DD-{prefix}-slug）からソース名を判定
           FIRST=$(echo $FILES | awk '{print $1}' | xargs -I{} basename {})
-          if echo "$FIRST" | grep -q '^tc-'; then SOURCE="TechCrunch"
-          elif echo "$FIRST" | grep -q '^tm-'; then SOURCE="Techmeme"
-          elif echo "$FIRST" | grep -q '^sn-'; then SOURCE="STAT News"
-          elif echo "$FIRST" | grep -q '^is-'; then SOURCE="IEEE Spectrum"
+          if echo "$FIRST" | grep -q -- '-tc-'; then SOURCE="TechCrunch"
+          elif echo "$FIRST" | grep -q -- '-tm-'; then SOURCE="Techmeme"
+          elif echo "$FIRST" | grep -q -- '-sn-'; then SOURCE="STAT News"
+          elif echo "$FIRST" | grep -q -- '-is-'; then SOURCE="IEEE Spectrum"
           else SOURCE="Skill Graph"
           fi
           echo "files=$FILES" >> $GITHUB_OUTPUT
