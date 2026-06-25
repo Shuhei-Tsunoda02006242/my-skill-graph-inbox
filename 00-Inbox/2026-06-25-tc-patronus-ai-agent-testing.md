@@ -1,28 +1,28 @@
 ---
-title: "Patronus AI lands $50M to build 'digital worlds' that stress-test AI agents"
+title: "Patronus AI、AI エージェントのストレステストを行う「デジタル世界」の構築に 5,000 万ドルを調達"
 date: 2026-06-25
 source: "https://techcrunch.com/2026/06/25/patronus-ai-lands-50m-to-build-digital-worlds-that-stress-test-ai-agents/"
 source-type: article
 domain: deeptech
 tech-tags: [AI]
 companies-mentioned: [Patronus AI, Greenfield Partners, Notable Capital, Lightspeed, Datadog, Samsung]
-investment-implication: "Patronus AI's 15x revenue growth and blue-chip investor syndicate reflect the emerging infrastructure layer needed to safely deploy autonomous AI agents at enterprise scale."
+investment-implication: "Patronus AI の 15 倍の収益成長と優良投資家シンジケートは、自律型 AI エージェントをエンタープライズ規模で安全に展開するために必要な新たなインフラストラクチャ層を反映しています。"
 signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-Patronus AI raised a $50M Series B to commercialize "Digital World Models" — large-scale simulation environments that replicate real websites and internal systems, allowing AI agents to be stress-tested and fine-tuned via reinforcement learning before production deployment.
+## 主な主張
+Patronus AI は、「デジタル ワールド モデル」を商品化するためにシリーズ B で 5,000 万ドルを調達しました。これは、実際の Web サイトや内部システムを複製する大規模なシミュレーション環境であり、実稼働展開前に AI エージェントのストレス テストと強化学習による微調整を可能にします。
 
-## Evidence / Context
-- $50M Series B led by Greenfield Partners; co-investors include Lightspeed, Datadog, Samsung, Notable Capital
-- Total funding: $70M; founded 2023 by ex-Meta AI researchers Anand Kannappan (CEO) and Rebecca Qian (CTO)
-- Revenue grew 15x year-over-year; works with "majority of leading frontier AI labs and hyperscalers"
-- Digital World Models create replica environments of customer digital infrastructure; agents are trained with RL — rewarding task success, penalizing errors
-- Positioned at the intersection of AI evaluation and agent training — a gap as agents move from demos to production
+## 根拠・背景
+- Greenfield Partners が主導するシリーズ B の 5,000 万ドル。共同投資家にはLightspeed、Datadog、Samsung、Notable Capitalが含まれる
+- 資金総額: 7,000 万ドル。元メタ AI 研究者のアナンド・カナッパン (CEO) とレベッカ・チェン (CTO) によって 2023 年に設立
+- 収益は前年比 15 倍に増加しました。 「主要なフロンティア AI ラボおよびハイパースケーラーの大多数」と連携
+- デジタル ワールド モデルは、顧客のデジタル インフラストラクチャのレプリカ環境を作成します。エージェントは RL でトレーニングされています - タスクの成功に報酬を与え、エラーにペナルティを与えます
+- AI 評価とエージェント トレーニングの交差点に位置 - エージェントがデモから本番環境に移行する際のギャップ
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
