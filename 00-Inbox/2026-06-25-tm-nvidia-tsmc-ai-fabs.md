@@ -1,28 +1,28 @@
 ---
-title: "NVIDIA and TSMC Bring AI Into Fabs to Advance Semiconductor Design and Manufacturing"
+title: "NVIDIA と TSMC がファブに AI を導入して半導体の設計と製造を推進"
 date: 2026-06-01
 source: "https://www.globenewswire.com/news-release/2026/06/01/3304000/0/en/NVIDIA-and-TSMC-Bring-AI-Into-Fabs-to-Advance-Semiconductor-Design-and-Manufacturing.html"
 source-type: article
 domain: deeptech
 tech-tags: [AI, semiconductor]
 companies-mentioned: [Nvidia, TSMC]
-investment-implication: "NVIDIA's AI tooling is embedding itself into TSMC fab operations, extending its software moat beyond GPUs into the manufacturing layer — making NVIDIA infrastructure harder to displace even for customers using non-NVIDIA chips."
+investment-implication: "NVIDIA の AI ツールは TSMC の工場運営に組み込まれており、ソフトウェアの堰を GPU を超えて製造層にまで拡張しており、NVIDIA 以外のチップを使用している顧客にとっても NVIDIA インフラストラクチャを置き換えることは困難になっています。"
 signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-Announced at NVIDIA GTC Taipei (June 1, 2026), NVIDIA and TSMC are deploying AI and accelerated computing across all major fab operations — computational lithography, defect inspection, process control, and transistor simulation — with cuLitho delivering 20–50% gains in cost effectiveness or cycle time versus CPU-based workflows.
+## 主な主張
+NVIDIA GTC Taipei (2026 年 6 月 1 日) で発表された、NVIDIA と TSMC は、計算リソグラフィー、欠陥検査、プロセス制御、トランジスタ シミュレーションなど、すべての主要なファブ業務に AI とアクセラレーション コンピューティングを導入しており、cuLitho は CPU ベースのワークフローと比較して費用対効果またはサイクル タイムで 20 ～ 50% の向上を実現します。
 
-## Evidence / Context
-- cuLitho (NVIDIA computational lithography) delivers 20–50% improvement in cost or cycle time vs. CPU-based lithography at TSMC fabs
-- NVIDIA Metropolis + TAO Toolkit powering automated defect inspection at nanometer scale, reducing repeated labeling and retraining overhead
-- TSMC exploring "FabTwin" — a virtual factory built with NVIDIA Omniverse to simulate layout and workflow changes before physical implementation
-- CUDA-X libraries and AI models also accelerating transistor simulation, advanced process control, and fab scheduling
-- Collaboration spans the full manufacturing stack, not just one workflow; positions NVIDIA as essential infrastructure inside advanced fabs
+## 根拠・背景
+- cuLitho (NVIDIA コンピュテーショナル リソグラフィー) は、TSMC ファブにおける CPU ベースのリソグラフィーと比較して、コストまたはサイクル タイムを 20 ～ 50% 改善します。
+- NVIDIA Metropolis + TAO Toolkit により、ナノメートルスケールでの自動欠陥検査が強化され、繰り返しのラベル付けと再トレーニングのオーバーヘッドが削減されます。
+- TSMC が「FabTwin」を検討中 - 物理的な実装前にレイアウトとワークフローの変更をシミュレートするために NVIDIA Omniverse で構築された仮想工場
+- CUDA-X ライブラリと AI モデルも、トランジスタ シミュレーション、高度なプロセス制御、ファブ スケジューリングを高速化します
+- コラボレーションは 1 つのワークフローだけでなく、製造スタック全体に及びます。 NVIDIA を先進的なファブ内の重要なインフラストラクチャとして位置付ける
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->

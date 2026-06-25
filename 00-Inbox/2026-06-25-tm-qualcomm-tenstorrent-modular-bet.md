@@ -1,29 +1,29 @@
 ---
-title: "Qualcomm Bets $14 Billion on Cracking Nvidia's AI Monopoly With RISC-V and an Open Compiler"
+title: "クアルコム、RISC-VとオープンコンパイラでNvidiaのAI独占を打破することに140億ドルを賭ける"
 date: 2026-06-24
 source: "https://www.techtimes.com/articles/319017/20260624/qualcomm-bets-14-billion-cracking-nvidias-ai-monopoly-risc-v-open-compiler.htm"
 source-type: article
 domain: deeptech
 tech-tags: [AI, semiconductor]
 companies-mentioned: [Qualcomm, Tenstorrent, Modular, Nvidia, Intel]
-investment-implication: "Qualcomm's two-pronged $14B bet on RISC-V silicon (Tenstorrent) plus a hardware-agnostic inference compiler (Modular) signals the most credible structural challenge yet to Nvidia's CUDA moat in the AI data center market."
+investment-implication: "クアルコムのRISC-Vシリコン（Tenstorrent）とハードウェアに依存しない推論コンパイラ（モジュラー）に対する140億ドルの二本立ての賭けは、AIデータセンター市場におけるNvidiaのCUDA堀に対するこれまでで最も信頼できる構造的課題を示唆している。"
 signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-At Qualcomm Investor Day (June 24, 2026), Qualcomm confirmed a ~$3.92B acquisition of Modular (open AI inference compiler) and disclosed ongoing talks to acquire Jim Keller's Tenstorrent for $8–10B — a combined $14B bet targeting Nvidia's AI hardware dominance from two sides simultaneously.
+## 主な主張
+クアルコム インベスター デイ (2026 年 6 月 24 日) で、クアルコムは、Modular (オープン AI 推論コンパイラー) の約 39 億 2000 万ドルの買収を確認し、ジム・ケラーの Tenstorrent を 80 億～100 億ドルで買収するための進行中の交渉を明らかにしました。これは、Nvidia の AI ハードウェアの優位性を 2 つの側から同時にターゲットにする合計 140 億ドルの賭けです。
 
-## Evidence / Context
-- Modular's MAX inference engine and Mojo programming language let developers run AI models across Nvidia, AMD, Intel, and Qualcomm chips without rewriting CUDA code
-- Tenstorrent designs RISC-V AI accelerators with open-source TT-Metalium software stack (MIT license), directly contrasting Nvidia's proprietary CUDA
-- Tenstorrent valuation tripled in ~12 months: $3.2B (2025 fundraise) → $8–10B (2026 reported talks); Intel has also expressed interest, creating competitive bidding dynamics
-- Qualcomm disclosed it expects to begin shipping custom silicon to a leading hyperscaler before end of 2026
-- Strategy targets Nvidia's dual moat: proprietary CUDA software stack + GPU hardware; Qualcomm attacks both simultaneously
-- Modular deal confirmed at Investor Day; Tenstorrent talks still unconfirmed and ongoing per Reuters
+## 根拠・背景
+- Modular の MAX 推論エンジンと Mojo プログラミング言語により、開発者は CUDA コードを書き換えることなく、Nvidia、AMD、Intel、Qualcomm チップ全体で AI モデルを実行できます。
+- Tenstorrent は、オープンソース TT-Metalium ソフトウェア スタック (MIT ライセンス) を使用して RISC-V AI アクセラレータを設計し、Nvidia 独自の CUDA とは直接対照的です。
+- Tenstorrentの評価額は約12か月で3倍：32億ドル（2025年の資金調達）→80億〜100億ドル（2026年の報告された交渉）。インテルも関心を示しており、競争入札のダイナミクスが生まれている
+- クアルコムは、2026年末までに大手ハイパースケーラーへのカスタムシリコンの出荷を開始する予定であることを明らかにした
+- 戦略は Nvidia の二重堀、つまり独自の CUDA ソフトウェア スタック + GPU ハードウェアをターゲットにしています。クアルコムは両方を同時に攻撃
+- インベスターデイでモジュラー取引が確認された。ロイター通信によると、Tenstorrentの交渉はまだ未確認で進行中
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
