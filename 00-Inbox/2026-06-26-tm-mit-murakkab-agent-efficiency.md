@@ -1,30 +1,30 @@
 ---
-title: "MIT and Microsoft introduce Murakkab to cut AI agent costs and energy use"
+title: "MIT とマイクロソフトが AI エージェントのコストとエネルギー使用量を削減するために Murakkab を導入"
 date: 2026-06-26
 source: "https://news.mit.edu/2026/improving-ai-agent-speed-and-energy-efficiency-0625"
 source-type: article
 domain: deeptech
 tech-tags: [AI]
 companies-mentioned: [MIT, Microsoft]
-investment-implication: "If Murakkab's ~4x cost and energy reductions commercialize via Azure, it substantially improves unit economics for enterprise AI agent deployments and favors cloud platforms over dedicated AI hardware."
+investment-implication: "Murakkab の約 4 倍のコストとエネルギー削減が Azure 経由で商用化されれば、エンタープライズ AI エージェントの導入のユニットエコノミクスが大幅に向上し、専用 AI ハードウェアよりもクラウド プラットフォームが優先されます。"
 signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-MIT and Microsoft researchers built Murakkab, an agentic workflow orchestration system that cuts compute to ~35%, energy to ~27%, and cost to under 25% of conventional methods — with less than 2% accuracy loss — by automatically composing optimal models and tools from a high-level developer intent description.
+## 主な主張
+MIT と Microsoft の研究者は、高レベルの開発者の意図の記述から最適なモデルとツールを自動的に構成することで、従来の方法に比べてコンピューティングを最大 35%、エネルギーを最大 27%、コストを 25% 未満に削減し、精度の損失は 2% 未満にする、エージェント型ワークフロー オーケストレーション システムである Murakkab を構築しました。
 
-## Evidence / Context
-- Uses only ~35% of computation required by comparable agentic orchestration methods
-- Consumes ~27% as much energy and runs for less than 25% of the cost
-- In one test: lowered energy by more than an order of magnitude with only ~2% accuracy drop
-- Benchmarked on diverse agentic workflows: video Q&A and code generation tasks
-- Developers describe desired workflow in high-level natural language; Murakkab auto-selects models and tools
-- Presented at OSDI 2026 (top-tier systems research venue)
-- Paper: "Murakkab: Resource-Efficient Agentic Workflow Orchestration in Cloud Platforms"
+## 根拠・背景
+- 同等のエージェントオーケストレーション方法で必要な計算量の最大 35% のみを使用
+- 最大 27% のエネルギーを消費し、コストの 25% 未満で稼働します
+- あるテストでは、わずか 2% 程度の精度低下でエネルギーが 1 桁以上減少しました
+- 多様なエージェント ワークフローのベンチマーク: ビデオ Q&A およびコード生成タスク
+- 開発者は、高レベルの自然言語で目的のワークフローを記述します。 Murakkab はモデルとツールを自動選択します
+- OSDI 2026 (トップレベルのシステム研究会場) で発表
+- 論文: 「Murakkab: クラウド プラットフォームにおけるリソース効率の高いエージェント ワークフロー オーケストレーション」
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
