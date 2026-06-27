@@ -38,6 +38,9 @@ jobs:
           elif echo "$FIRST" | grep -q -- '-tm-'; then SOURCE="Techmeme"
           elif echo "$FIRST" | grep -q -- '-sn-'; then SOURCE="STAT News"
           elif echo "$FIRST" | grep -q -- '-is-'; then SOURCE="IEEE Spectrum"
+          elif echo "$FIRST" | grep -q -- '-qcr-'; then SOURCE="Quantum Computing Report"
+          elif echo "$FIRST" | grep -q -- '-fb-'; then SOURCE="FierceBiotech"
+          elif echo "$FIRST" | grep -q -- '-ek-'; then SOURCE="Electrek"
           else SOURCE="Skill Graph"
           fi
           echo "files=$FILES" >> $GITHUB_OUTPUT
