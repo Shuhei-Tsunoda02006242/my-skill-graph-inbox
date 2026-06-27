@@ -1,28 +1,28 @@
 ---
-title: "Jeff Bezos's Prometheus raises $12B to build an 'artificial general engineer' for the physical world"
+title: "ジェフ・ベゾスのプロメテウス、物理世界用の「人工汎用エンジニア」を構築するために120億ドルを調達"
 date: 2026-06-27
 source: "https://techcrunch.com/2026/06/11/jeff-bezoss-prometheus-raises-12b-to-build-an-artificial-general-engineer-for-the-physical-world/"
 source-type: article
 domain: deeptech
 tech-tags: [AI]
 companies-mentioned: [Prometheus, JPMorgan Chase, Goldman Sachs, BlackRock, Verily]
-investment-implication: "At a $41B valuation, Prometheus represents the largest single bet on physical AI — automation of engineering design and manufacturing could disrupt aerospace, pharma, and industrials."
+investment-implication: "評価額 410 億ドルの Prometheus は、物理 AI に対する単一の最大の賭けを表しています。エンジニアリング設計と製造の自動化は、航空宇宙、製薬、産業に破壊的影響を与える可能性があります。"
 signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-Prometheus, co-founded by Jeff Bezos and former Verily co-founder Vik Bajaj, raised $12B at a $41B valuation to build an "artificial general engineer" — AI software that can autonomously design and manufacture complex physical systems such as jet engines and medical devices.
+## 主な主張
+ジェフ・ベゾスと元Verily共同創設者のヴィク・バジャージが共同設立したプロメテウスは、ジェットエンジンや医療機器などの複雑な物理システムを自律的に設計・製造できるAIソフトウェア「人工ジェネラルエンジニア」を構築するために、410億ドルの評価額で120億ドルを調達した。
 
-## Evidence / Context
-- $12B raise at $41B valuation (second round; first was $6.2B at launch)
-- Investors: Bezos personally, JPMorgan Chase, Goldman Sachs, BlackRock
-- ~150 employees across San Francisco, London, and Zurich
-- Scope: model designs, run simulations, plan manufacturing steps for complex physical objects
-- One of the most richly valued AI startups ever funded
+## 根拠・背景
+- 410億ドルの評価額で120億ドル調達（第2ラウンド、最初の立ち上げ時は62億ドル）
+- 投資家: ベゾス個人、JPモルガン・チェース、ゴールドマン・サックス、ブラックロック
+- サンフランシスコ、ロンドン、チューリッヒ全体で約 150 名の従業員
+- 範囲: モデル設計、シミュレーションの実行、複雑な物理オブジェクトの製造ステップの計画
+- これまでに資金提供された AI スタートアップの 1 つ
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->

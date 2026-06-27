@@ -1,27 +1,27 @@
 ---
-title: "Probably raises $9M to build a more reliable kind of AI"
+title: "おそらく、より信頼性の高い種類の AI を構築するために 900 万ドルを調達する"
 date: 2026-06-27
 source: "https://techcrunch.com/2026/06/16/probably-raises-9m-to-build-a-more-reliable-kind-of-ai/"
 source-type: article
 domain: deeptech
 tech-tags: [AI]
 companies-mentioned: [Probably, Andreessen Horowitz]
-investment-implication: "a16z-backed bet that AI reliability/error-prevention is the next infrastructure layer enterprises will pay for."
+investment-implication: "a16z は、AI の信頼性とエラー防止が企業が次に支払うインフラストラクチャ層であるという賭けを支援しています。"
 signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-Probably raised $9M in seed funding from Andreessen Horowitz to build a system that catches and eliminates AI errors before they reach users, targeting 99.99% accuracy comparable to deterministic software.
+## 主な主張
+おそらくアンドリーセン・ホロヴィッツからシード資金で900万ドルを調達し、AIエラーがユーザーに届く前に捕捉して除去するシステムを構築し、決定論的ソフトウェアに匹敵する99.99%の精度を目標としている。
 
-## Evidence / Context
-- $9M seed round led by Andreessen Horowitz
-- Founder Peter Elias: goal is to prevent hallucinations and factual errors from ever reaching the user
-- Target accuracy benchmark: 99.99% — common in deterministic systems, not yet achieved by LLMs
-- Hallucination remains a persistent problem even in the most capable frontier models
+## 根拠・背景
+- Andreessen Horowitz がリードする 900 万ドルのシードラウンド
+- 創設者ピーター・エリアス: 目標は、幻覚や事実誤認がユーザーに届かないようにすることです
+- 目標精度ベンチマーク: 99.99% — 決定論的システムでは一般的ですが、LLM ではまだ達成されていません
+- 幻覚は、最も高性能なフロンティアモデルであっても依然として根深い問題です
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
