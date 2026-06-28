@@ -1,30 +1,30 @@
 ---
-title: "Micron smashes estimates with $41.5B quarter, guides to $50B on AI memory surge"
+title: "マイクロン、四半期で 415 億ドルと予想を破り、AI メモリの急増で 500 億ドルの見込み"
 date: 2026-06-28
 source: "https://www.cnbc.com/2026/06/25/micron-stock-3q-earnings-memory.html"
 source-type: article
 domain: deeptech
 tech-tags: [AI, semiconductor]
 companies-mentioned: [Micron Technology]
-investment-implication: "Micron's HBM sold out through end of 2026 and Q4 guide of ~$50B signals that AI memory demand is compounding faster than consensus models, supporting sustained pricing power across the memory supply chain."
+investment-implication: "マイクロンの HBM は 2026 年末まで完売し、第 4 四半期ガイドの約 500 億ドルは、AI メモリの需要がコンセンサス モデルよりも急速に拡大しており、メモリ サプライ チェーン全体で持続的な価格決定力をサポートしていることを示しています。"
 signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-Micron posted a record $41.5B quarter (346% YoY revenue growth) and guided next quarter to ~$50B at midpoint — with high-bandwidth memory supply completely sold out through end of calendar 2026.
+## 主な主張
+マイクロンは、四半期で過去最高となる 415 億ドル (前年比 346% の収益成長) を記録し、次の四半期は中間時点で約 500 億ドルに達する見込みです。高帯域幅メモリの供給は 2026 年末まで完全に完売しました。
 
-## Evidence / Context
-- Q3 FY2026 revenue: ~$41.46B vs. analyst estimate of ~$36.28B — beat by $5.7B+
-- Non-GAAP EPS: $25.11, well above consensus
-- Q4 guidance midpoint: ~$50B, approximately $7B above prior estimates
-- Gross margin guidance for Q4: ~86%, indicating intensifying pricing power alongside volume
-- HBM supply: entirely sold out through end of calendar 2026
-- Stock surged ~15% after earnings, lifting other chip stocks (reported June 25)
-- Micron's market valuation surpassed Meta during the rally
+## 根拠・背景
+- 2026 年度第 3 四半期の売上高: ~414 億 6000 万ドル、アナリスト予想の ~362 億 8000 万ドルに対し、57 億ドル以上を上回りました
+- 非GAAP EPS: 25.11ドル、コンセンサスを大きく上回ります
+- 第 4 四半期ガイダンスの中間点: ~500 億ドル、以前の予想を約 70 億ドル上回ります
+- 第 4 四半期の粗利ガイダンス: ~86%、販売量とともに価格決定力も強化されていることを示しています
+- HBM 供給: 2026 年末までに完全に完売
+- 決算後に株価が最大15%上昇し、他の半導体株を押し上げた（6月25日報道）
+- マイクロンの市場評価額は上昇期間中にメタを上回った
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
