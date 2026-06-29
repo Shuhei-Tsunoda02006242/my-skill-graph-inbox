@@ -1,29 +1,29 @@
 ---
-title: "South Korea unveils $576 billion AI-chip investment powered by Samsung, SK Hynix"
+title: "韓国、サムスンとSKハイニックスによる5,760億ドルのAIチップ投資を発表"
 date: 2026-06-29
 source: "https://www.cnn.com/2026/06/29/business/south-korea-ai-investment-samsung-skhynix"
 source-type: article
 domain: deeptech
 tech-tags: [AI, semiconductor]
 companies-mentioned: [Samsung Electronics, SK Hynix]
-investment-implication: "Samsung and SK Hynix are locked in as the sovereign backbone of global HBM/DRAM supply, making them direct beneficiaries of any AI infrastructure buildout through the early 2030s."
+investment-implication: "Samsung と SK Hynix は世界的な HBM/DRAM 供給の主権的バックボーンとして固定されており、2030 年代初頭までの AI インフラストラクチャ構築の直接の受益者となっています。"
 signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-South Korea announced a national semiconductor and AI investment plan totaling over $576 billion, anchored by Samsung Electronics and SK Hynix building two new chip fabrication sites each in the country's southwest region — framing memory chips and physical AI as critical strategic infrastructure.
+## 主な主張
+韓国は、総額5,760億ドルを超える国家的な半導体およびAI投資計画を発表した。これは、サムスン電子とSKハイニックスがそれぞれ国の南西部にそれぞれ2つの新しいチップ製造拠点を建設し、メモリチップと物理AIを重要な戦略的インフラとして構築することを柱としている。
 
-## Evidence / Context
-- Samsung + SK Hynix committed 800 trillion won (~$518B) for four new fab sites in southwestern South Korea.
-- An additional 81 trillion won (~$52.5B) earmarked for a chip-packaging cluster in the Chungcheong area near Seoul.
-- Target: double DRAM output within five years via accelerated fab construction in the Seoul metropolitan area by the mid-2030s.
-- Broader national targets: 550 trillion won (~$357B) in AI data center investment by 2029; over 1,000 trillion won (~$648B) by 2035.
-- President Lee Jae Myung framed the initiative as a "great leap forward" centered on the "triple axis" of semiconductors, physical AI, and data centers.
-- HBM chips produced by Samsung and SK Hynix are described as pivotal to the global race for advanced AI systems.
+## 根拠・背景
+- Samsung + SK Hynix は、韓国南西部の 4 つの新しいファブサイトに 800 兆ウォン (約 5,180 億ドル) を投入しました。
+- ソウル近郊の忠清地域のチップパッケージングクラスターにさらに81兆ウォン（約525億ドル）が割り当てられる。
+- 目標: 2030年代半ばまでにソウル首都圏でファブ建設を加速し、5年以内にDRAM生産量を2倍にする。
+- より広範な国家目標: 2029 年までに AI データセンターへの投資を 550 兆ウォン (約 3,570 億ドル)。 2035年までに1,000兆ウォン（約6,480億ドル）を超える。
+- イ・ジェミョン大統領は、この取り組みを半導体、物理AI、データセンターの「三軸」を中心とした「大きな飛躍」と位置づけた。
+- Samsung と SK Hynix が製造する HBM チップは、高度な AI システムをめぐる世界的な競争にとって極めて重要であると言われています。
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->

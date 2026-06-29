@@ -1,30 +1,30 @@
 ---
-title: "Quantinuum raises $1.68 billion in Nasdaq IPO at $14B+ valuation"
+title: "Quantinuum、ナスダックIPOで評価額140億ドル以上で16億8000万ドルを調達"
 date: 2026-06-29
 source: "https://www.cnbc.com/2026/06/04/quantinuum-qnt-stock-first-trade-ipo.html"
 source-type: article
 domain: deeptech
 tech-tags: [quantum]
 companies-mentioned: [Quantinuum, Honeywell, IonQ]
-investment-implication: "Quantinuum's debut ($15.7B day-1 market cap on $31M revenue) sets a price-discovery benchmark for pure-play quantum hardware companies and signals institutional equity markets are willing to underwrite long-duration quantum bets ahead of fault-tolerant milestones."
+investment-implication: "Quantinuum のデビュー（収益 3,100 万ドルに対して初日時価総額 1,570 億ドル）は、純粋な量子ハードウェア企業の価格発見ベンチマークを設定し、機関株式市場がフォールトトレラントのマイルストーンに先立って長期の量子投資を引き受ける意欲があることを示しています。"
 signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-Honeywell-backed Quantinuum raised $1.68 billion in its Nasdaq IPO at $60 per share — above its initial $45–50 range — achieving a fully diluted valuation of ~$14.3B at pricing and closing its first trading day at a $15.7B market cap, making it the second-most valuable publicly traded quantum computing company.
+## 主な主張
+ハネウェルの支援を受けたクアンティナムは、ナスダックのIPOで1株当たり60ドル（当初の45～50ドルの範囲を上回る）で16億8000万ドルを調達し、価格設定で完全希薄化後約143億ドルの評価額を達成し、時価総額157億ドルで初日の取引を終え、上場量子コンピューティング企業としては2番目に価値の高い企業となった。
 
-## Evidence / Context
-- **IPO details:** 28 million Class A shares priced at $60 on June 3, 2026; ticker QNT on Nasdaq Global Select Market.
-- Initial target was 21M shares at $45–50 ($12.7B valuation); upsized due to oversubscription.
-- Day-1 close roughly flat; market cap settled at ~$15.7B.
-- **Revenue context:** $31M trailing revenue at IPO — implies ~500x price/revenue multiple.
-- IonQ remains the most valuable publicly traded quantum company at ~$27B market cap.
-- Quantinuum is the commercial spin-out of Honeywell's quantum business, focused on trapped-ion hardware and quantum software.
-- Raised $1.68B in proceeds, giving it a substantial cash runway to pursue fault-tolerant qubit development.
+## 根拠・背景
+- **IPO の詳細:** クラス A 株 2,800 万株の価格は 2026 年 6 月 3 日に 60 ドル。ナスダック・グローバル・セレクト・マーケットのティッカーQNT。
+- 当初の目標は 45 ～ 50 ドルで 2,100 万株 (評価額 1,270 億ドル) でした。オーバーサブスクリプションのためサイズが大きくなりました。
+- 初日はほぼ横ばいで終了。時価総額は約157億ドルに落ち着きました。
+- **収益の状況:** IPO 時の最終収益は 3,100 万ドル — 価格と収益の倍率が約 500 倍であることを意味します。
+- IonQ は、時価総額約 270 億ドルで、依然として最も価値のある上場量子企業です。
+- Quantinuum は、ハネウェルの量子ビジネスから商業的にスピンアウトしたもので、トラップ イオン ハードウェアと量子ソフトウェアに重点を置いています。
+- 16億8,000万ドルの収益を調達し、フォールトトレラントな量子ビット開発を追求するための相当な現金の滑走路を確保しました。
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
