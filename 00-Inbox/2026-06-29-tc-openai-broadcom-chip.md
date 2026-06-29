@@ -1,29 +1,29 @@
 ---
-title: "OpenAI unveils its first custom chip, built by Broadcom"
+title: "OpenAI、Broadcom が開発した初のカスタム チップを発表"
 date: 2026-06-29
 source: "https://techcrunch.com/2026/06/24/openai-unveils-its-first-custom-chip-built-by-broadcom/"
 source-type: article
 domain: deeptech
 tech-tags: [AI, semiconductor]
 companies-mentioned: [OpenAI, Broadcom, Microsoft, Nvidia]
-investment-implication: "Jalapeño's claimed 50% cost saving over GPUs and a 9-month design cycle (aided by AI) signals custom ASIC displacement of Nvidia's dominance is accelerating; Broadcom gains a major hyperscaler customer."
+investment-implication: "Jalapeño 氏は、GPU に比べて 50% のコスト削減と 9 か月の設計サイクル (AI の支援による) を主張しており、カスタム ASIC による Nvidia の優位性の置き換えが加速していることを示しています。 Broadcom は、ハイパースケーラーの大手顧客を獲得しました。"
 signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-OpenAI and Broadcom unveiled "Jalapeño," OpenAI's first custom AI inference chip, designed end-to-end in just nine months with AI assistance — potentially the fastest ASIC development cycle ever achieved in high-performance semiconductors.
+## 主な主張
+OpenAI と Broadcom は、OpenAI の最初のカスタム AI 推論チップである「Jalapeño」を発表しました。これは、AI 支援によりわずか 9 か月でエンドツーエンドで設計され、これまで高性能半導体で達成された最速の ASIC 開発サイクルとなる可能性があります。
 
-## Evidence / Context
-- Chip name: Jalapeño; purpose: inference (running deployed AI models for ChatGPT and other products)
-- 9-month design-to-tape-out timeline, aided by OpenAI's own models — claimed fastest ASIC cycle in high-performance semiconductors
-- Broadcom CEO Hock Tan: early testing shows ~50% cost savings versus standard AI GPUs
-- Target deployment: by end of 2026, with scale-up "in the years ahead"
-- Partnership goal: gigawatt-scale data centers with Microsoft and other partners starting 2026
-- Follows similar moves by Google, Apple, and SpaceX to reduce single-supplier (Nvidia) dependency
+## 根拠・背景
+- チップ名: ハラペーニョ;目的: 推論 (ChatGPT およびその他の製品用にデプロイされた AI モデルを実行する)
+- OpenAI 独自のモデルを活用した、設計からテープアウトまでの 9 か月のタイムライン - 高性能半導体で最速の ASIC サイクルを実現
+- Broadcom CEO ホック・タン氏: 初期のテストでは、標準の AI GPU と比較して最大 50% のコスト削減が示されました
+- 導入目標：2026年末まで、「数年以内に」規模拡大
+- パートナーシップの目標: 2026 年以降に Microsoft およびその他のパートナーとギガワット規模のデータセンターを構築
+- 単一サプライヤー (Nvidia) への依存を減らすために、Google、Apple、SpaceX による同様の動きに追随
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
