@@ -1,28 +1,28 @@
 ---
-title: "The DeepMind trio who built a poker AI are now making money for quant hedge funds"
+title: "ポーカー AI を開発した DeepMind のトリオは現在、クオンツ ヘッジファンドで儲けています"
 date: 2026-06-30
 source: "https://techcrunch.com/2026/06/30/the-deepmind-trio-who-built-a-poker-ai-are-now-making-money-for-quant-hedge-funds/"
 source-type: article
 domain: deeptech
 tech-tags: [AI]
 companies-mentioned: [EquiLibre Technologies, DeepMind, Tower Research Capital, Creandum]
-investment-implication: "EquiLibre Technologies' $500M Series A (led by Creandum) signals strong institutional appetite for RL-based quant trading AI spun out of frontier research labs."
+investment-implication: "EquiLibre Technologies の 5 億ドルのシリーズ A (Creandum 主導) は、フロンティア研究所からスピンアウトされた RL ベースのクオンツ取引 AI に対する機関の強い意欲を示しています。"
 signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-Three former DeepMind researchers who created DeepStack — the first AI to defeat professional poker players — have applied the same reinforcement learning techniques to quantitative trading, founding EquiLibre Technologies, now valued at $500M after a Series A.
+## 主な主張
+プロのポーカープレイヤーを破った最初のAIであるDeepStackを開発した元DeepMindの研究者3人は、同じ強化学習技術をクオンツトレーディングに応用し、シリーズA終了後に現在5億ドルの価値があるEquiLibre Technologiesを設立した。
 
-## Evidence / Context
-- Founders: Martin Schmid (CEO), Rudolf Kadlec (CTO), Matej Moravcik (CSO); built DeepStack at DeepMind
-- Series A led by Creandum — described as the largest single investment the firm has ever made
-- EquiLibre is Prague-based; agreed an exclusive deal with New York proprietary trading firm Tower Research Capital
-- Common denominator between poker and trading: both are well-suited to reinforcement learning, where models are incentivized by reward signals
-- Tower Research Capital is a high-frequency market maker that sources signals from multiple independent quant teams
+## 根拠・背景
+- 創設者: Martin Schmid (CEO)、Rudolf Kadlec (CTO)、Matej Moravcik (CSO)。 DeepMind で DeepStack を構築
+- Creandum が主導するシリーズ A — 同社がこれまでに行った単一の投資としては最大規模と言われています
+- EquiLibre はプラハに拠点を置いています。ニューヨークの私設商社タワー・リサーチ・キャピタルと独占契約に合意
+- ポーカーとトレーディングの共通点: どちらも強化学習に適しており、モデルは報酬シグナルによってインセンティブが与えられます。
+- Tower Research Capital は、複数の独立したクオンツ チームからシグナルを供給する高頻度マーケット メーカーです。
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
