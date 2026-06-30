@@ -1,28 +1,28 @@
 ---
-title: "Tenstorrent CEO Denies Qualcomm Acquisition Talks Amid Focus on AI Development"
+title: "Tenstorrent CEO、AI開発に注力する中クアルコム買収交渉を否定"
 date: 2026-06-30
 source: "https://www.gurufocus.com/news/8938157/tenstorrent-ceo-denies-qualcomm-acquisition-talks-amid-focus-on-ai-development"
 source-type: article
 domain: deeptech
 tech-tags: [AI, semiconductor]
 companies-mentioned: [Tenstorrent, Qualcomm, NVIDIA]
-investment-implication: "Tenstorrent remains an independent, high-valuation RISC-V AI chip play; the denial keeps an $8-10B acquisition premium off the table but signals confidence in a standalone path."
+investment-implication: "Tenstorrent は依然として独立系で評価の高い RISC-V AI チップの事業者です。この拒否により、80億～100億ドルの買収プレミアムは回避されるが、独立した道への信頼を示している。"
 signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-Jim Keller, CEO of Tenstorrent, publicly denied that his company is in acquisition talks with Qualcomm, contradicting mid-June reports from The Information and Reuters that pegged a potential deal at $8–10 billion.
+## 主な主張
+TenstorrentのCEOであるJim Keller氏は、同社がQualcommと買収交渉を行っていることを公に否定し、潜在的な取引額を80億～100億ドルとしているThe InformationとReutersの6月中旬の報道とは矛盾している。
 
-## Evidence / Context
-- The Information (June 15) and Reuters independently reported advanced acquisition negotiations valuing Tenstorrent at $8–10B; QCOM stock jumped over 4% on the news.
-- Keller spoke at a media event in Tokyo on June 30 to issue the denial, saying the company is focused on building its own business including IP operations and high-end scalable AI work in Japan and other markets.
-- Tenstorrent's implied valuation tripled in roughly one year leading up to the rumor, reflecting investor appetite for RISC-V AI chip alternatives to NVIDIA.
-- Keller left the door open to partnerships, saying Tenstorrent talks with "many companies in strategic areas" and that interest in big deals across the sector has increased.
-- Qualcomm separately announced a $14B bet on RISC-V and open compiler infrastructure (June 24) to challenge NVIDIA's AI monopoly.
+## 根拠・背景
+- The Information (6 月 15 日) と Reuters は、Tenstorrent を 80 ～ 100 億ドルと評価する高度な買収交渉を独自に報告しました。このニュースを受けてＱＣＯＭ株は４％超急騰した。
+- ケラー氏は6月30日に東京で行われたメディアイベントでこの否定を発表し、同社は日本やその他の市場での知財運用やハイエンドのスケーラブルなAI事業を含む独自のビジネスの構築に注力していると述べた。
+- Tenstorrent の暗黙の評価額は、NVIDIA に代わる RISC-V AI チップに対する投資家の需要を反映して、この噂に至るまでの約 1 年間で 3 倍になりました。
+- ケラー氏は、Tenstorrentが「戦略的分野の多くの企業」と交渉しており、セクター全体にわたる大型取引への関心が高まっていると述べ、パートナーシップへの扉を開いたままにした。
+- クアルコムは、NVIDIA の AI 独占に対抗するために、RISC-V とオープン コンパイラ インフラストラクチャに 140 億ドルを賭けると別途発表しました (6 月 24 日)。
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
