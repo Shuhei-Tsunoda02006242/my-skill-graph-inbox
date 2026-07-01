@@ -1,28 +1,28 @@
 ---
-title: "Neocloud Together AI raises $800M, leaps to $8.3B valuation"
+title: "Neocloud Together AI が 8 億ドルを調達、評価額は 83 億ドルに急上昇"
 date: 2026-07-01
 source: "https://techcrunch.com/2026/07/01/neocloud-together-ai-raises-800m-leaps-to-8-3b-valuation/"
 source-type: article
 domain: deeptech
 tech-tags: [AI]
 companies-mentioned: [Together AI, Aramco Ventures, Vista Equity Partners, General Catalyst, Emergence Capital, Nvidia, March Capital, Pegatron, SentinelOne, Cursor, Cognition, Decagon]
-investment-implication: "Together AI's $800M Series C at $8.3B valuation — with $1.15B in annual bookings and 500MW compute capacity secured — validates open-source AI neocloud as a high-margin infrastructure category independent of the hyperscalers."
+investment-implication: "AI の 8 億ドルのシリーズ C と 83 億ドルの評価額を合わせると、年間予約額 11 億 5,000 万ドルと 500MW のコンピューティング容量が確保されており、オープンソース AI ネオクラウドがハイパースケーラーから独立した利益率の高いインフラストラクチャ カテゴリであることが証明されています。"
 signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-Together AI, an open-source AI neocloud renting Nvidia GPU clusters and other AI infrastructure, raised an $800M Series C at an $8.3B valuation — more than doubling its $3.3B valuation from 16 months prior.
+## 主な主張
+Nvidia GPU クラスターやその他の AI インフラストラクチャをレンタルするオープンソースの AI ネオクラウドである Together AI は、83 億ドルの評価額でシリーズ C で 8 億ドルを調達しました。これは、16 か月前の評価額 33 億ドルの 2 倍以上です。
 
-## Evidence / Context
-- Round led by Aramco Ventures; participants include Vista Equity Partners, General Catalyst, Emergence Capital, Nvidia, March Capital, Pegatron, SentinelOne's S Ventures
-- Annual bookings crossed $1.15B last quarter
-- Thousands of paying customers including Cursor, Cognition, and Decagon
-- Secured commitments for over 500 megawatts of compute capacity from investors
-- Previous raise: $305M Series B at $3.3B valuation ~16 months ago
+## 根拠・背景
+- アラムコ・ベンチャーズが主導するラウンド。参加者には、Vista Equity Partners、General Catalyst、Emergence Capital、Nvidia、March Capital、Pegatron、SentinelOne's S Ventures が含まれます
+- 前四半期の年間予約額は 11 億 5000 万ドルを超えました
+- Cursor、Cognition、Decagon を含む数千の有料顧客
+- 投資家からの 500 メガワットを超えるコンピューティング能力の確保されたコミットメント
+- 前回の調達額: 約 16 か月前の評価額 33 億ドルでシリーズ B 3 億 500 万ドル
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
