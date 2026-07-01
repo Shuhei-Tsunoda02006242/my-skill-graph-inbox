@@ -1,30 +1,30 @@
 ---
-title: "STMicroelectronics unveils world's first ST54M secure mobile chip with post-quantum cryptography"
+title: "STマイクロエレクトロニクス、ポスト量子暗号を搭載した世界初のST54Mセキュアモバイルチップを発表"
 date: 2026-07-01
 source: "https://www.globenewswire.com/news-release/2026/06/24/3316591/0/en/stmicroelectronics-unveils-world-s-first-st54m-secure-mobile-chip-with-post-quantum-cryptography-for-next-generation-connected-services.html"
 source-type: article
 domain: deeptech
 tech-tags: [semiconductor, quantum]
 companies-mentioned: [STMicroelectronics]
-investment-implication: "First PQC-hardened mobile chip entering volume production this month positions STMicroelectronics for design-win cycles ahead of the 2031 US federal PQC mandate; smartphone OEMs must roadmap quantum-resistant security into 2027–2028 device generations now."
+investment-implication: "今月、初の PQC 強化モバイルチップが量産に入り、STMicroelectronics は 2031 年の米国連邦 PQC 義務化に先駆けて設計勝利サイクルを推進します。スマートフォン OEM は、今すぐ、量子耐性セキュリティを 2027 ～ 2028 年のデバイス世代にロードマップする必要があります。"
 signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-STMicroelectronics has launched the ST54M — the world's first monolithic mobile chip integrating NFC controller, secure element, and eSIM with a dedicated hardware accelerator for post-quantum cryptography (PQC) algorithms ML-KEM and ML-DSA. Full volume production begins July 2026.
+## 主な主張
+STマイクロエレクトロニクスは、NFCコントローラ、セキュアエレメント、eSIMとポスト量子暗号（PQC）アルゴリズムML-KEMおよびML-DSA専用のハードウェアアクセラレータを統合した世界初のモノリシックモバイルチップであるST54Mを発売しました。量産は 2026 年 7 月に開始されます。
 
-## Evidence / Context
-- Single-die design: NFC + Secure Element + eSIM + PQC accelerator on one chip (previous generation required separate dies)
-- Supported PQC algorithms: ML-KEM (key encapsulation) and ML-DSA (digital signatures) — both NIST-standardized in 2024
-- Certification: Completed Common Criteria 2022 EUCC and EMVCo evaluation testing
-- Timeline: Announced June 24; commercial sampling now; volume production July 2026
-- Use cases: contactless payments, transit ticketing, digital identity, eSIM, digital car keys
-- Targets 2030 industry-wide security standards; aligns with 2031 US federal PQC mandate
-- Context: NIST PQC standards finalized Aug 2024; governments mandating migration by 2030–2031; mobile devices are a major attack surface for harvest-now-decrypt-later quantum threats
+## 根拠・背景
+- シングルダイ設計: 1 チップ上の NFC + セキュア エレメント + eSIM + PQC アクセラレータ (前世代では個別のダイが必要でした)
+- サポートされている PQC アルゴリズム: ML-KEM (キーのカプセル化) および ML-DSA (デジタル署名) — どちらも 2024 年に NIST で標準化
+- 認証: Common Criteria 2022 EUCC および EMVCo 評価テストを完了
+- スケジュール: 6 月 24 日に発表。現在商用サンプリング中。量産 2026 年 7 月
+- 使用例: 非接触型決済、交通機関の発券、デジタル ID、eSIM、車のデジタルキー
+- 2030 年の業界全体のセキュリティ標準をターゲットにします。 2031 年の米国連邦 PQC 指令に準拠
+- 背景: NIST PQC 規格が 2024 年 8 月に最終決定。政府は2030年から2031年までに移住を義務付ける。モバイル デバイスは、「収穫してすぐに復号化して後で暗号化する」という量子脅威の主要な攻撃対象領域です。
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
