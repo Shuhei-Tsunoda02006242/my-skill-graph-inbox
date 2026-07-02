@@ -1,29 +1,29 @@
 ---
-title: "Sandia and Quantinuum Report High-Fidelity Results from 98-Qubit Helios Quantum System"
+title: "Sandia と Quantinuum が 98 量子ビット Helios 量子システムからの高忠実度の結果を報告"
 date: 2026-07-02
 source: "https://www.hpcwire.com/off-the-wire/sandia-and-quantinuum-report-high-fidelity-results-from-98-qubit-helios-quantum-system/"
 source-type: article
 domain: deeptech
 tech-tags: [quantum]
 companies-mentioned: [Quantinuum, Sandia National Laboratories, Honeywell]
-investment-implication: "Helios is the first commercially-launched quantum computer with error-corrected logical qubits outperforming their physical counterparts, a key fault-tolerance milestone that validates Quantinuum's $10B valuation and accelerates the quantum advantage timeline."
+investment-implication: "Helios は、物理量子ビットを上回るエラー訂正論理量子ビットを備えた初めて商用化された量子コンピューターであり、Quantinuum の 100 億ドルの評価を検証し、量子優位性のタイムラインを加速する重要なフォールトトレランスのマイルストーンです。"
 signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-Quantinuum's Helios—a 98-qubit trapped-ion system jointly validated with Sandia National Laboratories—is the world's most accurate quantum computer, and was the first to perform meaningful computations using fully error-corrected logical qubits that beat their underlying physical qubits in error rate.
+## 主な主張
+サンディア国立研究所と共同検証された Quantinuum の 98 量子ビット トラップ イオン システムである Quantinuum の Helios は、世界で最も正確な量子コンピュータであり、基礎となる物理量子ビットを誤り率で上回る、完全に誤り訂正された論理量子ビットを使用して意味のある計算を初めて実行しました。
 
-## Evidence / Context
-- **98 fully connected physical qubits** using barium ions in a QCCD (quantum charge-coupled device) architecture; all-to-all qubit connectivity.
-- Single-qubit gate fidelity: **99.9975%** (error rate ~2.5 in 100,000); two-qubit gate fidelity: **99.921%** (error rate ~7.9 in 10,000).
-- 98 physical qubits encoded into **48 fully error-corrected logical qubits** (48 pairs + 2 spare); logical qubit error rates beat physical qubit error rates—a first for a commercial system.
-- Results published in *Nature* (June 2026); Helios commercially launched late 2025.
-- Quantinuum raised $600M at a $10B pre-money valuation; NVIDIA (via Honeywell) invested.
-- First application: exploring questions in materials science and magnetism using logical qubits.
+## 根拠・背景
+- **98 個の完全に接続された物理量子ビット**、QCCD (量子電荷結合デバイス) アーキテクチャでバリウム イオンを使用。全対全量子ビット接続。
+- シングル量子ビットゲートの忠実度: **99.9975%** (エラー率 ~2.5/100,000); 2 量子ビットのゲート忠実度: **99.921%** (エラー率 ~7.9/10,000)。
+- 98 個の物理量子ビットを **48 個の完全に誤り訂正された論理量子ビット** (48 ペア + 2 個のスペア) にエンコード。論理量子ビットの誤り率が物理量子ビットの誤り率を上回り、これは商用システムとしては初めてのことです。
+- 結果は *Nature* に掲載 (2026 年 6 月); Helios は 2025 年後半に商業的に発売されました。
+- Quantinuum は 100 億ドルのプレマネー評価で 6 億ドルを調達しました。 NVIDIA (ハネウェル経由) が出資。
+- 最初のアプリケーション: 論理量子ビットを使用して材料科学と磁気学における疑問を探求します。
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->

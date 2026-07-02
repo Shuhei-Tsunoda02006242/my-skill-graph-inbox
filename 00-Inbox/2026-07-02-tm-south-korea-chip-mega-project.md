@@ -1,29 +1,29 @@
 ---
-title: "South Korea Unveils $576B National Semiconductor and AI Initiative; Samsung and SK Hynix Commit $518B to New Fabs"
+title: "韓国、5,760億ドル規模の国家半導体およびAIイニシアチブを発表。サムスンとSKハイニックス、新しいファブに5,180億ドルをコミット"
 date: 2026-07-02
 source: "https://www.bloomberg.com/news/articles/2026-06-28/samsung-sk-reportedly-to-invest-1-3-trillion-over-10-years"
 source-type: article
 domain: deeptech
 tech-tags: [semiconductor, AI]
 companies-mentioned: [Samsung, SK Hynix]
-investment-implication: "The largest-ever national semiconductor capex commitment—$518B in new HBM and logic fabs anchored by Samsung and SK Hynix—is structurally bullish for semiconductor equipment makers (ASML, Applied Materials, Lam Research) and HBM supply chains."
+investment-implication: "サムスンとSKハイニックスが主導する新しいHBMとロジックファブに5180億ドルを投じる史上最大の国家半導体設備投資は、半導体装置メーカー（ASML、アプライドマテリアルズ、ラムリサーチ）とHBMサプライチェーンにとって構造的に強気だ。"
 signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-South Korea's President Lee Jae-myung unveiled a 911 trillion won (~$576B) national semiconductor and AI initiative on June 29, 2026, with Samsung and SK Hynix each committing ~400 trillion won ($260B) to build two new chip fabs apiece, forming the largest public-private semiconductor investment ever announced.
+## 主な主張
+韓国のイ・ジェミョン大統領は、2026年6月29日に911兆ウォン（約5,760億ドル）規模の国家半導体・AI構想を発表し、サムスンとSKハイニックスはそれぞれ約400兆ウォン（約2,600億ドル）を投じて新たなチップファブを2つずつ建設し、これまで発表された中で最大の官民半導体投資となった。
 
-## Evidence / Context
-- Total initiative: **911 trillion won (~$576B)**; Samsung + SK Hynix fab commitment: **800 trillion won (~$518B)**.
-- Each company will build **two new fabrication plants** in South Korea's southwest (Gwangju area); additional 81 trillion won for a chip packaging cluster near Seoul.
-- Government co-investing: Gwangju and South Jeolla province to add 5–20 trillion won.
-- Separate **550 trillion won** earmarked for AI data center investments by 2029.
-- Fabs targeted for completion in the **mid-2030s**; initiative framed around "triple axis" of semiconductors, physical AI, and data centres.
-- Market reaction: Samsung shares fell 4.8%; SK Hynix fell 1.6% at close, likely on execution and financing concerns.
+## 根拠・背景
+- 総イニシアチブ: **911 兆ウォン (約 5,760 億ドル)**; Samsung + SK Hynix ファブへのコミットメント: **800 兆ウォン (約 5,180 億ドル)**。
+- 各社は韓国南西部（光州地域）に**2つの新しい製造工場**を建設する。ソウル近郊のチップパッケージングクラスターにさらに81兆ウォン。
+- 政府共同出資：光州と全羅南道が5～20兆ウォンを追加。
+- 2029 年までに別途 **550 兆ウォン**が AI データセンターへの投資に割り当てられます。
+- **2030年代半ば**の完成を目指すファブ。半導体、物理AI、データセンターの「3軸」を軸とした取り組み。
+- 市場の反応: サムスン株は4.8%下落。 SKハイニックスは、おそらく執行と資金調達の懸念から、終値で1.6％下落した。
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
