@@ -1,28 +1,28 @@
 ---
-title: "Anthropic is discussing a new custom chip with Samsung"
+title: "Anthropicはサムスンと新しいカスタムチップについて話し合っている"
 date: 2026-07-03
 source: "https://techcrunch.com/2026/07/02/anthropic-is-discussing-a-new-custom-chip-with-samsung/"
 source-type: article
 domain: deeptech
 tech-tags: [AI, semiconductor]
 companies-mentioned: [Anthropic, Samsung, OpenAI, Broadcom, Google, Amazon, Nvidia]
-investment-implication: "Anthropic entering custom silicon talks signals that every major frontier lab is moving toward vertical integration of chip design to reduce Nvidia dependence and control inference unit economics."
+investment-implication: "人間がカスタム シリコンに参入するという話は、すべての主要なフロンティア研究所が Nvidia への依存を減らし、推論ユニット エコノミクスを制御するためにチップ設計の垂直統合に向けて動いていることを示しています。"
 signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-Anthropic is in early-stage talks with Samsung to manufacture its first custom AI chip, likely triggered by OpenAI's Jalapeño chip announcement with Broadcom the week prior. The chip's workload, target specs, and server integration are all still undecided.
+## 主な主張
+Anthropic は、同社初のカスタム AI チップの製造に向けて Samsung と初期段階の交渉を行っており、これはおそらくその前の週に OpenAI が Broadcom と発表した Jalapeño チップの発表が引き金となったものと思われる。チップのワークロード、ターゲット仕様、サーバー統合などはすべてまだ決まっていない。
 
-## Evidence / Context
-- Talks reported by The Information (July 2, 2026); Anthropic confirmed only that a "diversified hardware stack" including Google, Amazon, and Nvidia chips remains core to its compute strategy
-- Anthropic recently hired Clive Chan, previously an engineer on OpenAI's custom silicon project — a concrete signal the effort has moved past pure exploration
-- Samsung's 2nm SF2P process and in-house HBM memory production make it a credible manufacturing partner
-- OpenAI unveiled Jalapeño (Broadcom-built inference ASIC) on June 24, 2026, in a nine-month development cycle — the competitive trigger for Anthropic's move
-- Pattern: Meta (MTIA), Google (TPU), Microsoft (Athena/Maia), OpenAI (Jalapeño), Amazon (Trainium/Inferentia) have all now committed to custom silicon; Anthropic would be the last major frontier lab to follow
+## 根拠・背景
+- The Information によって報告された会談 (2026 年 7 月 2 日)。 Anthropic は、Google、Amazon、Nvidia チップを含む「多様なハードウェア スタック」がコンピューティング戦略の中核であり続けることだけを認めた
+- Anthropic は最近、以前 OpenAI のカスタム シリコン プロジェクトのエンジニアだった Clive Chan を雇用しました。これは、取り組みが純粋な探求を超えた具体的な兆候です。
+- Samsung の 2nm SF2P プロセスと社内 HBM メモリ生産により、信頼できる製造パートナーとなっています
+- OpenAI は、2026 年 6 月 24 日に、9 か月の開発サイクルで Jalapeño (Broadcom が構築した推論 ASIC) を発表しました。これが Anthropic の動きの競争上のきっかけとなりました。
+- パターン: Meta (MTIA)、Google (TPU)、Microsoft (Athena/Maia)、OpenAI (Jalapeño)、Amazon (Trainium/Inferentia) はすべてカスタム シリコンに取り組んでいます。 Anthropic は後に続く最後の主要なフロンティア研究室となるだろう
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
