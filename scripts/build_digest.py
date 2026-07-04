@@ -60,6 +60,22 @@ def parse_note(path: str) -> dict:
     }
 
 
+def load_claude_commentary() -> dict[str, str]:
+    """キャプチャループ（Claude）が書いた本日の批評コメントをソース別に読む。"""
+    today = datetime.now(JST).strftime("%Y-%m-%d")
+    path = f"digests/{today}-commentary.md"
+    if not os.path.isfile(path):
+        return {}
+    text = open(path).read()
+    result = {}
+    for m in re.finditer(r"^## (.+?)\s*\n(.*?)(?=^## |\Z)",
+                         text, re.MULTILINE | re.DOTALL):
+        body = m.group(2).strip()
+        if body:
+            result[m.group(1).strip()] = body
+    return result
+
+
 def gemini_commentary(source_name: str, articles: list[dict]) -> str:
     """ソース単位の批評コメントを生成。失敗したら空文字（メール送信は止めない）。"""
     key = os.environ.get("GEMINI_API_KEY", "")
@@ -109,6 +125,8 @@ def main() -> None:
         if matched:
             groups[name] = matched
 
+    claude_comments = load_claude_commentary()
+
     today = datetime.now(JST).strftime("%Y-%m-%d")
     subject = (
         f"📥 [Skill Graph] デイリーダイジェスト {today}"
@@ -136,9 +154,13 @@ def main() -> None:
             if a["my_take"]:
                 lines += ["", "【My Take】", a["my_take"]]
             lines += [f"🔗 {a['url']}", ""]
-        commentary = gemini_commentary(source_name, articles)
+        commentary = claude_comments.get(source_name)
         if commentary:
-            lines += ["🗒 批評コメント（AI生成）:", commentary, ""]
+            lines += ["🗒 批評コメント（Claude）:", commentary, ""]
+        else:
+            commentary = gemini_commentary(source_name, articles)
+            if commentary:
+                lines += ["🗒 批評コメント（Gemini生成）:", commentary, ""]
 
     with open("digest_body.txt", "w") as f:
         f.write("\n".join(lines) + "\n")

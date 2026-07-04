@@ -58,6 +58,16 @@ for prefix in tc tm sn is qcr fb ek; do
   COMMITTED=1
 done
 
+# 批評コメント（digests/）も未コミットなら拾う
+COMMENTARY="digests/${TODAY}-commentary.md"
+if [ -f "$COMMENTARY" ] && [ -n "$(git status --porcelain "$COMMENTARY")" ]; then
+  git add "$COMMENTARY"
+  GIT_AUTHOR_NAME="Claude" GIT_AUTHOR_EMAIL="noreply@anthropic.com" \
+    git commit --quiet -m "daily: digest commentary ${TODAY}" >> "$LOG_FILE" 2>&1
+  echo "fallback commit: digest commentary" >> "$LOG_FILE"
+  COMMITTED=1
+fi
+
 if [ "$COMMITTED" = "1" ]; then
   git push origin main >> "$LOG_FILE" 2>&1 \
     || { git pull --rebase --quiet origin main >> "$LOG_FILE" 2>&1 && git push origin main >> "$LOG_FILE" 2>&1; } \

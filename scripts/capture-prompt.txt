@@ -1,0 +1,15 @@
+デイリーキャプチャループを実行してください。作業ディレクトリ: /Users/rena/projects/My-Skill-Graph-Inbox/
+
+手順:
+1. CLAUDE.md を読んで最新のキャプチャ対象ソースとルールを確認する
+2. CLAUDE.md のソーステーブルに記載された全ソースから、本日の注目記事を最大3件ずつ取得する（現在: tc- tm- sn- is- qcr- fb- ek-）
+3. CLAUDE.md のフォーマット（frontmatter + 本文）に従い、日本語で 00-Inbox/YYYY-MM-DD-{prefix}-{slug}.md ファイルを作成する
+4. 批評コメント作成: 本日日付の 00-Inbox ノート全件（クラウド側が先にキャプチャ済みの分も含む）をソース別にまとめ、digests/YYYY-MM-DD-commentary.md を作成する
+   - フォーマット: ソースごとに「## {ソース正式名}」見出し（例: ## TechCrunch、## Quantum Computing Report）+ 批評本文3〜5文
+   - 観点: (1) 誇張・ハイプの可能性 (2) 記事に欠けている文脈 (3) 投資家として注意すべき点 (4) 記事間に共通するトレンド
+   - このファイルは翌朝のダイジェストメールにそのまま掲載される
+5. git add → コミット（コミットメッセージ: daily: {Source} capture {YYYY-MM-DD} ({N} articles)、Author: Claude <noreply@anthropic.com>）→ push
+6. ソースごとに1コミット。批評コメントは daily: digest commentary {YYYY-MM-DD} として別コミット
+
+重要: signal-strength が moderate 以上の記事を優先的に選ぶ。すでに過去7日以内に類似トピックをキャプチャ済みの場合はスキップ。新規ソース追加候補を見つけた場合は CLAUDE.md を更新する。
+gitが実行できない場合はスキップしてよい（ラッパースクリプトが未コミット分を自動でコミット・pushする）。
