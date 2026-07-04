@@ -1,17 +1,18 @@
 name: Daily Digest Email
 
+# 1日1通、直近24時間にキャプチャされた全ソースの記事を
+# ソース別にまとめ、Gemini批評コメントを付けてメール送信する。
+# 09:30 JST = 00:30 UTC（キャプチャループ完了後を想定）
 on:
-  push:
-    branches: [main]
-    paths:
-      - "00-Inbox/**.md"
+  schedule:
+    - cron: "30 0 * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
 
 concurrency:
-  group: daily-digest-${{ github.ref }}
+  group: daily-digest
   cancel-in-progress: false
 
 jobs:
@@ -20,49 +21,36 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
-      - name: Detect target files
+      - name: Detect files captured since last digest
         id: files
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            FILES=$(ls 00-Inbox/*.md 2>/dev/null | grep -v README | tr '\n' ' ')
-            SUFFIX="手動実行 — Inbox全件"
-          else
-            FILES=$(git diff --name-only HEAD~1 HEAD -- '00-Inbox/*.md' | grep -v README | tr '\n' ' ')
-            SUFFIX="新着"
-          fi
-          # ファイル名（YYYY-MM-DD-{prefix}-slug）からソース名を判定
-          FIRST=$(echo $FILES | awk '{print $1}' | xargs -I{} basename {})
-          if echo "$FIRST" | grep -q -- '-tc-'; then SOURCE="TechCrunch"
-          elif echo "$FIRST" | grep -q -- '-tm-'; then SOURCE="Techmeme"
-          elif echo "$FIRST" | grep -q -- '-sn-'; then SOURCE="STAT News"
-          elif echo "$FIRST" | grep -q -- '-is-'; then SOURCE="IEEE Spectrum"
-          elif echo "$FIRST" | grep -q -- '-qcr-'; then SOURCE="Quantum Computing Report"
-          elif echo "$FIRST" | grep -q -- '-fb-'; then SOURCE="FierceBiotech"
-          elif echo "$FIRST" | grep -q -- '-ek-'; then SOURCE="Electrek"
-          else SOURCE="Skill Graph"
-          fi
+          SINCE=$(cat .digest-state 2>/dev/null || echo "24 hours ago")
+          echo "Looking for files added since: $SINCE"
+          FILES=$(git log --since="$SINCE" --diff-filter=A --name-only --pretty=format: -- '00-Inbox/*.md' \
+            | { grep -v README || true; } | sort -u \
+            | while read -r f; do [ -f "$f" ] && echo "$f"; done | tr '\n' ' ')
+          COUNT=$(echo $FILES | wc -w | tr -d ' ')
           echo "files=$FILES" >> $GITHUB_OUTPUT
-          echo "count=$(echo $FILES | wc -w)" >> $GITHUB_OUTPUT
-          echo "suffix=$SUFFIX" >> $GITHUB_OUTPUT
-          echo "source=$SOURCE" >> $GITHUB_OUTPUT
+          echo "count=$COUNT" >> $GITHUB_OUTPUT
+          echo "Detected $COUNT file(s): $FILES"
 
       - uses: actions/setup-python@v5
+        if: steps.files.outputs.count != '0'
         with:
           python-version: "3.12"
 
       - name: Install dependencies
+        if: steps.files.outputs.count != '0'
         run: pip install -q deep-translator
 
       - name: Translate to Japanese
-        run: |
-          FILES="${{ steps.files.outputs.files }}"
-          if [ -n "$FILES" ]; then
-            python3 scripts/translate_inbox.py $FILES
-          fi
+        if: steps.files.outputs.count != '0'
+        run: python3 scripts/translate_inbox.py ${{ steps.files.outputs.files }}
 
       - name: Commit translated files
+        if: steps.files.outputs.count != '0'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -75,28 +63,14 @@ jobs:
           fi
 
       - name: Build digest body
+        if: steps.files.outputs.count != '0'
         id: digest
-        run: |
-          TODAY=$(date '+%Y-%m-%d')
-          BODY="📥 Skill Graph Inbox ${{ steps.files.outputs.suffix }} ${{ steps.files.outputs.count }}件（${TODAY}）\n\n"
-
-          for file in ${{ steps.files.outputs.files }}; do
-            [ -f "$file" ] || continue
-            TITLE=$(grep '^title:' "$file" | sed 's/title: *"\?\(.*\)"\?/\1/' | tr -d '"')
-            CLAIM=$(awk '/^## 主な主張/{found=1; next} found && /^##/{exit} found{print}' "$file" | sed '/^$/d' | head -5)
-            IMPLICATION=$(grep '^investment-implication:' "$file" | sed 's/investment-implication: *"\?\(.*\)"\?/\1/' | tr -d '"')
-            SIGNAL=$(grep '^signal-strength:' "$file" | sed 's/signal-strength: *//')
-            URL=$(grep '^source:' "$file" | sed 's/source: *"\?\(.*\)"\?/\1/' | tr -d '"')
-            BODY="${BODY}---\n📌 ${TITLE}\nシグナル強度: ${SIGNAL}\n\n【主な主張】\n${CLAIM}\n\n【投資含意】\n${IMPLICATION}\n\n🔗 ${URL}\n\n"
-          done
-
-          {
-            echo "body<<EOF"
-            echo -e "$BODY"
-            echo "EOF"
-          } >> $GITHUB_OUTPUT
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python3 scripts/build_digest.py ${{ steps.files.outputs.files }}
 
       - name: Send email
+        if: steps.files.outputs.count != '0'
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
@@ -104,8 +78,19 @@ jobs:
           secure: true
           username: ${{ secrets.GMAIL_USERNAME }}
           password: ${{ secrets.GMAIL_APP_PASSWORD }}
-          subject: "📥 [${{ steps.files.outputs.source }}] ${{ steps.files.outputs.suffix }} ${{ steps.files.outputs.count }}件"
+          subject: ${{ steps.digest.outputs.subject }}
           to: ${{ secrets.GMAIL_USERNAME }}
           from: Skill Graph Inbox <${{ secrets.GMAIL_USERNAME }}>
-          body: ${{ steps.digest.outputs.body }}
+          body: file://digest_body.txt
           content_type: text/plain; charset=utf-8
+
+      # 送信済み時点を記録（次回はこれ以降に追加されたファイルだけを対象にする）
+      - name: Update digest state
+        if: steps.files.outputs.count != '0'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          date -u +%Y-%m-%dT%H:%M:%SZ > .digest-state
+          git add .digest-state
+          git commit -m "chore: update digest state"
+          git pull --rebase origin main && git push
