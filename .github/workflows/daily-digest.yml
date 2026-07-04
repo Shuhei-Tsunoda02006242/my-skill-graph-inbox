@@ -2,10 +2,10 @@ name: Daily Digest Email
 
 # 1日1通、直近24時間にキャプチャされた全ソースの記事を
 # ソース別にまとめ、Gemini批評コメントを付けてメール送信する。
-# 09:30 JST = 00:30 UTC（キャプチャループ完了後を想定）
+# 10:00 JST = 01:00 UTC（8:57開始のローカルキャプチャ完了後を想定）
 on:
   schedule:
-    - cron: "30 0 * * *"
+    - cron: "0 1 * * *"
   workflow_dispatch:
 
 permissions:
