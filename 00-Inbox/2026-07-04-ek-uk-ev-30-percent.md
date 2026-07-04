@@ -6,22 +6,22 @@ source-type: article
 domain: investment
 tech-tags: [energy]
 companies-mentioned: [Tesla]
-investment-implication: "英国EVシェア30%突破は市場の転換点。TeslaのEuropa回復は欧州市場での競争力持続を示し、EV関連インフラ投資の追い風となる。"
+investment-implication: "英国EVシェア30%突破は市場の転換点。テスラの欧州回復は欧州市場での競争力持続を示し、EVインフラ投資の追い風となる。"
 signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-英国の2026年6月の新車市場でBEV（バッテリーEV）が約30%のシェアを達成し、Teslaは42%の回復を記録した。
+## 主な主張
+英国の2026年6月の新車市場でBEV（バッテリーEV）は約30％のシェアを達成し、テスラは42％の回復を記録しました。
 
-## Evidence / Context
-- 英国BEV登録台数：64,440台（前年比+38%）
+## 根拠・背景
+- 英国BEV登録台数：64,440台（都度比+38%）
 - 市場シェア：約30%
-- Tesla：英国市場で前年比+42%（前四半期の低迷から急回復）
+- Tesla：英国市場で先比+42%（事前の予測から急回復）
 - 英国は2035年のガソリン車新車販売禁止を控え、EV普及が政策的に加速
 
-## My Take
+## 私の見解
 <!-- 1行の自分の見解（空欄でよい） -->
 
-## Links
+## リンク
 [[2026-07-01-ek-byd-tesla-q2-ev-sales]]

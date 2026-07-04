@@ -1,5 +1,5 @@
 ---
-title: "InsilicO MedicineがTakedaと6億ドル規模のAI創薬コラボレーション締結"
+title: "InsilicO Medicineが武田と6億ドル規模のAI創薬コラボレーション締結"
 date: 2026-07-04
 source: "https://www.fiercebiotech.com/biotech/insilco-continues-run-partnership-600m-biobuck-collab-takeda"
 source-type: article
@@ -11,17 +11,17 @@ signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-AI創薬企業Insilico MedicineがTakedaとバイオバック総額6億ドルのコラボレーション契約を締結した。
+## 主な主張
+AI創薬企業Insilico Medicineが武田とバイオバック総額6億ドルの契約契約を締結した。
 
-## Evidence / Context
-- 契約総額：$600M（マイルストーン含むバイオバック構造）
+## 根拠・背景
+- 契約総額：$600M（マイルストーンを含むバイオバック構造）
 - Insilico Medicineは生成AIを活用した創薬プラットフォームで複数の臨床試験中
-- Takedaは消化器・神経科学・希少疾患分野に強み
+- 武田は消化器・神経科学・希少領域分野の強み
 - 2026年に入りInsilicoは複数の大型提携を実現（連続的なパートナーシップ構築）
 
-## My Take
+## 私の見解
 <!-- 1行の自分の見解（空欄でよい） -->
 
-## Links
+## リンク
 <!-- [[関連ノート]] -->

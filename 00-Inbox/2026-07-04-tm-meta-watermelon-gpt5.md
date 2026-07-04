@@ -6,22 +6,22 @@ source-type: article
 domain: deeptech
 tech-tags: [AI]
 companies-mentioned: [Meta, OpenAI]
-investment-implication: "OpenAIのモデル優位性が縮小。オープンウェイトモデルの競争力向上により、クローズドモデルのプレミアム正当性が問われる。"
+investment-implication: "OpenAIのモデルの優位性が縮小。オープンウェイトモデルの競争力向上により、クローズドモデルのプレミアム正当性が問われる。"
 signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-MetaがWatermelonと呼ぶ新AIモデルがOpenAIのGPT-5.5に並ぶ性能を達成した。
+## 主な主張
+MetaがWatermelonと呼ぶ新AIモデルがOpenAIのGPT-5.5に並ぶパフォーマンスを達成しました。
 
-## Evidence / Context
+## 根拠・背景
 - Watermelonは前モデル「Avocado」比「桁違いの計算量」を使用
-- Zuckerberg自身がGPT-5.5との競合を認める発言
-- 同時にZuckerbergはAIエージェント開発が「期待より遅い」と認めている
+- ザッカーバーグ自身がGPT-5.5との評判を認める発言
+- 同時にザッカーバーグはAIエージェント開発が「期待より遅い」と認めている
 - MetaのオープンウェイトLlama系譜における最大規模モデルと見られる
 
-## My Take
+## 私の見解
 <!-- 1行の自分の見解（空欄でよい） -->
 
-## Links
+## リンク
 <!-- [[関連ノート]] -->
