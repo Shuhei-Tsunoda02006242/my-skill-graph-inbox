@@ -22,6 +22,7 @@
 | `qcr-` | Quantum Computing Report | `https://quantumcomputingreport.com/` | 量子コンピューター全般・商用化動向・資金調達 |
 | `fb-` | FierceBiotech | `https://www.fiercebiotech.com/` | バイオテックM&A・FDA承認・臨床試験結果 |
 | `ek-` | Electrek | `https://electrek.co/` | エネルギー技術・EV・再生可能エネルギー・電力インフラ |
+| `tqi-` | The Quantum Insider | `https://thequantuminsider.com/` | 量子コンピューター・研究・PQC・上場/資金調達（qcr-の補完） |
 
 ---
 
@@ -121,11 +122,11 @@ Author: `Claude <noreply@anthropic.com>`
 
 ## メール配信（GitHub Actions）
 
-`.github/workflows/daily-digest.yml` が **毎朝10:00 JST** に実行され、前回送信以降（ルートの `.digest-state` マーカー以降）に追加された **全ソース** のノートをソース別にグルーピングし、ソースごとのGemini批評コメント付きで **1日1通** のメールとして送信する。
+`.github/workflows/daily-digest.yml` が **毎朝08:00 JST** に実行され、前回送信以降（ルートの `.digest-state` マーカー以降）に追加された **全ソース** のノートをソース別にグルーピングし、ソースごとのGemini批評コメント付きで **ソースごとに1通ずつ** メール送信する（2026-07-05〜、以前は1日1通にまとめて送信していた）。
 
 - push時の都度送信は廃止済み（2026-07-04）
 - 手動送信: Actions の workflow_dispatch から実行可能
-- 本文組み立て: `scripts/build_digest.py`（Gemini API失敗時はコメント無しで送信を継続）
+- 本文組み立て・SMTP送信ともに `scripts/build_digest.py` が実施（`smtplib.SMTP_SSL` で1ログイン後、ソースごとにループ送信。Gemini API失敗時はコメント無しで送信を継続）
 
 ---
 

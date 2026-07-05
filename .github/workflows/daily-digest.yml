@@ -1,11 +1,11 @@
 name: Daily Digest Email
 
-# 1日1通、直近24時間にキャプチャされた全ソースの記事を
+# ソースごとに1通、直近24時間にキャプチャされた記事を
 # ソース別にまとめ、Gemini批評コメントを付けてメール送信する。
-# 10:00 JST = 01:00 UTC（8:57開始のローカルキャプチャ完了後を想定）
+# 08:00 JST = 23:00 UTC（前日、8:57開始のローカルキャプチャ完了後を想定）
 on:
   schedule:
-    - cron: "0 1 * * *"
+    - cron: "0 23 * * *"
   workflow_dispatch:
 
 permissions:
@@ -62,27 +62,14 @@ jobs:
             git pull --rebase origin main && git push
           fi
 
-      - name: Build digest body
+      - name: Build and send digest emails
         if: steps.files.outputs.count != '0'
         id: digest
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
         run: python3 scripts/build_digest.py ${{ steps.files.outputs.files }}
-
-      - name: Send email
-        if: steps.files.outputs.count != '0'
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          secure: true
-          username: ${{ secrets.GMAIL_USERNAME }}
-          password: ${{ secrets.GMAIL_APP_PASSWORD }}
-          subject: ${{ steps.digest.outputs.subject }}
-          to: ${{ secrets.GMAIL_USERNAME }}
-          from: Skill Graph Inbox <${{ secrets.GMAIL_USERNAME }}>
-          body: file://digest_body.txt
-          content_type: text/plain; charset=utf-8
 
       # 送信済み時点を記録（次回はこれ以降に追加されたファイルだけを対象にする）
       - name: Update digest state
