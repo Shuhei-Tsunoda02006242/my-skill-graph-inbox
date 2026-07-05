@@ -19,7 +19,8 @@ echo "=== $(date '+%Y-%m-%d %H:%M:%S') キャプチャ開始 ===" >> "$LOG_FILE"
 cd "$INBOX_DIR"
 
 # クラウド側ルーチンの朝キャプチャを取り込んでから開始（重複キャプチャ防止）
-git pull --rebase --quiet origin main >> "$LOG_FILE" 2>&1 || true
+# --autostash: 作業ツリーに未コミット差分があってもpullを通す
+git pull --rebase --autostash --quiet origin main >> "$LOG_FILE" 2>&1 || true
 
 "$CLAUDE_BIN" \
   --dangerously-skip-permissions \
