@@ -11,19 +11,19 @@ signal-strength: strong
 status: fleeting
 ---
 
-## Key Claim
-NvidiaのGPUクラスターをレンタルするAIネオクラウドのTogether AIが$8億のSeries Cを調達し、バリュエーションが約16ヶ月前のSeries B比2.5倍となる$83億に到達した。
+## 主な主張
+NvidiaのGPUクラスターをレンタルするAIネオクラウドのTogetter AIが8億ドルのシリーズCを調達し、バリュエーションが約16か月前のシリーズB比2.5倍となる83億ドルに到達しました。
 
-## Evidence / Context
-- ラウンドリード: Aramco Ventures
+## 根拠・背景
+- ラウンドリード: アラムコ ベンチャーズ
 - 参加者: Vista Equity Partners、General Catalyst、Emergence Capital、Nvidia、March Capital、Pegatron、SentinelOne's S Ventures
-- 直近四半期のAnnual Bookings: $11.5億超
+- 天気予報の年間予約額: 115億ドル超
 - 主要顧客: Cursor、Cognition、Decagon（計数千社以上）
 - オープンソースモデル利用は業界全体で過去1年間に3倍に増加（OpenRouter調べ）
-- 前回調達: 2025年初頭にSeries B $3.05億（$33億バリュエーション）
+-将来調達: 2025年初頭にシリーズB $3.05億（$33億バリュエーション）
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
