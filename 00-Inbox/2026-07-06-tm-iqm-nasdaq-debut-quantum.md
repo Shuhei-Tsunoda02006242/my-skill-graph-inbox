@@ -1,29 +1,29 @@
 ---
-title: "IQM Quantum Computers、SPAC合併でNasdaqに上場——欧州初の量子コンピューター上場企業"
+title: "IQM 量子コンピュータ、SPAC 合併でナスダックに昇格——欧州初の量子コンピュータ先進企業"
 date: 2026-07-06
 source: "https://techcrunch.com/2026/07/02/iqm-europes-first-public-quantum-company-admits-the-future-of-the-tech-is-uncertain/"
 source-type: article
 domain: deeptech
 tech-tags: [quantum]
 companies-mentioned: [IQM Quantum Computers, Real Asset Acquisition Corp]
-investment-implication: "欧州初の量子コンピューター上場（評価額$1.9B）はマイルストーンだが、初日の株価低迷が示す通り商用化タイムラインへの不確実性が依然高く、長期ポジションには慎重な評価が必要。"
+investment-implication: "欧州初の量子コンピューター中間（評価額$1.9B）はマイルストーンだが、初値の予想が示す通り商業化タイムラインへ不確実性が依然高く、長期的な視点には慎重な評価が必要。"
 signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-フィンランドのIQM Quantum Computersが、SPAC（Real Asset Acquisition Corp.）合併を通じてNasdaq Global Select Marketに上場（ティッカー：IQMX）し、欧州初の量子コンピューター上場企業となった。
+## 主な主張
+フィンランドのIQM Quantum Computersが、SPAC（Real Asset Acquisition Corp.）に酔いしれながらNasdaq Global Select Marketに頂点（ティッカー：IQMX）し、欧州初の量子コンピューター先進企業となった。
 
-## Evidence / Context
-- 上場評価額：約**$1.9B**（約1,900億円相当）
-- SPAC合併後の手元資金：**€337M（$385M）**——トランスアトランティック事業拡大の資金
+## 根拠・背景
+- 上位評価額：約**$1.9B**（約1,900億円相当）
+- SPAC合併後の手元資金：**3億3,700万ユーロ（3億8,500万ドル）**——トランスアトランティック事業拡大の資金
 - 世界に**23台**の量子コンピューターを導入済み（研究機関・国家計算センター向け）
-- 初日の株価：終日公募価格を下回る推移——投資家の商用化タイムラインへの懐疑を反映
-- TechCrunchが「量子技術の商用化の未来は不確実と会社自身が認める」と報道
-- 技術方式：**超伝導量子コンピューター**（full-stack）
+- 初日の株価：終日募集価格を下に置く——投資家の商業化タイムラインへの懐疑を反映
+- TechCrunchが「量子技術の商業化の未来は不確実と会社自身が認める」と報道
+-方式技術：**超伝導量子コンピュータ**（フルスタック）
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->

@@ -6,23 +6,23 @@ source-type: article
 domain: deeptech
 tech-tags: [AI]
 companies-mentioned: [Meta, OpenAI]
-investment-implication: "MetaがAI計算インフラに年間$125-145Bを投資し、OpenAIとの差を急速に縮める動きは、AI半導体・データセンター需要の長期継続を示唆する。"
+investment-implication: "メタがAI計算基盤に年間125-1450億ドルを投資し、OpenAIと比較を急速に縮める動きは、AI半導体・データセンターが必要な長期継続を示唆する。"
 signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-MetaのAIチーフAlexandr Wangが社内タウンホールで、次期モデル「Watermelon」（開発コード）がOpenAIのGPT-5.5に主要ベンチマークで追いついたと表明した。
+## 主な主張
+メタのAIチーフAlexandr Wangが社内タウンホールで、次期モデル「Watermelon」（開発コード）がOpenAIのGPT-5.5に主要ベンチマークで追いついたと表明した。
 
-## Evidence / Context
+## 根拠・背景
 - WatermelonはMuse Spark（社内コードAvocado）の次世代モデルで、現在トレーニング中
-- 計算規模はAvocadoの**10倍**（order of magnitude more compute）
-- WangはGPT-5.5との同等性をベンチマークで示したとしているが、具体的なベンチマーク名・スコアは未公表
+- 計算規模はAvocadoの**10倍**（桁違いの計算量）
+- WangはGPT-5.5との同等性をベンチマークで示しているが、具体的なベンチマーク名・スコアは未発表
 - Meta社全体の2026年インフラ投資見通し：**$125B〜$145B**（チップ・データセンター・インフラ）
-- Muse Sparkのコーディング・エージェント強化アップデートも「もうすぐ」提供予定
+- Muse Sparkのエンディング・エージェント強化アップデートも「すぐもう」提供予定
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
