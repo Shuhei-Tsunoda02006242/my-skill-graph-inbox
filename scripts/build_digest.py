@@ -35,6 +35,20 @@ GEMINI_MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"]
 JST = timezone(timedelta(hours=9))
 
 
+def load_sources() -> dict[str, str]:
+    """CLAUDE.mdのソーステーブルから prefix→ソース名 を読む。
+    ソースは自動追加されるため、固定のSOURCESは読めなかった場合のフォールバック。"""
+    sources = dict(SOURCES)
+    try:
+        text = open(os.path.join(os.path.dirname(__file__), "..", "CLAUDE.md")).read()
+        for m in re.finditer(r"^\|\s*`([a-z]+)-`\s*\|\s*([^|]+?)\s*\|",
+                             text, re.MULTILINE):
+            sources[m.group(1)] = m.group(2).strip()
+    except OSError:
+        pass
+    return sources
+
+
 def frontmatter_field(field: str, text: str) -> str:
     m = re.search(rf'^{re.escape(field)}:\s*"?(.*?)"?\s*$', text, re.MULTILINE)
     return m.group(1).strip() if m else ""
@@ -52,12 +66,12 @@ def section(names: list[str], text: str) -> str:
     return ""
 
 
-def parse_note(path: str) -> dict:
+def parse_note(path: str, sources: dict[str, str]) -> dict:
     text = open(path).read()
     m = re.match(r"\d{4}-\d{2}-\d{2}-([a-z]+)-", os.path.basename(path))
     prefix = m.group(1) if m else ""
     return {
-        "source_name": SOURCES.get(prefix, "その他"),
+        "source_name": sources.get(prefix, "その他"),
         "title": frontmatter_field("title", text),
         "url": frontmatter_field("source", text),
         "signal": frontmatter_field("signal-strength", text),
@@ -188,10 +202,11 @@ def send_emails(groups: dict[str, list[dict]], claude_comments: dict[str, str]) 
 
 def main() -> None:
     paths = [p for p in sys.argv[1:] if os.path.isfile(p)]
-    notes = [parse_note(p) for p in paths]
+    sources = load_sources()
+    notes = [parse_note(p, sources) for p in paths]
 
     groups: dict[str, list[dict]] = {}
-    for name in list(SOURCES.values()) + ["その他"]:
+    for name in list(dict.fromkeys(sources.values())) + ["その他"]:
         matched = [n for n in notes if n["source_name"] == name]
         if matched:
             groups[name] = matched
