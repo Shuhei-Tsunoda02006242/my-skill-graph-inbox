@@ -148,8 +148,9 @@ def build_body(source_name: str, articles: list[dict], commentary: str, commenta
 
 def send_emails(groups: dict[str, list[dict]], claude_comments: dict[str, str]) -> None:
     dry_run = os.environ.get("DRY_RUN") == "1"
-    username = os.environ["GMAIL_USERNAME"]
-    password = os.environ.get("GMAIL_APP_PASSWORD", "")
+    # シークレット値に末尾改行が入っているとメールヘッダーが弾かれるため必ずstrip
+    username = os.environ["GMAIL_USERNAME"].strip()
+    password = os.environ.get("GMAIL_APP_PASSWORD", "").strip()
     today = datetime.now(JST).strftime("%Y-%m-%d")
 
     messages = []
