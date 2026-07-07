@@ -1,4 +1,4 @@
-デイリーキャプチャループを実行してください。作業ディレクトリ: /Users/rena/projects/My-Skill-Graph-Inbox/
+デイリーキャプチャループを実行してください。作業ディレクトリ: /Users/rena/projects/skill-graph/My-Skill-Graph-Inbox/
 
 手順:
 1. CLAUDE.md を読んで最新のキャプチャ対象ソースとルールを確認する
