@@ -11,18 +11,18 @@ signal-strength: moderate
 status: fleeting
 ---
 
-## Key Claim
-MetaはBroadcomと共同設計したAI専用カスタムチップを9月からTSMCで量産開始する。未曾有のGPU供給不足の中でコスト削減と供給安定化を目指す。
+## 主な主張
+メタはBroadcomと共同設計したAI専用カスタムチップを9月からTSMCで量産開始する。前代未聞のGPU供給不足の中コスト削減と供給安定化を目指す。
 
-## Evidence / Context
+## 根拠・背景
 - 量産開始予定: 2026年9月
 - チップ設計: Meta × Broadcom 協業
-- 製造: TSMC
-- 背景: GPU部品の前例のない供給不足（component shortage）への対応
-- 目的: GPU調達コストの引き下げ
+製造：TSMC
+- 背景: GPU部品の前の例のない供給不足（コンポーネント不足）への対応
+- 目的: GPU調達コストの検討
 
-## My Take
+## 私の見解
 <!-- fill in later -->
 
-## Links
+## リンク
 <!-- fill in later -->
