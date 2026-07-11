@@ -76,6 +76,7 @@ def parse_note(path: str, sources: dict[str, str]) -> dict:
         "url": frontmatter_field("source", text),
         "signal": frontmatter_field("signal-strength", text),
         "implication": frontmatter_field("investment-implication", text),
+        "position": frontmatter_field("landscape-position", text),
         "claim": section(["主な主張", "Key Claim"], text),
         "my_take": section(["私の見解", "My Take"], text),
     }
@@ -144,6 +145,10 @@ def build_body(source_name: str, articles: list[dict], commentary: str, commenta
     for a in articles:
         lines += [
             f"📌 {a['title']}",
+        ]
+        if a["position"]:
+            lines += [f"📍 {a['position']}"]
+        lines += [
             f"シグナル強度: {a['signal']}",
             "",
             "【主な主張】",
