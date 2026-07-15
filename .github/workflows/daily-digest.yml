@@ -26,10 +26,12 @@ jobs:
       - name: Detect files captured since last digest
         id: files
         run: |
-          SINCE=$(cat .digest-state 2>/dev/null || echo "24 hours ago")
-          echo "Looking for files added since: $SINCE"
-          FILES=$(git log --since="$SINCE" --diff-filter=A --name-only --pretty=format: -- '00-Inbox/*.md' \
-            | { grep -v README || true; } | sort -u \
+          # .digest-stateはコミットSHAを保持する（タイムスタンプ比較はマージコミットで
+          # 追加されたファイルを検出できないため廃止。2026-07-15の取りこぼし事故対策）
+          BASE=$(cat .digest-state 2>/dev/null || git rev-list --max-parents=0 HEAD)
+          echo "Diffing from $BASE to HEAD"
+          FILES=$(git diff --name-status --diff-filter=A "$BASE" HEAD -- '00-Inbox/*.md' \
+            | awk '{print $2}' | { grep -v README || true; } | sort -u \
             | while read -r f; do [ -f "$f" ] && echo "$f"; done | tr '\n' ' ')
           COUNT=$(echo $FILES | wc -w | tr -d ' ')
           echo "files=$FILES" >> $GITHUB_OUTPUT
@@ -50,13 +52,13 @@ jobs:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
         run: python3 scripts/build_digest.py ${{ steps.files.outputs.files }}
 
-      # 送信済み時点を記録（次回はこれ以降に追加されたファイルだけを対象にする）
+      # 送信済み時点のコミットSHAを記録（次回はこのSHA以降に追加されたファイルだけを対象にする）
       - name: Update digest state
         if: steps.files.outputs.count != '0'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          date -u +%Y-%m-%dT%H:%M:%SZ > .digest-state
+          git rev-parse HEAD > .digest-state
           git add .digest-state
           git commit -m "chore: update digest state"
           git pull --rebase origin main && git push
