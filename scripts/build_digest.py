@@ -324,10 +324,39 @@ def send_emails(groups: dict[str, list[dict]], claude_comments: dict[str, str]) 
             print(f"Sent: {subject}")
 
 
+def dedup_by_url(paths: list[str], sources: dict[str, str]) -> list[dict]:
+    """URL重複を除外してパース済みノートを返す。
+    複数のキャプチャ経路（クラウドルーチン/ローカル/手動）が同一記事を
+    別ファイル名で拾う事故が繰り返し起きているため、送信直前に機械的に弾く。"""
+    import glob
+    pending = set(paths)
+    past_urls = set()
+    for p in glob.glob("00-Inbox/*.md"):
+        if p in pending:
+            continue
+        try:
+            u = frontmatter_field("source", open(p, errors="ignore").read()).strip()
+        except OSError:
+            continue
+        if u:
+            past_urls.add(u)
+    notes, seen = [], set()
+    for p in sorted(paths):
+        note = parse_note(p, sources)
+        u = note["url"].strip()
+        if u and (u in past_urls or u in seen):
+            print(f"Skipped duplicate: {p}")
+            continue
+        if u:
+            seen.add(u)
+        notes.append(note)
+    return notes
+
+
 def main() -> None:
     paths = [p for p in sys.argv[1:] if os.path.isfile(p)]
     sources = load_sources()
-    notes = [parse_note(p, sources) for p in paths]
+    notes = dedup_by_url(paths, sources)
 
     groups: dict[str, list[dict]] = {}
     for name in list(dict.fromkeys(sources.values())) + ["その他"]:
@@ -337,7 +366,10 @@ def main() -> None:
 
     claude_comments = load_claude_commentary()
 
-    send_emails(groups, claude_comments)
+    if not notes:
+        print("No unique articles to send")
+    else:
+        send_emails(groups, claude_comments)
 
     out = os.environ.get("GITHUB_OUTPUT")
     if out:

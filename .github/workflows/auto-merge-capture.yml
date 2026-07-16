@@ -1,0 +1,51 @@
+name: Auto-merge capture branches
+
+# クラウドルーチンの実行環境はclaude/…作業ブランチを強制しmainに直接pushできないため、
+# キャプチャ成果物（00-Inbox/・digests/）のみの変更なら自動でmainへマージ回収する。
+# それ以外の変更（workflow・スクリプト等）を含むブランチは安全のため自動マージしない。
+on:
+  push:
+    branches: ['claude/**']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: auto-merge-capture
+  cancel-in-progress: false
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Merge capture-only branch into main
+        run: |
+          BRANCH="${{ github.ref_name }}"
+          git fetch origin "$BRANCH"
+          CHANGED=$(git diff --name-only "origin/main...origin/$BRANCH")
+          if [ -z "$CHANGED" ]; then
+            echo "変更なし。スキップ"
+            exit 0
+          fi
+          BAD=$(echo "$CHANGED" | grep -vE '^(00-Inbox/|digests/)' || true)
+          if [ -n "$BAD" ]; then
+            echo "キャプチャ成果物以外の変更を含むため自動マージしない:"
+            echo "$BAD"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git merge --no-edit "origin/$BRANCH"; then
+            git push origin main
+            git push origin --delete "$BRANCH" || true
+            echo "mainへマージ済み・ブランチ削除済み"
+          else
+            git merge --abort
+            echo "::error::コンフリクトのため自動マージ失敗。手動回収が必要: $BRANCH"
+            exit 1
+          fi
