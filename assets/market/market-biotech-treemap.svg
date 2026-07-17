@@ -1,0 +1,36 @@
+<svg width="100%" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+<text x="20" y="30" font-size="18" font-weight="700" fill="#9aa0a6" font-family="sans-serif">バイオテック 市場規模ヒートマップ</text>
+<rect x="20.00" y="55.00" width="373.77" height="370.00" fill="#841715" fill-opacity="0.85" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="206.89" y="230.64" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff" font-family="sans-serif">低分子(Small Molecule)</text>
+<text x="206.89" y="243.64" text-anchor="middle" font-size="10.5" font-weight="400" fill="#ffffff" font-family="sans-serif">$600B</text>
+<text x="206.89" y="256.64" text-anchor="middle" font-size="9.5" font-weight="400" fill="#ffffff" font-family="sans-serif">CAGR 3-5%</text>
+<rect x="393.77" y="55.00" width="311.48" height="370.00" fill="#991a18" fill-opacity="0.85" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="549.51" y="230.64" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff" font-family="sans-serif">抗体/バイオ医薬(Biologics)</text>
+<text x="549.51" y="243.64" text-anchor="middle" font-size="10.5" font-weight="400" fill="#ffffff" font-family="sans-serif">$500B</text>
+<text x="549.51" y="256.64" text-anchor="middle" font-size="9.5" font-weight="400" fill="#ffffff" font-family="sans-serif">CAGR 8-10%</text>
+<rect x="705.25" y="55.00" width="74.75" height="123.33" fill="#ad1e1b" fill-opacity="0.65" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="742.62" y="107.31" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff" font-family="sans-serif">核酸/mR…</text>
+<text x="742.62" y="120.31" text-anchor="middle" font-size="10.5" font-weight="400" fill="#ffffff" font-family="sans-serif">$40B</text>
+<text x="742.62" y="133.31" text-anchor="middle" font-size="9.5" font-weight="400" fill="#ffffff" font-family="sans-serif">CAGR 変動大</text>
+<rect x="705.25" y="178.33" width="74.75" height="77.08" fill="#c2211f" fill-opacity="0.85" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="742.62" y="207.51" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff" font-family="sans-serif">シーケンシ…</text>
+<text x="742.62" y="220.51" text-anchor="middle" font-size="10.5" font-weight="400" fill="#ffffff" font-family="sans-serif">$25B</text>
+<text x="742.62" y="233.51" text-anchor="middle" font-size="9.5" font-weight="400" fill="#ffffff" font-family="sans-serif">CAGR 10-12%</text>
+<rect x="705.25" y="255.42" width="74.75" height="61.67" fill="#d62522" fill-opacity="0.65" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="742.62" y="276.89" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff" font-family="sans-serif">合成生物学…</text>
+<text x="742.62" y="289.89" text-anchor="middle" font-size="10.5" font-weight="400" fill="#ffffff" font-family="sans-serif">$20B</text>
+<text x="742.62" y="302.89" text-anchor="middle" font-size="9.5" font-weight="400" fill="#ffffff" font-family="sans-serif">CAGR 15-25%</text>
+<rect x="705.25" y="317.08" width="40.77" height="67.83" fill="#df3431" fill-opacity="0.85" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="725.63" y="348.14" text-anchor="middle" font-size="10.5" font-weight="600" fill="#ffffff" font-family="sans-serif">$12B</text>
+<text x="725.63" y="361.14" text-anchor="middle" font-size="9.5" font-weight="400" fill="#ffffff" font-family="sans-serif">CAGR 20%+</text>
+<rect x="746.02" y="317.08" width="33.98" height="67.83" fill="#e24946" fill-opacity="0.85" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="763.01" y="354.64" text-anchor="middle" font-size="10.5" font-weight="600" fill="#ffffff" font-family="sans-serif">$10B</text>
+<rect x="705.25" y="384.92" width="28.75" height="40.08" fill="#e55d5a" fill-opacity="0.65" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="719.62" y="408.60" text-anchor="middle" font-size="10.5" font-weight="600" fill="#ffffff" font-family="sans-serif">$5B</text>
+<rect x="734.00" y="384.92" width="28.75" height="40.08" fill="#e8716f" fill-opacity="0.65" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-dasharray="4,3" />
+<text x="748.37" y="408.60" text-anchor="middle" font-size="10.5" font-weight="600" fill="#ffffff" font-family="sans-serif">★$5B</text>
+<rect x="762.75" y="384.92" width="17.25" height="40.08" fill="#ec8584" fill-opacity="0.65" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="771.37" y="408.60" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" font-family="sans-serif">①</text>
+<text x="20" y="449" font-size="10.5" fill="#9aa0a6" font-family="sans-serif" font-weight="600">凡例（サイズ制約でラベル省略）:</text>
+<text x="20" y="464" font-size="10" fill="#9aa0a6" font-family="sans-serif">① Neurotech/BMI — $3B, CAGR 非常に高い</text>
+</svg>

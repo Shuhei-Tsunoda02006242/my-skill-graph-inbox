@@ -1,0 +1,41 @@
+<svg width="100%" viewBox="0 0 800 509" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+<text x="20" y="30" font-size="18" font-weight="700" fill="#9aa0a6" font-family="sans-serif">エネルギー 市場規模ヒートマップ</text>
+<rect x="20.00" y="55.00" width="306.29" height="370.00" fill="#994e00" fill-opacity="0.85" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="173.14" y="230.64" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff" font-family="sans-serif">電動化(EV・産業電化)</text>
+<text x="173.14" y="243.64" text-anchor="middle" font-size="10.5" font-weight="400" fill="#ffffff" font-family="sans-serif">$750B</text>
+<text x="173.14" y="256.64" text-anchor="middle" font-size="9.5" font-weight="400" fill="#ffffff" font-family="sans-serif">CAGR 15-20%</text>
+<rect x="326.29" y="55.00" width="306.29" height="197.33" fill="#b15a00" fill-opacity="0.85" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="479.43" y="144.31" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff" font-family="sans-serif">再エネ発電(太陽光)</text>
+<text x="479.43" y="157.31" text-anchor="middle" font-size="10.5" font-weight="400" fill="#ffffff" font-family="sans-serif">$400B</text>
+<text x="479.43" y="170.31" text-anchor="middle" font-size="9.5" font-weight="400" fill="#ffffff" font-family="sans-serif">CAGR 10-15%</text>
+<rect x="326.29" y="252.33" width="306.29" height="172.67" fill="#c96700" fill-opacity="0.85" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="479.43" y="329.31" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff" font-family="sans-serif">送配電・グリッド(送電網/変圧器)</text>
+<text x="479.43" y="342.31" text-anchor="middle" font-size="10.5" font-weight="400" fill="#ffffff" font-family="sans-serif">$350B</text>
+<text x="479.43" y="355.31" text-anchor="middle" font-size="9.5" font-weight="400" fill="#ffffff" font-family="sans-serif">CAGR 8-12%</text>
+<rect x="632.57" y="55.00" width="147.43" height="153.74" fill="#e07300" fill-opacity="0.85" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="706.29" y="122.51" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff" font-family="sans-serif">再エネ発電(風力)</text>
+<text x="706.29" y="135.51" text-anchor="middle" font-size="10.5" font-weight="400" fill="#ffffff" font-family="sans-serif">$150B</text>
+<text x="706.29" y="148.51" text-anchor="middle" font-size="9.5" font-weight="400" fill="#ffffff" font-family="sans-serif">CAGR 5-10%</text>
+<rect x="632.57" y="208.74" width="147.43" height="81.99" fill="#f87f00" fill-opacity="0.65" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-dasharray="4,3" />
+<text x="706.29" y="240.38" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff" font-family="sans-serif">★AIデータセンター電力…</text>
+<text x="706.29" y="253.38" text-anchor="middle" font-size="10.5" font-weight="400" fill="#ffffff" font-family="sans-serif">$80B</text>
+<text x="706.29" y="266.38" text-anchor="middle" font-size="9.5" font-weight="400" fill="#ffffff" font-family="sans-serif">CAGR 非常に高い</text>
+<rect x="632.57" y="290.73" width="67.52" height="134.27" fill="#ff8b11" fill-opacity="0.85" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="666.34" y="348.51" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff" font-family="sans-serif">エネルギ…</text>
+<text x="666.34" y="361.51" text-anchor="middle" font-size="10.5" font-weight="400" fill="#ffffff" font-family="sans-serif">$60B</text>
+<text x="666.34" y="374.51" text-anchor="middle" font-size="9.5" font-weight="400" fill="#ffffff" font-family="sans-serif">CAGR 25%+</text>
+<rect x="700.10" y="290.73" width="79.90" height="94.55" fill="#ff9629" fill-opacity="0.65" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="740.05" y="328.65" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff" font-family="sans-serif">次世代原子…</text>
+<text x="740.05" y="341.65" text-anchor="middle" font-size="10.5" font-weight="400" fill="#ffffff" font-family="sans-serif">$50B</text>
+<text x="740.05" y="354.65" text-anchor="middle" font-size="9.5" font-weight="400" fill="#ffffff" font-family="sans-serif">CAGR 10%+</text>
+<rect x="700.10" y="385.29" width="57.07" height="39.71" fill="#ffa241" fill-opacity="0.65" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="728.63" y="402.28" text-anchor="middle" font-size="10.5" font-weight="600" fill="#ffffff" font-family="sans-serif">$15B</text>
+<text x="728.63" y="415.28" text-anchor="middle" font-size="9.5" font-weight="400" fill="#ffffff" font-family="sans-serif">CAGR 変動大</text>
+<rect x="757.17" y="385.29" width="22.83" height="19.86" fill="#ffae58" fill-opacity="0.65" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-dasharray="4,3" />
+<text x="768.59" y="398.86" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" font-family="sans-serif">①</text>
+<rect x="757.17" y="405.14" width="22.83" height="19.86" fill="#ffb970" fill-opacity="0.65" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="768.59" y="418.71" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" font-family="sans-serif">②</text>
+<text x="20" y="449" font-size="10.5" fill="#9aa0a6" font-family="sans-serif" font-weight="600">凡例（サイズ制約でラベル省略）:</text>
+<text x="20" y="464" font-size="10" fill="#9aa0a6" font-family="sans-serif">① ★核融合(Fusion) — $3B, CAGR 変動大</text>
+<text x="20" y="479" font-size="10" fill="#9aa0a6" font-family="sans-serif">② 次世代地熱(EGS/海洋) — $3B, CAGR 高い</text>
+</svg>

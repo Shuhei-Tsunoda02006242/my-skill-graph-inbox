@@ -134,6 +134,9 @@ Author: `Claude <noreply@anthropic.com>`
 - push時の都度送信は廃止済み（2026-07-04）
 - 手動送信: Actions の workflow_dispatch から実行可能
 - 本文組み立て・SMTP送信ともに `scripts/build_digest.py` が実施（`smtplib.SMTP_SSL` で1ログイン後、ソースごとにループ送信。Gemini API失敗時はコメント無しで送信を継続）
+- 📍パンくずには市場規模注記が付く（`assets/market/market-sizes.json` の `breadcrumb-map` 由来。例: `📍 Quantum > PQC（市場$0.4B・急成長）`）。マップ不一致・データ無しなら注記なしでフォールバック
+- メール末尾に該当領域の市場規模ヒートマップPNGを埋め込む（`🗺 市場規模ヒートマップ` セクション）。SVGをGitHub Actions上で `rsvg-convert` によりPNG化しCID埋め込み。環境変数 `INCLUDE_HEATMAPS=0` で画像埋め込みのみ無効化可能（📍注記は継続）
+- `assets/market/` はvault側 `scripts/generate_market_treemaps.py` 実行時に自動同期される（Inboxリポジトリはvaultの非コミット物を直接読めないため）
 
 ---
 

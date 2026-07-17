@@ -8,15 +8,21 @@ Usage: build_digest.py <file1.md> [file2.md ...]
 - GMAIL_USERNAME / GMAIL_APP_PASSWORD  SMTP認証情報（送受信とも同一アドレス）
 - GEMINI_API_KEY                       批評コメント生成用（無くても継続）
 - DRY_RUN=1                            SMTP送信せず、件名・本文を標準出力するのみ
+- INCLUDE_HEATMAPS=0                   末尾ヒートマップ画像の埋め込みのみを無効化（📍市場規模
+                                        注記は独立して継続。デフォルト有効。
+                                        assets/market/market-sizes.json が無い場合は
+                                        両機能とも自動的に無効）
 
 出力:
 - $GITHUB_OUTPUT (あれば)  count
 """
 
+import base64
 import html
 import os
 import re
 import smtplib
+import subprocess
 import sys
 import json
 import urllib.request
@@ -55,6 +61,33 @@ SIGNAL_BADGE_COLORS = {
     "moderate": ("#f9ab00", "#000000"),
     "weak": ("#9aa0a6", "#ffffff"),
     "none": ("#e8eaed", "#5f6368"),
+}
+
+# 市場規模データ（vault側 scripts/generate_market_treemaps.py 実行時に自動同期される）
+MARKET_DATA_PATH = "assets/market/market-sizes.json"
+
+# landscape-position 先頭セグメント → market-sizes.json の domains キー
+DOMAIN_SEGMENT_TO_KEY = {
+    "AI": "ai",
+    "Semiconductor": "semiconductor",
+    "Quantum": "quantum",
+    "Biotech": "biotech",
+    "Energy": "energy",
+}
+
+# ヒートマップ埋め込み時の見出しラベル
+DOMAIN_KEY_TO_LABEL = {
+    "ai": "AI",
+    "semiconductor": "半導体",
+    "quantum": "量子",
+    "biotech": "バイオテック",
+    "energy": "エネルギー",
+}
+
+# cagrが「%」を含まない語彙表現の変換（市場規模注記用）
+CAGR_WORD_MAP = {
+    "高い": "急成長",
+    "非常に高い": "急成長",
 }
 
 
@@ -121,6 +154,137 @@ def load_claude_commentary() -> dict[str, str]:
     return result
 
 
+def load_market_data() -> dict | None:
+    """assets/market/market-sizes.json を読み込む。無ければ機能を静かに無効化する
+    （vault側 generate_market_treemaps.py が未実行のセットアップ初期等を想定）。
+    INCLUDE_HEATMAPS=0 はヒートマップ画像埋め込みのみを止める（📍市場規模注記は継続）ため、
+    ここでは判定しない（send_emails側でヒートマップ生成のみをスキップする）。"""
+    if not os.path.isfile(MARKET_DATA_PATH):
+        return None
+    try:
+        with open(MARKET_DATA_PATH, encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, json.JSONDecodeError) as e:
+        print(f"market-sizes.json 読み込み失敗: {e}", file=sys.stderr)
+        return None
+
+
+def find_market_tile(position: str, market_data: dict) -> dict | None:
+    """landscape-position のパンくずを breadcrumb-map で最長プレフィックス一致させ、
+    該当する domains 配下のタイル（item dict）を返す。ヒットしなければNone。
+    まず完全一致、無ければ末尾セグメントを1つずつ削って再照合する。"""
+    if not position:
+        return None
+    breadcrumb_map = market_data.get("breadcrumb-map", {})
+    segments = [s.strip() for s in position.split(">") if s.strip()]
+    if not segments:
+        return None
+
+    for n in range(len(segments), 0, -1):
+        key = " > ".join(segments[:n])
+        if key not in breadcrumb_map:
+            continue
+        tile_name = breadcrumb_map[key]
+        if tile_name is None:
+            return None
+        domain_key = DOMAIN_SEGMENT_TO_KEY.get(segments[0])
+        if not domain_key:
+            return None
+        for item in market_data.get("domains", {}).get(domain_key, []):
+            if item["name"] == tile_name:
+                return item
+        return None
+    return None
+
+
+def fmt_market_annotation(item: dict) -> str:
+    """タイル情報から📍行に付ける市場規模注記を組み立てる。"""
+    size_str = "${:g}B".format(item["size"])
+    if "★" in item.get("note", ""):
+        return f"（★投資額{size_str}/年ベース）"
+    cagr = item.get("cagr", "")
+    if "%" in cagr:
+        return f"（市場{size_str}・CAGR {cagr}）"
+    cagr_disp = CAGR_WORD_MAP.get(cagr, cagr)
+    return f"（市場{size_str}・{cagr_disp}）"
+
+
+def annotate_position(position: str, market_data: dict | None) -> str:
+    """📍 位置文字列に市場規模注記を付記する。マップ不一致・データ無しならそのまま返す。"""
+    if not position or not market_data:
+        return position
+    tile = find_market_tile(position, market_data)
+    if not tile:
+        return position
+    return position + fmt_market_annotation(tile)
+
+
+def domains_for_articles(articles: list[dict]) -> list[str]:
+    """記事群の landscape-position 先頭セグメントから該当する domain key を
+    重複除去・出現順で集める。"""
+    keys = []
+    for a in articles:
+        pos = a.get("position", "")
+        if not pos:
+            continue
+        top = pos.split(">")[0].strip()
+        domain_key = DOMAIN_SEGMENT_TO_KEY.get(top)
+        if domain_key and domain_key not in keys:
+            keys.append(domain_key)
+    return keys
+
+
+def render_domain_heatmap_png(domain_key: str, width: int = 1200) -> bytes | None:
+    """market-{domain}-treemap.svg を rsvg-convert でPNG化する。
+    rsvg-convertが無い/失敗した場合はNoneを返し、stderrに警告する
+    （画像なしで送信を継続するためのフォールバック）。"""
+    svg_path = os.path.join("assets", "market", f"market-{domain_key}-treemap.svg")
+    if not os.path.isfile(svg_path):
+        print(f"ヒートマップSVGが見つかりません: {svg_path}", file=sys.stderr)
+        return None
+    try:
+        result = subprocess.run(
+            ["rsvg-convert", "-w", str(width), svg_path],
+            capture_output=True,
+            check=True,
+        )
+        return result.stdout
+    except FileNotFoundError:
+        print(
+            "rsvg-convert が見つかりません。ヒートマップ画像埋め込みをスキップします。",
+            file=sys.stderr,
+        )
+        return None
+    except subprocess.CalledProcessError as e:
+        stderr_text = e.stderr.decode(errors="ignore") if e.stderr else ""
+        print(f"rsvg-convert 失敗（{domain_key}）: {stderr_text}", file=sys.stderr)
+        return None
+
+
+def build_heatmap_html(domain_keys: list[str], src_map: dict[str, str]) -> str:
+    """ヒートマップ画像セクションのHTML断片を組み立てる。
+    src_map に無い（＝変換不可だった）domainはスキップする。"""
+    available = [dk for dk in domain_keys if dk in src_map]
+    if not available:
+        return ""
+    parts = [
+        '<div style="margin-top:16px;">',
+        '<div style="font-size:16px;font-weight:bold;color:#202124;margin-bottom:8px;">'
+        "🗺 市場規模ヒートマップ</div>",
+    ]
+    for dk in available:
+        label = DOMAIN_KEY_TO_LABEL.get(dk, dk)
+        parts.append(
+            '<div style="margin-bottom:12px;">'
+            f'<div style="font-size:13px;font-weight:bold;color:#5f6368;margin-bottom:4px;">'
+            f"{html.escape(label)}</div>"
+            f'<img src="{src_map[dk]}" style="width:100%;max-width:600px;border-radius:8px;">'
+            "</div>"
+        )
+    parts.append("</div>")
+    return "".join(parts)
+
+
 def gemini_commentary(source_name: str, articles: list[dict]) -> str:
     """ソース単位の批評コメントを生成。失敗したら空文字（メール送信は止めない）。"""
     key = os.environ.get("GEMINI_API_KEY", "")
@@ -160,7 +324,8 @@ def gemini_commentary(source_name: str, articles: list[dict]) -> str:
     return ""
 
 
-def build_body(source_name: str, articles: list[dict], commentary: str, commentary_label: str) -> str:
+def build_body(source_name: str, articles: list[dict], commentary: str, commentary_label: str,
+                market_data: dict | None = None, heatmap_available: bool = False) -> str:
     lines = [
         f"{source_name}（{len(articles)}件）",
         "",
@@ -170,7 +335,7 @@ def build_body(source_name: str, articles: list[dict], commentary: str, commenta
             f"📌 {a['title']}",
         ]
         if a["position"]:
-            lines += [f"📍 {a['position']}"]
+            lines += [f"📍 {annotate_position(a['position'], market_data)}"]
         lines += [
             f"シグナル強度: {a['signal']}",
             "",
@@ -185,6 +350,8 @@ def build_body(source_name: str, articles: list[dict], commentary: str, commenta
         lines += [f"🔗 {a['url']}", ""]
     if commentary:
         lines += [f"🗒 批評コメント（{commentary_label}）:", commentary, ""]
+    if heatmap_available:
+        lines += ["🗺 市場規模ヒートマップは HTML表示で確認", ""]
     return "\n".join(lines) + "\n"
 
 
@@ -194,7 +361,8 @@ def _esc(text: str) -> str:
 
 
 def build_html_body(source_name: str, articles: list[dict], commentary: str,
-                     commentary_label: str, today: str) -> str:
+                     commentary_label: str, today: str, market_data: dict | None = None,
+                     heatmap_html: str = "") -> str:
     """NewsPicks風カードのHTMLメール本文を組み立てる。Gmail対応のためインラインstyleのみ使用。"""
     accent = SOURCE_COLORS.get(source_name, SOURCE_COLORS["その他"])
 
@@ -226,7 +394,7 @@ def build_html_body(source_name: str, articles: list[dict], commentary: str,
         if a["position"]:
             card.append(
                 '<div style="font-size:12px;color:#5f6368;margin-top:4px;">'
-                f'📍 {html.escape(a["position"])}</div>'
+                f'📍 {html.escape(annotate_position(a["position"], market_data))}</div>'
             )
         card.append(
             f'<div style="display:inline-block;background-color:{badge_bg};'
@@ -269,6 +437,9 @@ def build_html_body(source_name: str, articles: list[dict], commentary: str,
             "</div>"
         )
 
+    if heatmap_html:
+        parts.append(heatmap_html)
+
     parts.append("</div>")
     return "".join(parts)
 
@@ -280,6 +451,18 @@ def send_emails(groups: dict[str, list[dict]], claude_comments: dict[str, str]) 
     password = os.environ.get("GMAIL_APP_PASSWORD", "").strip()
     today = datetime.now(JST).strftime("%Y-%m-%d")
 
+    market_data = load_market_data()
+    # INCLUDE_HEATMAPS=0 は画像埋め込みのみを止める（📍市場規模注記は独立して継続する）
+    include_heatmaps = os.environ.get("INCLUDE_HEATMAPS", "1") != "0"
+
+    # ヒートマップPNGは領域単位（最大5枚）なので、複数ソースにまたがっても1回だけ変換する
+    heatmap_cache: dict[str, bytes | None] = {}
+
+    def get_heatmap_png(domain_key: str) -> bytes | None:
+        if domain_key not in heatmap_cache:
+            heatmap_cache[domain_key] = render_domain_heatmap_png(domain_key)
+        return heatmap_cache[domain_key]
+
     messages = []
     for source_name, articles in groups.items():
         commentary = claude_comments.get(source_name)
@@ -289,15 +472,38 @@ def send_emails(groups: dict[str, list[dict]], claude_comments: dict[str, str]) 
             commentary = gemini_commentary(source_name, articles)
             label = "Gemini生成"
 
+        domain_keys = domains_for_articles(articles) if (market_data and include_heatmaps) else []
+        images: dict[str, bytes] = {}
+        for dk in domain_keys:
+            png_bytes = get_heatmap_png(dk)
+            if png_bytes:
+                images[dk] = png_bytes
+
+        if dry_run:
+            # DRY_RUN時はEmailMessageを作らず、プレビューHTMLに直接data URIを埋め込む
+            src_map = {
+                dk: "data:image/png;base64," + base64.b64encode(data).decode()
+                for dk, data in images.items()
+            }
+            if domain_keys and not images:
+                print(f"[DRY_RUN] {source_name}: ヒートマップ画像は変換できませんでした（rsvg-convert未導入等）")
+        else:
+            # 実送信時はCID参照にし、あとでadd_relatedする
+            src_map = {dk: f"cid:heatmap-{dk}" for dk in images}
+
+        heatmap_html = build_heatmap_html(domain_keys, src_map)
+
         subject = f"📥 [{source_name}] デイリーキャプチャ {today}（{len(articles)}件）"
-        body = build_body(source_name, articles, commentary, label)
-        html_body = build_html_body(source_name, articles, commentary, label, today)
-        messages.append((subject, body, html_body, source_name))
+        body = build_body(source_name, articles, commentary, label, market_data, bool(heatmap_html))
+        html_body = build_html_body(
+            source_name, articles, commentary, label, today, market_data, heatmap_html
+        )
+        messages.append((subject, body, html_body, source_name, images))
 
     if dry_run:
         preview_dir = os.environ.get("TMPDIR", "/tmp")
         sources = load_sources()
-        for subject, body, html_body, source_name in messages:
+        for subject, body, html_body, source_name, images in messages:
             print("=" * 60)
             print(f"Subject: {subject}")
             print("-" * 60)
@@ -313,13 +519,19 @@ def send_emails(groups: dict[str, list[dict]], claude_comments: dict[str, str]) 
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
         smtp.login(username, password)
-        for subject, body, html_body, source_name in messages:
+        for subject, body, html_body, source_name, images in messages:
             msg = EmailMessage()
             msg["Subject"] = subject
             msg["From"] = f"Skill Graph Inbox <{username}>"
             msg["To"] = username
             msg.set_content(body, charset="utf-8")
             msg.add_alternative(html_body, subtype="html")
+            if images:
+                html_part = msg.get_payload()[-1]
+                for dk, data in images.items():
+                    html_part.add_related(
+                        data, maintype="image", subtype="png", cid=f"<heatmap-{dk}>"
+                    )
             smtp.send_message(msg)
             print(f"Sent: {subject}")
 

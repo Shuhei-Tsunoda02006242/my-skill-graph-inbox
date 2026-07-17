@@ -1,0 +1,31 @@
+<svg width="100%" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+<text x="20" y="30" font-size="18" font-weight="700" fill="#9aa0a6" font-family="sans-serif">量子 市場規模ヒートマップ</text>
+<rect x="269.18" y="55.00" width="186.89" height="370.00" fill="#63219c" fill-opacity="0.65" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="362.62" y="230.64" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff" font-family="sans-serif">量子コンピューティングHW(全…</text>
+<text x="362.62" y="243.64" text-anchor="middle" font-size="10.5" font-weight="400" fill="#ffffff" font-family="sans-serif">$1.5B</text>
+<text x="362.62" y="256.64" text-anchor="middle" font-size="9.5" font-weight="400" fill="#ffffff" font-family="sans-serif">CAGR 25-40%</text>
+<rect x="456.07" y="55.00" width="161.97" height="199.23" fill="#7527ba" fill-opacity="0.65" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="537.05" y="145.26" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff" font-family="sans-serif">量子通信/QKD</text>
+<text x="537.05" y="158.26" text-anchor="middle" font-size="10.5" font-weight="400" fill="#ffffff" font-family="sans-serif">$0.7B</text>
+<text x="537.05" y="171.26" text-anchor="middle" font-size="9.5" font-weight="400" fill="#ffffff" font-family="sans-serif">CAGR 20-30%</text>
+<rect x="618.03" y="55.00" width="161.97" height="199.23" fill="#8830d4" fill-opacity="0.65" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="699.02" y="145.26" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff" font-family="sans-serif">量子SW/クラウド/ミドル…</text>
+<text x="699.02" y="158.26" text-anchor="middle" font-size="10.5" font-weight="400" fill="#ffffff" font-family="sans-serif">$0.7B</text>
+<text x="699.02" y="171.26" text-anchor="middle" font-size="9.5" font-weight="400" fill="#ffffff" font-family="sans-serif">CAGR 30%+</text>
+<rect x="456.07" y="254.23" width="161.97" height="170.77" fill="#994eda" fill-opacity="0.65" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="537.05" y="330.26" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff" font-family="sans-serif">量子センシング/計測</text>
+<text x="537.05" y="343.26" text-anchor="middle" font-size="10.5" font-weight="400" fill="#ffffff" font-family="sans-serif">$0.6B</text>
+<text x="537.05" y="356.26" text-anchor="middle" font-size="9.5" font-weight="400" fill="#ffffff" font-family="sans-serif">CAGR 15-25%</text>
+<rect x="618.03" y="254.23" width="161.97" height="113.85" fill="#aa6be0" fill-opacity="0.65" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="699.02" y="301.79" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff" font-family="sans-serif">PQC(耐量子暗号)</text>
+<text x="699.02" y="314.79" text-anchor="middle" font-size="10.5" font-weight="400" fill="#ffffff" font-family="sans-serif">$0.4B</text>
+<text x="699.02" y="327.79" text-anchor="middle" font-size="9.5" font-weight="400" fill="#ffffff" font-family="sans-serif">CAGR 非常に高い</text>
+<rect x="618.03" y="368.08" width="161.97" height="56.92" fill="#bb89e6" fill-opacity="0.65" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+<text x="699.02" y="387.18" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff" font-family="sans-serif">量子アルゴリズム/アプリ(…</text>
+<text x="699.02" y="400.18" text-anchor="middle" font-size="10.5" font-weight="400" fill="#ffffff" font-family="sans-serif">$0.2B</text>
+<text x="699.02" y="413.18" text-anchor="middle" font-size="9.5" font-weight="400" fill="#ffffff" font-family="sans-serif">CAGR 高い</text>
+<rect x="20.00" y="55.00" width="249.18" height="370.00" fill="#501a7f" fill-opacity="0.65" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-dasharray="4,3" />
+<text x="144.59" y="230.64" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff" font-family="sans-serif">★量子IPO/年間投資額(資本市場・参考)</text>
+<text x="144.59" y="243.64" text-anchor="middle" font-size="10.5" font-weight="400" fill="#ffffff" font-family="sans-serif">$2B</text>
+<text x="144.59" y="256.64" text-anchor="middle" font-size="9.5" font-weight="400" fill="#ffffff" font-family="sans-serif">CAGR 変動大</text>
+</svg>

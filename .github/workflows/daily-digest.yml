@@ -43,6 +43,10 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install rsvg-convert (for heatmap PNG embedding)
+        if: steps.files.outputs.count != '0'
+        run: sudo apt-get update && sudo apt-get install -y librsvg2-bin fonts-noto-cjk
+
       - name: Build and send digest emails
         if: steps.files.outputs.count != '0'
         id: digest
