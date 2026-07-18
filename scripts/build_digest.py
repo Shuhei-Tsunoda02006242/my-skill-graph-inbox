@@ -1,12 +1,24 @@
 #!/usr/bin/env python3
-"""キャプチャノートからソース別ダイジェスト（+ Gemini批評コメント）を組み立てて、
-ソースごとに1通ずつメール送信する。
+"""キャプチャノートからカテゴリ別ダイジェスト（+ Gemini批評コメント）を組み立てて、
+カテゴリ（Sequoia Capital風アレンジ5分類: AI/Hardware（半導体）/Climate & Energy/
+Healthcare/Frontier（量子）/その他）ごとに1通ずつメール送信する（2026-07-18〜、
+以前はソース別グルーピングだった）。
 
-Usage: build_digest.py <file1.md> [file2.md ...]
+Frontier（量子）は日次配信の対象外。WEEKLY_QUANTUM=1 で起動すると、日次処理の代わりに
+過去7日以内の量子ノートをスキャンして週次サマリー1通（1行ヘッドライン形式＋Gemini総括＋
+量子ヒートマップ）を送信する専用モードに切り替わる。
+
+Usage:
+    build_digest.py <file1.md> [file2.md ...]              通常の日次カテゴリダイジェスト
+    WEEKLY_QUANTUM=1 build_digest.py [file1.md ...]         週次量子ダイジェスト
+        （パスを渡せばそれを対象にする＝テスト用。渡さなければ 00-Inbox/*.md を
+        ファイル名の日付でスキャンし、過去7日以内かつFrontier（量子）カテゴリの
+        ノートを対象にする。.digest-state には依存しない）
 
 環境変数:
 - GMAIL_USERNAME / GMAIL_APP_PASSWORD  SMTP認証情報（送受信とも同一アドレス）
-- GEMINI_API_KEY                       批評コメント生成用（無くても継続）
+- GEMINI_API_KEY                       批評コメント/週次総括生成用（無くても継続）
+- WEEKLY_QUANTUM=1                     週次量子ダイジェストモードに切り替え
 - DRY_RUN=1                            SMTP送信せず、件名・本文を標準出力するのみ
 - INCLUDE_HEATMAPS=0                   末尾ヒートマップ画像の埋め込みのみを無効化（📍市場規模
                                         注記は独立して継続。デフォルト有効。
@@ -41,18 +53,48 @@ SOURCES = {
 GEMINI_MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"]
 JST = timezone(timedelta(hours=9))
 
-# ソース別アクセントカラー（HTMLメールのヘッダー帯・リンク色に使用）。
-# 未知ソースは「その他」にフォールバック。
-SOURCE_COLORS = {
-    "TechCrunch": "#0a7d33",
-    "Techmeme": "#1a73e8",
-    "STAT News": "#c5221f",
-    "IEEE Spectrum Neuro": "#7627bb",
-    "Quantum Computing Report": "#0b8043",
-    "FierceBiotech": "#e37400",
-    "The Quantum Insider": "#00695c",
-    "Electrek": "#188038",
-    "その他": "#5f6368",
+# 配信カテゴリ（Sequoia Capital風アレンジ5分類 + その他）。
+# アクセントカラーはHTMLメールのヘッダー帯・リンク色に、domainはヒートマップ画像
+# （assets/market/market-{domain}-treemap.svg）の選択に使う。「その他」はdomain無し。
+CATEGORIES = {
+    "AI": {"accent": "#1a73e8", "domain": "ai"},
+    "Hardware（半導体）": {"accent": "#0a7d33", "domain": "semiconductor"},
+    "Climate & Energy": {"accent": "#e37400", "domain": "energy"},
+    "Healthcare": {"accent": "#c5221f", "domain": "biotech"},
+    "Frontier（量子）": {"accent": "#7627bb", "domain": "quantum"},
+    "その他": {"accent": "#5f6368", "domain": None},
+}
+CATEGORY_ORDER = list(CATEGORIES.keys())
+
+# DRY_RUNプレビューファイル名用のカテゴリ→スラグ変換
+CATEGORY_SLUG = {
+    "AI": "ai",
+    "Hardware（半導体）": "hardware",
+    "Climate & Energy": "climate-energy",
+    "Healthcare": "healthcare",
+    "Frontier（量子）": "quantum",
+    "その他": "other",
+}
+
+# landscape-position 第1セグメント → 配信カテゴリ
+SEGMENT_TO_CATEGORY = {
+    "AI": "AI",
+    "Semiconductor": "Hardware（半導体）",
+    "Energy": "Climate & Energy",
+    "Biotech": "Healthcare",
+    "Quantum": "Frontier（量子）",
+}
+
+# landscape-position が空のノート向け、ソースprefix→配信カテゴリのフォールバック
+PREFIX_FALLBACK_CATEGORY = {
+    "tc": "AI",
+    "tm": "AI",
+    "sn": "Healthcare",
+    "is": "Healthcare",
+    "fb": "Healthcare",
+    "ek": "Climate & Energy",
+    "qcr": "Frontier（量子）",
+    "tqi": "Frontier（量子）",
 }
 
 # シグナル強度バッジの配色（背景色, 文字色）
@@ -127,6 +169,7 @@ def parse_note(path: str, sources: dict[str, str]) -> dict:
     m = re.match(r"\d{4}-\d{2}-\d{2}-([a-z]+)-", os.path.basename(path))
     prefix = m.group(1) if m else ""
     return {
+        "prefix": prefix,
         "source_name": sources.get(prefix, "その他"),
         "title": frontmatter_field("title", text),
         "url": frontmatter_field("source", text),
@@ -136,6 +179,19 @@ def parse_note(path: str, sources: dict[str, str]) -> dict:
         "claim": section(["主な主張", "Key Claim"], text),
         "my_take": section(["私の見解", "My Take"], text),
     }
+
+
+def categorize(note: dict) -> str:
+    """ノートを配信カテゴリに振り分ける。
+    landscape-position の第1セグメントを優先し、無ければソースprefixでフォールバック、
+    どちらも該当しなければ「その他」。"""
+    position = note.get("position", "")
+    if position:
+        top = position.split(">")[0].strip()
+        category = SEGMENT_TO_CATEGORY.get(top)
+        if category:
+            return category
+    return PREFIX_FALLBACK_CATEGORY.get(note.get("prefix", ""), "その他")
 
 
 def load_claude_commentary() -> dict[str, str]:
@@ -219,21 +275,6 @@ def annotate_position(position: str, market_data: dict | None) -> str:
     return position + fmt_market_annotation(tile)
 
 
-def domains_for_articles(articles: list[dict]) -> list[str]:
-    """記事群の landscape-position 先頭セグメントから該当する domain key を
-    重複除去・出現順で集める。"""
-    keys = []
-    for a in articles:
-        pos = a.get("position", "")
-        if not pos:
-            continue
-        top = pos.split(">")[0].strip()
-        domain_key = DOMAIN_SEGMENT_TO_KEY.get(top)
-        if domain_key and domain_key not in keys:
-            keys.append(domain_key)
-    return keys
-
-
 def render_domain_heatmap_png(domain_key: str, width: int = 1200) -> bytes | None:
     """market-{domain}-treemap.svg を rsvg-convert でPNG化する。
     rsvg-convertが無い/失敗した場合はNoneを返し、stderrに警告する
@@ -285,23 +326,11 @@ def build_heatmap_html(domain_keys: list[str], src_map: dict[str, str]) -> str:
     return "".join(parts)
 
 
-def gemini_commentary(source_name: str, articles: list[dict]) -> str:
-    """ソース単位の批評コメントを生成。失敗したら空文字（メール送信は止めない）。"""
+def _gemini_generate(prompt: str, label: str) -> str:
+    """Gemini API呼び出しの共通処理。失敗したら空文字（呼び出し元の送信は止めない）。"""
     key = os.environ.get("GEMINI_API_KEY", "")
     if not key:
         return ""
-    summary = "\n\n".join(
-        f"記事{i + 1}: {a['title']}\n主張: {a['claim']}\n投資含意: {a['implication']}"
-        for i, a in enumerate(articles)
-    )
-    prompt = (
-        f"あなたはDeepTech（AI・半導体・量子・バイオ・エネルギー）と投資のクロスドメインアナリストです。"
-        f"以下は本日キャプチャした {source_name} の記事要約です。\n\n{summary}\n\n"
-        "この記事群への批評コメントを日本語で3〜5文で書いてください。観点: "
-        "(1) 誇張・ハイプの可能性 (2) 記事に欠けている文脈 "
-        "(3) 投資家として注意すべき点 (4) 記事間に共通するトレンドがあれば指摘。"
-        "前置き・見出し・箇条書きは不要で、コメント本文のみを出力してください。"
-    )
     payload = json.dumps({"contents": [{"parts": [{"text": prompt}]}]}).encode()
     for model in GEMINI_MODELS:
         try:
@@ -320,14 +349,47 @@ def gemini_commentary(source_name: str, articles: list[dict]) -> str:
             if text:
                 return text
         except Exception as e:
-            print(f"Gemini ({model}) failed: {e}", file=sys.stderr)
+            print(f"Gemini {label} ({model}) failed: {e}", file=sys.stderr)
     return ""
 
 
-def build_body(source_name: str, articles: list[dict], commentary: str, commentary_label: str,
+def gemini_commentary(category_name: str, articles: list[dict]) -> str:
+    """カテゴリ単位の批評コメントを生成。失敗したら空文字（メール送信は止めない）。"""
+    summary = "\n\n".join(
+        f"記事{i + 1}: {a['title']}\n主張: {a['claim']}\n投資含意: {a['implication']}"
+        for i, a in enumerate(articles)
+    )
+    prompt = (
+        f"あなたはDeepTech（AI・半導体・量子・バイオ・エネルギー）と投資のクロスドメインアナリストです。"
+        f"以下は本日キャプチャした {category_name} カテゴリの記事要約です。\n\n{summary}\n\n"
+        "この記事群への批評コメントを日本語で3〜5文で書いてください。観点: "
+        "(1) 誇張・ハイプの可能性 (2) 記事に欠けている文脈 "
+        "(3) 投資家として注意すべき点 (4) 記事間に共通するトレンドがあれば指摘。"
+        "前置き・見出し・箇条書きは不要で、コメント本文のみを出力してください。"
+    )
+    return _gemini_generate(prompt, category_name)
+
+
+def gemini_weekly_summary(articles: list[dict]) -> str:
+    """量子週次ダイジェストの総括コメントを生成。失敗したら空文字（総括なしで継続）。"""
+    summary = "\n\n".join(
+        f"記事{i + 1}: {a['title']}\n主張: {a['claim']}\n投資含意: {a['implication']}"
+        for i, a in enumerate(articles)
+    )
+    prompt = (
+        "あなたはDeepTech（AI・半導体・量子・バイオ・エネルギー）と投資のクロスドメインアナリストです。"
+        f"以下は今週キャプチャした量子分野の記事群の要約です。\n\n{summary}\n\n"
+        "個別記事の詳細ではなく、記事群全体から見える潮流・地形の変化がわかる総括を"
+        "日本語で3〜5文で書いてください。ハイプ（誇張）に注意すべき点があれば添えてください。"
+        "前置き・見出し・箇条書きは不要で、総括本文のみを出力してください。"
+    )
+    return _gemini_generate(prompt, "weekly-quantum")
+
+
+def build_body(category: str, articles: list[dict], commentary: str, commentary_label: str,
                 market_data: dict | None = None, heatmap_available: bool = False) -> str:
     lines = [
-        f"{source_name}（{len(articles)}件）",
+        f"{category}（{len(articles)}件）",
         "",
     ]
     for a in articles:
@@ -337,6 +399,7 @@ def build_body(source_name: str, articles: list[dict], commentary: str, commenta
         if a["position"]:
             lines += [f"📍 {annotate_position(a['position'], market_data)}"]
         lines += [
+            f"ソース: {a['source_name']}",
             f"シグナル強度: {a['signal']}",
             "",
             "【主な主張】",
@@ -360,20 +423,20 @@ def _esc(text: str) -> str:
     return html.escape(text).replace("\n", "<br>")
 
 
-def build_html_body(source_name: str, articles: list[dict], commentary: str,
+def build_html_body(category: str, articles: list[dict], commentary: str,
                      commentary_label: str, today: str, market_data: dict | None = None,
                      heatmap_html: str = "") -> str:
     """NewsPicks風カードのHTMLメール本文を組み立てる。Gmail対応のためインラインstyleのみ使用。"""
-    accent = SOURCE_COLORS.get(source_name, SOURCE_COLORS["その他"])
+    accent = CATEGORIES.get(category, CATEGORIES["その他"])["accent"]
 
     parts = [
         '<div style="max-width:600px;margin:0 auto;'
         "font-family:-apple-system,'Hiragino Sans',sans-serif;"
         'background-color:#f1f3f4;padding:16px;">',
-        # ヘッダー: ソース別アクセントカラーの帯
+        # ヘッダー: カテゴリ別アクセントカラーの帯
         f'<div style="background-color:{accent};border-radius:8px 8px 0 0;'
         'padding:16px;color:#ffffff;">'
-        f'<div style="font-size:20px;font-weight:bold;">{html.escape(source_name)}</div>'
+        f'<div style="font-size:20px;font-weight:bold;">{html.escape(category)}</div>'
         f'<div style="font-size:13px;opacity:0.9;margin-top:4px;">'
         f'{html.escape(today)}（{len(articles)}件）</div>'
         "</div>",
@@ -401,6 +464,9 @@ def build_html_body(source_name: str, articles: list[dict], commentary: str,
             f"color:{badge_fg};font-size:12px;font-weight:bold;border-radius:12px;"
             f'padding:2px 10px;margin-top:8px;">'
             f'{html.escape(a["signal"] or "none")}</div>'
+            # 複数ソースが混在するカテゴリメールのため、ソース名チップを併記
+            f'<span style="font-size:12px;color:#5f6368;margin-left:8px;">'
+            f'{html.escape(a["source_name"])}</span>'
         )
         card.append(
             '<div style="font-size:14px;font-weight:bold;color:#202124;margin-top:12px;">'
@@ -464,15 +530,17 @@ def send_emails(groups: dict[str, list[dict]], claude_comments: dict[str, str]) 
         return heatmap_cache[domain_key]
 
     messages = []
-    for source_name, articles in groups.items():
-        commentary = claude_comments.get(source_name)
+    for category, articles in groups.items():
+        commentary = claude_comments.get(category)
         if commentary:
             label = "Claude"
         else:
-            commentary = gemini_commentary(source_name, articles)
+            commentary = gemini_commentary(category, articles)
             label = "Gemini生成"
 
-        domain_keys = domains_for_articles(articles) if (market_data and include_heatmaps) else []
+        # カテゴリメールでは対応する領域のヒートマップ1枚だけを埋め込む（その他はdomain無し）
+        domain_key = CATEGORIES.get(category, CATEGORIES["その他"])["domain"]
+        domain_keys = [domain_key] if (domain_key and market_data and include_heatmaps) else []
         images: dict[str, bytes] = {}
         for dk in domain_keys:
             png_bytes = get_heatmap_png(dk)
@@ -486,32 +554,29 @@ def send_emails(groups: dict[str, list[dict]], claude_comments: dict[str, str]) 
                 for dk, data in images.items()
             }
             if domain_keys and not images:
-                print(f"[DRY_RUN] {source_name}: ヒートマップ画像は変換できませんでした（rsvg-convert未導入等）")
+                print(f"[DRY_RUN] {category}: ヒートマップ画像は変換できませんでした（rsvg-convert未導入等）")
         else:
             # 実送信時はCID参照にし、あとでadd_relatedする
             src_map = {dk: f"cid:heatmap-{dk}" for dk in images}
 
         heatmap_html = build_heatmap_html(domain_keys, src_map)
 
-        subject = f"📥 [{source_name}] デイリーキャプチャ {today}（{len(articles)}件）"
-        body = build_body(source_name, articles, commentary, label, market_data, bool(heatmap_html))
+        subject = f"📥 [{category}] デイリーダイジェスト {today}（{len(articles)}件）"
+        body = build_body(category, articles, commentary, label, market_data, bool(heatmap_html))
         html_body = build_html_body(
-            source_name, articles, commentary, label, today, market_data, heatmap_html
+            category, articles, commentary, label, today, market_data, heatmap_html
         )
-        messages.append((subject, body, html_body, source_name, images))
+        messages.append((subject, body, html_body, category, images))
 
     if dry_run:
         preview_dir = os.environ.get("TMPDIR", "/tmp")
-        sources = load_sources()
-        for subject, body, html_body, source_name, images in messages:
+        for subject, body, html_body, category, images in messages:
             print("=" * 60)
             print(f"Subject: {subject}")
             print("-" * 60)
             print(body)
-            prefix = next(
-                (p for p, n in sources.items() if n == source_name), "other"
-            )
-            preview_path = os.path.join(preview_dir, f"digest_preview_{prefix}.html")
+            slug = CATEGORY_SLUG.get(category, "other")
+            preview_path = os.path.join(preview_dir, f"digest_preview_{slug}.html")
             with open(preview_path, "w", encoding="utf-8") as f:
                 f.write(html_body)
             print(f"[DRY_RUN] HTML preview saved: {preview_path}")
@@ -519,7 +584,7 @@ def send_emails(groups: dict[str, list[dict]], claude_comments: dict[str, str]) 
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
         smtp.login(username, password)
-        for subject, body, html_body, source_name, images in messages:
+        for subject, body, html_body, category, images in messages:
             msg = EmailMessage()
             msg["Subject"] = subject
             msg["From"] = f"Skill Graph Inbox <{username}>"
@@ -534,6 +599,152 @@ def send_emails(groups: dict[str, list[dict]], claude_comments: dict[str, str]) 
                     )
             smtp.send_message(msg)
             print(f"Sent: {subject}")
+
+
+def build_weekly_body(articles: list[dict], summary: str, today: str,
+                       market_data: dict | None = None, heatmap_available: bool = False) -> str:
+    """量子週次ダイジェストのplain本文（1行ヘッドライン形式）を組み立てる。"""
+    lines = [f"Frontier（量子） 週次ダイジェスト {today}（今週{len(articles)}件）", ""]
+    if summary:
+        lines += ["🔭 今週の潮流", summary, ""]
+    for a in articles:
+        lines.append(f"・{a['title']}")
+        meta_bits = []
+        if a["position"]:
+            meta_bits.append(f"📍 {annotate_position(a['position'], market_data)}")
+        meta_bits.append(f"ソース: {a['source_name']}")
+        lines.append("  " + "｜".join(meta_bits))
+        lines.append(f"  🔗 {a['url']}")
+        lines.append("")
+    if heatmap_available:
+        lines += ["🗺 市場規模ヒートマップは HTML表示で確認", ""]
+    return "\n".join(lines) + "\n"
+
+
+def build_weekly_html_body(articles: list[dict], summary: str, today: str,
+                            market_data: dict | None = None, heatmap_html: str = "") -> str:
+    """量子週次ダイジェストのHTML本文（1行ヘッドライン形式）を組み立てる。"""
+    accent = CATEGORIES["Frontier（量子）"]["accent"]
+
+    parts = [
+        '<div style="max-width:600px;margin:0 auto;'
+        "font-family:-apple-system,'Hiragino Sans',sans-serif;"
+        'background-color:#f1f3f4;padding:16px;">',
+        f'<div style="background-color:{accent};border-radius:8px 8px 0 0;'
+        'padding:16px;color:#ffffff;">'
+        '<div style="font-size:20px;font-weight:bold;">Frontier（量子） 週次ダイジェスト</div>'
+        f'<div style="font-size:13px;opacity:0.9;margin-top:4px;">'
+        f'{html.escape(today)}（今週{len(articles)}件）</div>'
+        "</div>",
+    ]
+
+    if summary:
+        parts.append(
+            '<div style="background-color:#f8f9fa;border-radius:8px;padding:16px;'
+            'margin-top:12px;">'
+            '<div style="font-size:13px;font-weight:bold;color:#5f6368;">🔭 今週の潮流</div>'
+            f'<div style="font-size:14px;color:#3c4043;line-height:1.6;margin-top:8px;">'
+            f'{_esc(summary)}</div>'
+            "</div>"
+        )
+
+    rows = []
+    for a in articles:
+        meta_bits = []
+        if a["position"]:
+            meta_bits.append(
+                f'📍 {html.escape(annotate_position(a["position"], market_data))}'
+            )
+        meta_bits.append(html.escape(a["source_name"]))
+        rows.append(
+            '<div style="background-color:#ffffff;border-bottom:1px solid #dadce0;'
+            'padding:12px 4px;">'
+            f'<a href="{html.escape(a["url"], quote=True)}" '
+            f'style="color:{accent};text-decoration:none;font-size:15px;font-weight:bold;'
+            'line-height:1.4;">'
+            f'{html.escape(a["title"])}</a>'
+            '<div style="font-size:12px;color:#5f6368;margin-top:4px;">'
+            f'{"｜".join(meta_bits)}</div>'
+            "</div>"
+        )
+    parts.append(
+        '<div style="background-color:#ffffff;border:1px solid #dadce0;'
+        'border-radius:8px;margin-top:12px;overflow:hidden;">' + "".join(rows) + "</div>"
+    )
+
+    if heatmap_html:
+        parts.append(heatmap_html)
+
+    parts.append("</div>")
+    return "".join(parts)
+
+
+def send_weekly_quantum_email(articles: list[dict]) -> None:
+    """量子週次ダイジェストを1通だけ送信する。"""
+    dry_run = os.environ.get("DRY_RUN") == "1"
+    # シークレット値に末尾改行が入っているとメールヘッダーが弾かれるため必ずstrip
+    username = os.environ["GMAIL_USERNAME"].strip()
+    password = os.environ.get("GMAIL_APP_PASSWORD", "").strip()
+    today = datetime.now(JST).strftime("%Y-%m-%d")
+
+    market_data = load_market_data()
+    include_heatmaps = os.environ.get("INCLUDE_HEATMAPS", "1") != "0"
+
+    summary = gemini_weekly_summary(articles)
+
+    domain_key = CATEGORIES["Frontier（量子）"]["domain"]
+    images: dict[str, bytes] = {}
+    if domain_key and market_data and include_heatmaps:
+        png_bytes = render_domain_heatmap_png(domain_key)
+        if png_bytes:
+            images[domain_key] = png_bytes
+
+    domain_keys = [domain_key] if (domain_key and market_data and include_heatmaps) else []
+
+    if dry_run:
+        src_map = {
+            dk: "data:image/png;base64," + base64.b64encode(data).decode()
+            for dk, data in images.items()
+        }
+        if domain_keys and not images:
+            print("[DRY_RUN] Frontier（量子）: ヒートマップ画像は変換できませんでした（rsvg-convert未導入等）")
+    else:
+        src_map = {dk: f"cid:heatmap-{dk}" for dk in images}
+
+    heatmap_html = build_heatmap_html(domain_keys, src_map)
+
+    subject = f"🔭 [Frontier（量子）] 週次ダイジェスト {today}（今週{len(articles)}件）"
+    body = build_weekly_body(articles, summary, today, market_data, bool(heatmap_html))
+    html_body = build_weekly_html_body(articles, summary, today, market_data, heatmap_html)
+
+    if dry_run:
+        print("=" * 60)
+        print(f"Subject: {subject}")
+        print("-" * 60)
+        print(body)
+        preview_dir = os.environ.get("TMPDIR", "/tmp")
+        preview_path = os.path.join(preview_dir, "digest_preview_weekly_quantum.html")
+        with open(preview_path, "w", encoding="utf-8") as f:
+            f.write(html_body)
+        print(f"[DRY_RUN] HTML preview saved: {preview_path}")
+        return
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+        smtp.login(username, password)
+        msg = EmailMessage()
+        msg["Subject"] = subject
+        msg["From"] = f"Skill Graph Inbox <{username}>"
+        msg["To"] = username
+        msg.set_content(body, charset="utf-8")
+        msg.add_alternative(html_body, subtype="html")
+        if images:
+            html_part = msg.get_payload()[-1]
+            for dk, data in images.items():
+                html_part.add_related(
+                    data, maintype="image", subtype="png", cid=f"<heatmap-{dk}>"
+                )
+        smtp.send_message(msg)
+        print(f"Sent: {subject}")
 
 
 def dedup_by_url(paths: list[str], sources: dict[str, str]) -> list[dict]:
@@ -565,20 +776,72 @@ def dedup_by_url(paths: list[str], sources: dict[str, str]) -> list[dict]:
     return notes
 
 
+def run_weekly_quantum(paths: list[str], sources: dict[str, str]) -> None:
+    """WEEKLY_QUANTUM=1 時のエントリーポイント。
+    argvにパスが渡されればそれを対象にする（テスト用）。無ければ 00-Inbox/*.md を
+    ファイル名の日付でスキャンし、過去7日以内かつFrontier（量子）カテゴリのノートを
+    対象にする（.digest-state には依存しない）。対象0件なら送信せず正常終了する。"""
+    import glob
+
+    if paths:
+        candidate_paths = paths
+    else:
+        cutoff = datetime.now(JST).date() - timedelta(days=7)
+        candidate_paths = []
+        for p in sorted(glob.glob("00-Inbox/*.md")):
+            m = re.match(r"(\d{4}-\d{2}-\d{2})-", os.path.basename(p))
+            if not m:
+                continue
+            try:
+                file_date = datetime.strptime(m.group(1), "%Y-%m-%d").date()
+            except ValueError:
+                continue
+            if file_date >= cutoff:
+                candidate_paths.append(p)
+
+    notes = dedup_by_url(candidate_paths, sources)
+    quantum_notes = [n for n in notes if categorize(n) == "Frontier（量子）"]
+
+    if not quantum_notes:
+        print("No quantum articles this week")
+    else:
+        send_weekly_quantum_email(quantum_notes)
+
+    out = os.environ.get("GITHUB_OUTPUT")
+    if out:
+        with open(out, "a") as f:
+            f.write(f"count={len(quantum_notes)}\n")
+    print(f"Built weekly quantum digest: {len(quantum_notes)} articles")
+
+
 def main() -> None:
     paths = [p for p in sys.argv[1:] if os.path.isfile(p)]
     sources = load_sources()
+
+    if os.environ.get("WEEKLY_QUANTUM") == "1":
+        run_weekly_quantum(paths, sources)
+        return
+
     notes = dedup_by_url(paths, sources)
 
+    # Frontier（量子）は日次配信の対象外。週次サマリー（WEEKLY_QUANTUM=1）側で拾うため
+    # ここでは除くだけで、ノート自体は消失しない
+    quantum_notes = [n for n in notes if categorize(n) == "Frontier（量子）"]
+    if quantum_notes:
+        print(f"Skipped for weekly: {len(quantum_notes)} quantum articles")
+    daily_notes = [n for n in notes if categorize(n) != "Frontier（量子）"]
+
     groups: dict[str, list[dict]] = {}
-    for name in list(dict.fromkeys(sources.values())) + ["その他"]:
-        matched = [n for n in notes if n["source_name"] == name]
+    for category in CATEGORY_ORDER:
+        if category == "Frontier（量子）":
+            continue
+        matched = [n for n in daily_notes if categorize(n) == category]
         if matched:
-            groups[name] = matched
+            groups[category] = matched
 
     claude_comments = load_claude_commentary()
 
-    if not notes:
+    if not daily_notes:
         print("No unique articles to send")
     else:
         send_emails(groups, claude_comments)
@@ -587,7 +850,7 @@ def main() -> None:
     if out:
         with open(out, "a") as f:
             f.write(f"count={len(notes)}\n")
-    print(f"Built digest: {len(notes)} articles, {len(groups)} sources")
+    print(f"Built digest: {len(notes)} articles, {len(groups)} categories")
 
 
 if __name__ == "__main__":

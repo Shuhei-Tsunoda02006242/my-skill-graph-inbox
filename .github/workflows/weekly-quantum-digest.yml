@@ -1,0 +1,38 @@
+name: Weekly Quantum Digest
+
+# Frontier（量子）は日次配信から分離し、土曜08:00 JST = 金曜23:00 UTCに
+# 週次サマリー1通（1行ヘッドライン形式＋Gemini総括＋量子ヒートマップ）を送信する。
+# 対象は WEEKLY_QUANTUM=1 起動時にスクリプト自身が 00-Inbox/*.md をファイル名の
+# 日付でスキャンして選定するため、.digest-state には依存しない。
+on:
+  schedule:
+    - cron: "0 23 * * 5"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: weekly-quantum-digest
+  cancel-in-progress: false
+
+jobs:
+  send-weekly-quantum-digest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install rsvg-convert (for heatmap PNG embedding)
+        run: sudo apt-get update && sudo apt-get install -y librsvg2-bin fonts-noto-cjk
+
+      - name: Build and send weekly quantum digest
+        env:
+          WEEKLY_QUANTUM: "1"
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: python3 scripts/build_digest.py

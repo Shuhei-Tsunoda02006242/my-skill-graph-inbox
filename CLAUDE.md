@@ -95,6 +95,13 @@ landscape-position: ""  # 領域タクソノミーのパンくず（下記「領
 - プレスリリースのみで独自情報なし
 - 既に過去7日以内に類似トピックをキャプチャ済み
 
+### 量子ソース（qcr-/tqi-）の軽量化ルール（2026-07-18〜）
+Frontier（量子）は日次配信から外れ週次サマリーに集約されたため、キャプチャ自体も全体感把握用に軽量化する（使用量削減も兼ねる）。
+
+- `qcr-`・`tqi-` は**1日合計最大2記事まで**（両ソース合わせて2件。個別ソースごとに2件ではない）
+- 本文は **Key Claim中心に3行以内**で簡潔に書く（Evidence / Contextを詳細に掘り下げない）
+- 詳細な深掘りは不要。週次ダイジェストは1行ヘッドライン形式で潮流を見るためのものなので、個別記事の情報量より広く拾うことを優先する
+
 ---
 
 ## signal-strength 判定基準
@@ -127,15 +134,34 @@ Author: `Claude <noreply@anthropic.com>`
 
 ---
 
+## 配信カテゴリ（Sequoia風アレンジ）
+
+メールはソース別ではなく、Sequoia Capital「Our Companies」風にアレンジした5カテゴリ＋その他でグルーピングする（2026-07-18〜）。振り分けは `landscape-position` の第1セグメントを優先し、空欄ならソースprefixでフォールバックする。
+
+| カテゴリ（表示名） | landscape-position第1セグメント | ソースprefixフォールバック | 配信頻度 |
+|---|---|---|---|
+| AI | AI | `tc-`, `tm-` | 日次 |
+| Hardware（半導体） | Semiconductor | （フォールバック無し） | 日次 |
+| Climate & Energy | Energy | `ek-` | 日次 |
+| Healthcare | Biotech | `sn-`, `is-`, `fb-` | 日次 |
+| Frontier（量子） | Quantum | `qcr-`, `tqi-` | **週次（土曜08:00 JST）** |
+| その他 | （どれにも該当しない/position無し） | 不明なprefix | 日次 |
+
+Frontier（量子）だけは日次配信から外れ、`weekly-quantum-digest.yml` が土曜朝に週次1通としてまとめて送る（詳細は次節）。
+
+---
+
 ## メール配信（GitHub Actions）
 
-`.github/workflows/daily-digest.yml` が **毎朝08:00 JST** に実行され、前回送信以降（ルートの `.digest-state` マーカー以降）に追加された **全ソース** のノートをソース別にグルーピングし、ソースごとのGemini批評コメント付きで **ソースごとに1通ずつ** メール送信する（2026-07-05〜、以前は1日1通にまとめて送信していた）。
+`.github/workflows/daily-digest.yml` が **毎朝08:00 JST** に実行され、前回送信以降（ルートの `.digest-state` マーカー以降）に追加された全ソースのノートを上記の**配信カテゴリ別**にグルーピングし、カテゴリごとのGemini批評コメント付きで **カテゴリごとに1通ずつ** メール送信する（2026-07-18〜、以前はソース別グルーピングだった。2026-07-05〜07-17はソース別1通ずつ、それ以前は1日1通にまとめていた）。
 
+- Frontier（量子）カテゴリは日次送信の対象外。`.github/workflows/weekly-quantum-digest.yml` が**土曜08:00 JST**（cron `0 23 * * 5`）に週次1通として送信する（`WEEKLY_QUANTUM=1 python3 scripts/build_digest.py` 起動。対象は `00-Inbox/*.md` をファイル名の日付でスキャンし過去7日以内のFrontier（量子）ノート。`.digest-state` には依存しない。対象0件なら送信せず正常終了）。週次本文は1行ヘッドライン形式（フルカードではない）＋Gemini週次総括＋末尾に量子ヒートマップ
 - push時の都度送信は廃止済み（2026-07-04）
-- 手動送信: Actions の workflow_dispatch から実行可能
-- 本文組み立て・SMTP送信ともに `scripts/build_digest.py` が実施（`smtplib.SMTP_SSL` で1ログイン後、ソースごとにループ送信。Gemini API失敗時はコメント無しで送信を継続）
+- 手動送信: 両ワークフローとも Actions の workflow_dispatch から実行可能
+- 本文組み立て・SMTP送信ともに `scripts/build_digest.py` が実施（`smtplib.SMTP_SSL` で1ログイン後、カテゴリごとにループ送信。Gemini API失敗時はコメント無しで送信を継続）
+- カテゴリメールは複数ソースが混在するため、各記事カードにソース名チップ（シグナルバッジの横にグレー文字で表示。例: `TechCrunch`）を表示する。plain版も各記事に `ソース: {ソース名}` の1行を追加
 - 📍パンくずには市場規模注記が付く（`assets/market/market-sizes.json` の `breadcrumb-map` 由来。例: `📍 Quantum > PQC（市場$0.4B・急成長）`）。マップ不一致・データ無しなら注記なしでフォールバック
-- メール末尾に該当領域の市場規模ヒートマップPNGを埋め込む（`🗺 市場規模ヒートマップ` セクション）。SVGをGitHub Actions上で `rsvg-convert` によりPNG化しCID埋め込み。環境変数 `INCLUDE_HEATMAPS=0` で画像埋め込みのみ無効化可能（📍注記は継続）
+- メール末尾に**そのカテゴリに対応する領域の**市場規模ヒートマップPNGを1枚だけ埋め込む（`🗺 市場規模ヒートマップ` セクション。カテゴリ→domainの対応は「配信カテゴリ」表参照、その他はヒートマップ無し）。SVGをGitHub Actions上で `rsvg-convert` によりPNG化しCID埋め込み。環境変数 `INCLUDE_HEATMAPS=0` で画像埋め込みのみ無効化可能（📍注記は継続）
 - `assets/market/` はvault側 `scripts/generate_market_treemaps.py` 実行時に自動同期される（Inboxリポジトリはvaultの非コミット物を直接読めないため）
 
 ---
