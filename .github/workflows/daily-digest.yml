@@ -4,10 +4,13 @@ name: Daily Digest Email
 # 批評コメント（Claude優先・Geminiフォールバック）付きでメール送信する。
 # 量子（Frontier）は日次配信から分離し、weekly-quantum-digest.yml が土曜週次で扱う
 # （検出自体は量子ノートも拾うが、build_digest.py内でカテゴリ判定して日次送信から除外する）。
-# 08:00 JST = 23:00 UTC（毎朝7:00 JSTのクラウドルーチンによるキャプチャ完了後を想定）
+# cronは22:35 UTC = 7:35 JST起動。GitHub Actionsのスケジュール遅延
+# （毎時00分は混雑で40分超、半端な分でも5〜20分程度の遅延が直近7日間で実測）を
+# 織り込んでおり、実配信は8:00 JST前後になる想定。
+# キャプチャルーチン（クラウドルーチン）は毎朝7:13〜7:20 JSTに完了済み。
 on:
   schedule:
-    - cron: "0 23 * * *"
+    - cron: "35 22 * * *"
   workflow_dispatch:
 
 permissions:

@@ -1,12 +1,15 @@
 name: Weekly Quantum Digest
 
-# Frontier（量子）は日次配信から分離し、土曜08:00 JST = 金曜23:00 UTCに
-# 週次サマリー1通（1行ヘッドライン形式＋Gemini総括＋量子ヒートマップ）を送信する。
+# Frontier（量子）は日次配信から分離し、土曜週次サマリー1通
+# （1行ヘッドライン形式＋Gemini総括＋量子ヒートマップ）を送信する。
+# cronは金曜22:35 UTC = 土曜7:35 JST起動。GitHub Actionsのスケジュール遅延
+# （毎時00分は混雑で40分超、半端な分でも5〜20分程度の遅延が直近7日間で実測）を
+# 織り込んでおり、実配信は土曜8:00 JST前後になる想定。
 # 対象は WEEKLY_QUANTUM=1 起動時にスクリプト自身が 00-Inbox/*.md をファイル名の
 # 日付でスキャンして選定するため、.digest-state には依存しない。
 on:
   schedule:
-    - cron: "0 23 * * 5"
+    - cron: "35 22 * * 5"
   workflow_dispatch:
 
 permissions:
