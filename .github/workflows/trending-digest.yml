@@ -1,0 +1,33 @@
+name: Trending Digest Email
+
+# はてなブックマーク・Qiita・Zenn・Hacker News・Product Hunt の人気記事一覧を
+# モバイル向けHTMLメール1通にまとめて送信する（外出先から携帯でトレンドを読むため）。
+# cronは22:45 UTC = 7:45 JST起動。daily-digest.yml（22:35 UTC = 7:35 JST）と
+# 同じsend-digestランナー混雑帯を避けるため10分ずらしている。
+on:
+  schedule:
+    - cron: "45 22 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: trending-digest
+  cancel-in-progress: false
+
+jobs:
+  send-trending-digest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build and send trending digest email
+        env:
+          GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: python3 scripts/trending_mail.py
