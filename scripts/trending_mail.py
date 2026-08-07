@@ -9,7 +9,7 @@ Xトレンド・YouTubeはローカル専用の取得手段（opencli／ブラ�
 取得ソース（すべて認証不要の公開エンドポイント。opencliは使わない）:
 - はてなブックマーク: https://b.hatena.ne.jp/hotentry.rss (RSS/RDF) 上位15件
 - Qiita: https://qiita.com/popular-items/feed.atom (Atom) 上位15件
-  author が sumomoo の記事は除外（ユーザー指定。除外分は繰り上げない）
+  author が sumomoo/prumnn の記事は除外（ユーザー指定。除外分は繰り上げない）
 - Zenn: https://zenn.dev/feed (RSS) 上位15件
 - Hacker News: topstories.json → item/{id}.json を個別取得 上位10件
 - Product Hunt: https://www.producthunt.com/feed (Atom。RSSで返る可能性にも両対応) 上位10件
@@ -44,7 +44,9 @@ NS_RSS1 = "http://purl.org/rss/1.0/"
 NS_HATENA = "http://www.hatena.ne.jp/info/xmlns#"
 NS_ATOM = "http://www.w3.org/2005/Atom"
 
-EXCLUDE_QIITA_AUTHORS = {"sumomoo"}  # ユーザー指定（trending.md参照）
+# ユーザー指定の除外author。dotfiles側 claude/commands/trending.md の Qiita欄と
+# 同じ内容を保つこと（GitHub Actionsからdotfilesを読めないため二重管理になっている）。
+EXCLUDE_QIITA_AUTHORS = {"sumomoo", "prumnn"}
 
 
 def fetch_bytes(url: str, timeout: int = 20) -> bytes:
@@ -83,7 +85,7 @@ def fetch_hatena(limit: int = 15) -> list[dict]:
 
 
 def fetch_qiita(limit: int = 15) -> list[dict]:
-    """Qiita 人気の記事。Atomフィード。sumomoo著者の記事は抽出後に除外（繰り上げなし）。"""
+    """Qiita 人気の記事。Atomフィード。指定author（sumomoo/prumnn）の記事は抽出後に除外（繰り上げなし）。"""
     data = fetch_bytes("https://qiita.com/popular-items/feed.atom")
     root = ET.fromstring(data)
     results = []
