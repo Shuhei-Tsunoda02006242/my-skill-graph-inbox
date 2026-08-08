@@ -1,0 +1,4 @@
+{
+  "_comment": "トレンド一覧から除外する対象の唯一の正。デスクトップの /trending（dotfiles/claude/commands/trending.md）とメール版（trending_mail.py）の両方がこのファイルを読む。dotfilesはremoteが無くGitHub Actionsから見えないため、GitHub上にあるこちらを正とする。",
+  "qiita_authors": ["sumomoo", "prumnn"]
+}

@@ -44,9 +44,23 @@ NS_RSS1 = "http://purl.org/rss/1.0/"
 NS_HATENA = "http://www.hatena.ne.jp/info/xmlns#"
 NS_ATOM = "http://www.w3.org/2005/Atom"
 
-# ユーザー指定の除外author。dotfiles側 claude/commands/trending.md の Qiita欄と
-# 同じ内容を保つこと（GitHub Actionsからdotfilesを読めないため二重管理になっている）。
-EXCLUDE_QIITA_AUTHORS = {"sumomoo", "prumnn"}
+def load_exclusions() -> set[str]:
+    """除外authorを trending-exclusions.json から読む（このファイルが唯一の正）。
+
+    デスクトップの /trending も同じJSONを読む。dotfilesはremoteが無く
+    GitHub Actionsから見えないため、GitHub上にあるこちら側を正とする。
+    読めない場合は除外なしで続行する（メールが止まるより混ざるほうがマシ）。
+    """
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "trending-exclusions.json")
+    try:
+        with open(path, encoding="utf-8") as f:
+            return set(json.load(f).get("qiita_authors", []))
+    except (OSError, ValueError) as e:
+        print(f"warning: 除外リストを読めませんでした（除外なしで続行）: {e}", file=sys.stderr)
+        return set()
+
+
+EXCLUDE_QIITA_AUTHORS = load_exclusions()
 
 
 def fetch_bytes(url: str, timeout: int = 20) -> bytes:
