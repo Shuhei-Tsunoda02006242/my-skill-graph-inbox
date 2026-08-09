@@ -195,11 +195,27 @@ def categorize(note: dict) -> str:
 
 
 def load_claude_commentary() -> dict[str, str]:
-    """キャプチャループ（Claude）が書いた本日の批評コメントをソース別に読む。"""
-    today = datetime.now(JST).strftime("%Y-%m-%d")
-    path = f"digests/{today}-commentary.md"
-    if not os.path.isfile(path):
+    """キャプチャループ（Claude）が書いた本日の批評コメントをソース別に読む。
+    クラウドキャプチャルーチンはUTC日付でファイルを書くが、メール送信はJST日付基準で
+    動いているため、日付ズレを吸収するため複数の候補日付を順に試す
+    （UTC今日 → JST今日 → JST昨日）。"""
+    now_utc = datetime.now(timezone.utc)
+    now_jst = datetime.now(JST)
+    candidates = [
+        now_utc.strftime("%Y-%m-%d"),
+        now_jst.strftime("%Y-%m-%d"),
+        (now_jst - timedelta(days=1)).strftime("%Y-%m-%d"),
+    ]
+    path = None
+    for date_str in candidates:
+        candidate_path = f"digests/{date_str}-commentary.md"
+        if os.path.isfile(candidate_path):
+            path = candidate_path
+            break
+    if path is None:
+        print("No Claude commentary found; will fall back to Gemini")
         return {}
+    print(f"Loaded Claude commentary: {path}")
     text = open(path).read()
     result = {}
     for m in re.finditer(r"^## (.+?)\s*\n(.*?)(?=^## |\Z)",
@@ -423,6 +439,48 @@ def _esc(text: str) -> str:
     return html.escape(text).replace("\n", "<br>")
 
 
+# **強調**マークアップ（キャプチャ時にClaudeが本文に埋め込む）を<strong>に変換する
+_BOLD_MARKUP_RE = re.compile(r"\*\*(.+?)\*\*", re.DOTALL)
+# 既存の<strong>...</strong>区間を切り出すためのスプリッタ（数値太字化の二重適用を避ける）
+_STRONG_SPLIT_RE = re.compile(r"(<strong>.*?</strong>)", re.DOTALL)
+
+# 太字化する数値パターン（過剰適用を避けるため下記に限定。年号・四半期等は対象外）
+_CURRENCY_RE = r"[$€£]\d[\d,]*(?:\.\d+)?(?:兆|億|万|[BMK])?"          # $400M / $3.8B / $1.5兆 / €91M / £50M
+_YEN_CONVERSION_RE = r"約\d[\d,]*(?:\.\d+)?(?:兆|億|万)円"             # 約600億円 / 約1.1兆円
+_POWER_RE = r"\d[\d,]*(?:\.\d+)?(?:TWh|GWh|MWh|KWh|TW|GW|MW|KW)"      # 2.5GW / 509MW / 1,440MWh / 1.1TWh
+_QUBIT_RE = r"\d[\d,]*(?:\.\d+)?万?量子ビット"                         # 2万量子ビット / 98量子ビット
+_MULTIPLIER_RE = r"\d[\d,]*(?:\.\d+)?倍"                              # 20倍 / 3倍
+_PERCENT_RE = r"[+-]?\d[\d,]*(?:\.\d+)?%\+?"                          # 76% / +143% / -55% / 30%+
+
+_NUMBER_PATTERN = re.compile("|".join([
+    _YEN_CONVERSION_RE, _CURRENCY_RE, _POWER_RE, _QUBIT_RE, _MULTIPLIER_RE, _PERCENT_RE,
+]))
+
+
+def _bold_numbers(text: str) -> str:
+    """数値パターンを<strong>で囲む。既に<strong>...</strong>で囲まれた区間はスキップし、
+    二重の太字化ネストを避ける。"""
+    parts = _STRONG_SPLIT_RE.split(text)
+    for i, part in enumerate(parts):
+        if i % 2 == 0:  # 偶数インデックス=<strong>タグの外側（分割元テキスト）
+            parts[i] = _NUMBER_PATTERN.sub(lambda m: f"<strong>{m.group(0)}</strong>", part)
+    return "".join(parts)
+
+
+def _esc_rich(text: str) -> str:
+    """本文用のエスケープ。HTMLエスケープ後に **強調** と数値の太字化を適用し、改行を<br>にする。
+    処理順序はセキュリティ上重要（この順を変えないこと）:
+    1. html.escape でユーザー由来テキストのHTML注入を防ぐ
+    2. **〜** を <strong>〜</strong> に変換（キャプチャ時にClaudeが埋め込む要点マークアップ用）
+    3. 数値パターンを <strong> で囲む
+    4. 改行を <br> に変換
+    """
+    escaped = html.escape(text)
+    with_markup = _BOLD_MARKUP_RE.sub(r"<strong>\1</strong>", escaped)
+    with_numbers = _bold_numbers(with_markup)
+    return with_numbers.replace("\n", "<br>")
+
+
 def build_html_body(category: str, articles: list[dict], commentary: str,
                      commentary_label: str, today: str, market_data: dict | None = None,
                      heatmap_html: str = "") -> str:
@@ -472,14 +530,14 @@ def build_html_body(category: str, articles: list[dict], commentary: str,
             '<div style="font-size:14px;font-weight:bold;color:#202124;margin-top:12px;">'
             "【主な主張】</div>"
             f'<div style="font-size:14px;color:#3c4043;line-height:1.6;margin-top:4px;">'
-            f'{_esc(a["claim"] or "（なし）")}</div>'
+            f'{_esc_rich(a["claim"] or "（なし）")}</div>'
         )
         card.append(
             '<div style="background-color:#fef7e0;border-left:4px solid #f9ab00;'
             'padding:8px 12px;margin-top:12px;">'
             '<div style="font-size:14px;font-weight:bold;color:#202124;">【投資含意】</div>'
             f'<div style="font-size:14px;color:#3c4043;line-height:1.6;margin-top:4px;">'
-            f'{_esc(a["implication"] or "（なし）")}</div>'
+            f'{_esc_rich(a["implication"] or "（なし）")}</div>'
             "</div>"
         )
         if a["my_take"]:
@@ -487,7 +545,7 @@ def build_html_body(category: str, articles: list[dict], commentary: str,
                 '<div style="font-size:14px;font-weight:bold;color:#202124;margin-top:12px;">'
                 "【My Take】</div>"
                 f'<div style="font-size:14px;color:#3c4043;line-height:1.6;'
-                f'font-style:italic;margin-top:4px;">{_esc(a["my_take"])}</div>'
+                f'font-style:italic;margin-top:4px;">{_esc_rich(a["my_take"])}</div>'
             )
         card.append("</div>")
         parts.append("".join(card))
@@ -499,7 +557,7 @@ def build_html_body(category: str, articles: list[dict], commentary: str,
             f'<div style="font-size:13px;font-weight:bold;color:#5f6368;">'
             f'🗒 批評コメント（{html.escape(commentary_label)}）</div>'
             f'<div style="font-size:14px;color:#3c4043;line-height:1.6;margin-top:8px;">'
-            f'{_esc(commentary)}</div>'
+            f'{_esc_rich(commentary)}</div>'
             "</div>"
         )
 
@@ -644,7 +702,7 @@ def build_weekly_html_body(articles: list[dict], summary: str, today: str,
             'margin-top:12px;">'
             '<div style="font-size:13px;font-weight:bold;color:#5f6368;">🔭 今週の潮流</div>'
             f'<div style="font-size:14px;color:#3c4043;line-height:1.6;margin-top:8px;">'
-            f'{_esc(summary)}</div>'
+            f'{_esc_rich(summary)}</div>'
             "</div>"
         )
 
