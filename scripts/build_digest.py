@@ -434,11 +434,6 @@ def build_body(category: str, articles: list[dict], commentary: str, commentary_
     return "\n".join(lines) + "\n"
 
 
-def _esc(text: str) -> str:
-    """HTMLエスケープ後、改行を<br>に変換する。"""
-    return html.escape(text).replace("\n", "<br>")
-
-
 # **強調**マークアップ（キャプチャ時にClaudeが本文に埋め込む）を<strong>に変換する
 _BOLD_MARKUP_RE = re.compile(r"\*\*(.+?)\*\*", re.DOTALL)
 # 既存の<strong>...</strong>区間を切り出すためのスプリッタ（数値太字化の二重適用を避ける）
