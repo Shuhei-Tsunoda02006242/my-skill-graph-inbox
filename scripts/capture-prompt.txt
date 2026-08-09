@@ -4,6 +4,7 @@
 1. CLAUDE.md を読んで最新のキャプチャ対象ソースとルールを確認する
 2. CLAUDE.md のソーステーブルに記載された全ソースから、本日の注目記事を最大3件ずつ取得する。ソース一覧はこのプロンプトに列挙しない——CLAUDE.mdのテーブルが唯一の正であり、自動追加された新ソース（例: tqi-）も必ず対象に含めること
 3. CLAUDE.md のフォーマット（frontmatter + 本文）に従い、日本語で 00-Inbox/YYYY-MM-DD-{prefix}-{slug}.md ファイルを作成する
+   - frontmatter の landscape-position を埋めるときは docs/taxonomy.md を読むこと（領域マップの唯一の正。CLAUDE.mdからは切り出してあるので、そちらを開かないと埋められない）
 4. 批評コメント作成: 本日日付の 00-Inbox ノート全件（クラウド側が先にキャプチャ済みの分も含む）をソース別にまとめ、digests/YYYY-MM-DD-commentary.md を作成する
    - フォーマット: ソースごとに「## {ソース正式名}」見出し（例: ## TechCrunch、## Quantum Computing Report）+ 批評本文3〜5文
    - 観点: (1) 誇張・ハイプの可能性 (2) 記事に欠けている文脈 (3) 投資家として注意すべき点 (4) 記事間に共通するトレンド
