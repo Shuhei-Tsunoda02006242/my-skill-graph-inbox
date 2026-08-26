@@ -805,10 +805,12 @@ def dedup_by_url(paths: list[str], sources: dict[str, str]) -> list[dict]:
     複数のキャプチャ経路（クラウドルーチン/ローカル/手動）が同一記事を
     別ファイル名で拾う事故が繰り返し起きているため、送信直前に機械的に弾く。"""
     import glob
-    pending = set(paths)
+    # 相対/絶対パスの取り違えで自分自身を「過去ノート」と誤認しないよう正規化して比較する。
+    # （絶対パスで呼ぶと全記事が無言で重複判定され、0件配信になる事故があった）
+    pending = {os.path.realpath(p) for p in paths}
     past_urls = set()
     for p in glob.glob("00-Inbox/*.md"):
-        if p in pending:
+        if os.path.realpath(p) in pending:
             continue
         try:
             u = frontmatter_field("source", open(p, errors="ignore").read()).strip()

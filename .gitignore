@@ -1,0 +1,4 @@
+.sync-ledger
+logs/
+node_modules/
+scripts/__pycache__/
