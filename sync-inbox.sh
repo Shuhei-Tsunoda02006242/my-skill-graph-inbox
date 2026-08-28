@@ -126,9 +126,14 @@ do_backfill() {
 }
 
 do_normal() {
+    # pull が失敗しても処理は続ける。前回までにローカルへ降りてきていて
+    # まだ台帳に載っていないノートは、ネットワークが落ちていても Vault へ
+    # 反映できるため。ここで exit すると「取得済みなのに同期されない」
+    # 取りこぼしが再発する（2026-08-26に8/24〜8/25分16件で実際に発生）。
+    local pull_failed=0
     if ! "$GIT" -C "$INBOX_DIR" pull origin main; then
-        log "ERROR: git pull に失敗しました"
-        exit 1
+        log "WARN: git pull に失敗しました（ローカルにある分だけ同期します）"
+        pull_failed=1
     fi
 
     if [ ! -f "$LEDGER" ]; then
@@ -166,6 +171,11 @@ do_normal() {
     fi
 
     log "新着 ${count}件"
+
+    if [ "$pull_failed" -eq 1 ]; then
+        log "ERROR: git pull に失敗したままです（次回実行で再取得します）"
+        return 1
+    fi
 }
 
 case "${1:-}" in
