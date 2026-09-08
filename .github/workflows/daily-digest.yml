@@ -15,6 +15,9 @@ name: Daily Digest Email
 # 2本目は安全に空振りする。以降の全ステップが `if: count != '0'` で
 # ガードされており、本命が成功していれば .digest-state が進んでいるため
 # 検出0件となり何も送信しない（concurrency も効くので競合もしない）。
+# 検出0件のときは、巡回ログを見て「本当に取得失敗だったのか」を判定し、
+# 異常な0件のときだけ通知メールを送る（2026-09-08追加。egress遮断による
+# 0件が月3〜4回起きているのに、こちらから気づく手段が無かったため）。
 on:
   schedule:
     - cron: "35 22 * * *"
@@ -50,6 +53,58 @@ jobs:
           echo "files=$FILES" >> $GITHUB_OUTPUT
           echo "count=$COUNT" >> $GITHUB_OUTPUT
           echo "Detected $COUNT file(s): $FILES"
+
+      # ここから0件時の通知。0件は必ずしも異常ではない点に注意する——
+      # 保険cron（8:20 JST）は本命cronが送信に成功した後も常に0件になるため、
+      # 巡回ログ digests/YYYY-MM-DD-sources.md を見て理由を判定し、
+      # 本当に異常なときだけ通知する。.alert-state で同日の二重送信も防ぐ。
+      # キャプチャは17:00 UTC、配信は同じUTC日の22:35/23:20 UTCなので、
+      # 巡回ログのファイル名は「UTCの今日」で引ける。
+      - name: Detect capture failure
+        id: failure
+        if: steps.files.outputs.count == '0'
+        run: |
+          D=$(date -u +%Y-%m-%d)
+          LOG="digests/$D-sources.md"
+          echo "date=$D" >> $GITHUB_OUTPUT
+          if [ "$(cat .alert-state 2>/dev/null)" = "$D" ]; then
+            echo "Already alerted for $D"
+            echo "reason=" >> $GITHUB_OUTPUT
+          elif [ ! -f "$LOG" ]; then
+            echo "No source log for $D"
+            echo "reason=no-log" >> $GITHUB_OUTPUT
+          elif ! grep -qE '\|[[:space:]]*OK[[:space:]]*\|' "$LOG"; then
+            echo "All sources failed on $D"
+            echo "reason=all-failed" >> $GITHUB_OUTPUT
+          else
+            # 巡回ログに成功行がある＝取得はできていた。本命送信後の保険cron等
+            echo "Capture succeeded on $D; nothing to alert"
+            echo "reason=" >> $GITHUB_OUTPUT
+          fi
+
+      - uses: actions/setup-python@v5
+        if: steps.failure.outputs.reason != ''
+        with:
+          python-version: "3.12"
+
+      - name: Send capture failure notification
+        if: steps.failure.outputs.reason != ''
+        env:
+          GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: |
+          python3 scripts/notify_capture_failure.py \
+            "${{ steps.failure.outputs.date }}" "${{ steps.failure.outputs.reason }}"
+
+      - name: Record alert state
+        if: steps.failure.outputs.reason != ''
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          echo "${{ steps.failure.outputs.date }}" > .alert-state
+          git add .alert-state
+          git commit -m "chore: update alert state"
+          git pull --rebase origin main && git push
 
       - uses: actions/setup-python@v5
         if: steps.files.outputs.count != '0'
