@@ -58,13 +58,24 @@ jobs:
       # 保険cron（8:20 JST）は本命cronが送信に成功した後も常に0件になるため、
       # 巡回ログ digests/YYYY-MM-DD-sources.md を見て理由を判定し、
       # 本当に異常なときだけ通知する。.alert-state で同日の二重送信も防ぐ。
-      # キャプチャは17:00 UTC、配信は同じUTC日の22:35/23:20 UTCなので、
-      # 巡回ログのファイル名は「UTCの今日」で引ける。
+      # 巡回ログの日付Dは「直近のキャプチャ実行日(UTC)」であって date -u の今日ではない。
+      # キャプチャは毎日17:00 UTCに走る。配信cronは22:35/23:20 UTCだが、
+      # GitHub Actionsのスケジュール実行は常に50〜115分遅れて起動しており、
+      # 実測8回すべてが00:00 UTCを跨いで翌日に入っていた（2026-09-10調査）。
+      # そのため date -u をそのまま使うと D が必ず1日先にずれ、
+      #   - 巡回ログが必ず見つからず reason が常に no-log になる
+      #   - 「成功行あり→通知しない」分岐に到達できず、正常日に保険cronが誤発報する
+      # という二重の不具合になる。17:00 UTC を境に日付を決めることでズレを消す。
       - name: Detect capture failure
         id: failure
         if: steps.files.outputs.count == '0'
         run: |
-          D=$(date -u +%Y-%m-%d)
+          if [ "$(date -u +%H)" -ge 17 ]; then
+            D=$(date -u +%Y-%m-%d)
+          else
+            D=$(date -u -d yesterday +%Y-%m-%d)
+          fi
+          echo "Derived capture date: $D (now $(date -u +%Y-%m-%dT%H:%M:%SZ))"
           LOG="digests/$D-sources.md"
           echo "date=$D" >> $GITHUB_OUTPUT
           if [ "$(cat .alert-state 2>/dev/null)" = "$D" ]; then
