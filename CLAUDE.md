@@ -13,16 +13,66 @@
 
 ## キャプチャ対象ソース
 
-| prefix | ソース | URL | ドメイン |
-|--------|--------|-----|---------|
-| `tc-` | TechCrunch | `https://techcrunch.com/category/startups/` | AI・半導体・スタートアップ資金調達 |
-| `tm-` | Techmeme | `https://www.techmeme.com/` | テック業界全般のヘッドライン集約 |
-| `sn-` | STAT News | `https://www.statnews.com/category/biotech/` | バイオテック・CRISPR・遺伝子治療・創薬 |
-| `is-` | IEEE Spectrum Neuro | `https://spectrum.ieee.org/tag/brain-computer-interface` | BMI・ニューロテック・脳科学×エンジニアリング |
-| `qcr-` | Quantum Computing Report | `https://quantumcomputingreport.com/` | 量子コンピューター全般・商用化動向・資金調達 |
-| `fb-` | FierceBiotech | `https://www.fiercebiotech.com/` | バイオテックM&A・FDA承認・臨床試験結果 |
-| `ek-` | Electrek | `https://electrek.co/` | エネルギー技術・EV・再生可能エネルギー・電力インフラ |
-| `tqi-` | The Quantum Insider | `https://thequantuminsider.com/` | 量子コンピューター・研究・PQC・上場/資金調達（qcr-の補完） |
+| prefix | ソース | URL | フィード | ドメイン |
+|--------|--------|-----|----------|---------|
+| `tc-` | TechCrunch | `https://techcrunch.com/category/startups/` | `https://techcrunch.com/feed/` | AI・半導体・スタートアップ資金調達 |
+| `tm-` | Techmeme | `https://www.techmeme.com/` | `https://www.techmeme.com/feed.xml` | テック業界全般のヘッドライン集約 |
+| `sn-` | STAT News | `https://www.statnews.com/category/biotech/` | `https://www.statnews.com/feed/` | バイオテック・CRISPR・遺伝子治療・創薬 |
+| `is-` | IEEE Spectrum Neuro | `https://spectrum.ieee.org/tag/brain-computer-interface` | `https://spectrum.ieee.org/feeds/topic/biomedical.rss` | BMI・ニューロテック・脳科学×エンジニアリング |
+| `qcr-` | Quantum Computing Report | `https://quantumcomputingreport.com/` | `https://quantumcomputingreport.com/feed/` | 量子コンピューター全般・商用化動向・資金調達 |
+| `fb-` | FierceBiotech | `https://www.fiercebiotech.com/` | `https://www.fiercebiotech.com/rss/xml` | バイオテックM&A・FDA承認・臨床試験結果 |
+| `ek-` | Electrek | `https://electrek.co/` | `https://electrek.co/feed/` | エネルギー技術・EV・再生可能エネルギー・電力インフラ |
+| `tqi-` | The Quantum Insider | `https://thequantuminsider.com/` | `https://thequantuminsider.com/feed/` | 量子コンピューター・研究・PQC・上場/資金調達（qcr-の補完） |
+
+---
+
+## ソース記事の取得方法（2026-09-10〜）
+
+**WebFetch でソースサイトを直接取得してはならない。** 実行環境のegressは2026-09-07以降、
+全ドメインへの接続が403で拒否されており、直接取得は必ず失敗する。
+設定画面を3箇所（デスクトップアプリの「許可されたサイト」／ルーチン編集の「動作」タブ／
+設定→機能→コード実行とファイル作成のドメイン許可リスト）確認したが、**この実行環境の
+egressを利用者が変更できる設定は存在しなかった**（vaultのKNOWLEDGE.md 2026-09-10の項）。
+
+代わりに GitHub Actions（`fetch-sources.yml`、毎日1:50 JST＝ルーチンの10分前）が
+全ソースのフィードと記事本文を取得し、`sources-raw` ブランチへ置いている。
+**github.com はegress遮断日でも到達できる**ため（遮断日でもルーチンはcommit/pushに
+成功していた）、この経路なら環境の状態に依存しない。
+
+### 手順
+
+1. `git fetch origin sources-raw`（**mainへマージしないこと**。履歴を持たない別系統のブランチ）
+2. `git show origin/sources-raw:sources-raw/fetch-log.md` — ソース別の取得結果
+3. `git show origin/sources-raw:sources-raw/{当日}/index.md` — 記事一覧（prefix・公開日・タイトル・ファイルパス・URL）
+4. 本文は `git show origin/sources-raw:sources-raw/{当日}/{prefix}/{slug}.md`
+   frontmatter に `source` `title` `url` `published` が入っている。
+   **`url` をそのままノートの `source:` に使う**（重複チェックもこのURLで行う）
+
+### 注意
+
+- **`truncated: true` の記事は末尾が切れている。** 重要な数字が末尾にある可能性があるため、
+  Key Claim に断定を書くときは本文中に根拠があることを確認する
+- `index.md` には3日前までの記事が載っている。障害日のさかのぼり取得はここから拾える
+- Actions側が取得に失敗したソースは `fetch-log.md` の「取得」列が `失敗` になる。
+  巡回ログの「取得」列はこの表をそのまま転記してよい（従来の自己申告より事実に近い）
+- 当日の `index.md` が存在しない場合は、Actionsが動いていない。巡回ログにその旨を書いて終える
+
+### egress疎通の記録（毎回1行）
+
+元の直接取得経路が復活したかを記録に残すため、巡回ログの末尾に次を1行書く。
+
+```
+egress疎通: OK (200)      または      egress疎通: 失敗 (403)
+```
+
+判定は次のコマンドを**1回だけ**実行して得る。記事の取得には使わない（取得は `sources-raw` 経由が正）。
+
+```
+curl -sS -o /dev/null -w '%{http_code}' --max-time 10 https://techcrunch.com/
+```
+
+これは環境が復旧した日を記録するためだけの1リクエストである。
+復旧が確認できても取得経路は自動では戻さない。戻すかどうかはユーザーが判断する。
 
 ---
 

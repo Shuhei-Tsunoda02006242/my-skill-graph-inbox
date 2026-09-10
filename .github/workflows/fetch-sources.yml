@@ -1,0 +1,68 @@
+name: Fetch Sources
+
+# 各ソースのフィードと記事本文を取得し、sources-raw ブランチへ置く。
+#
+# なぜActions側で取得するのか:
+# クラウドキャプチャルーチンの実行環境は2026-09-07以降、外部ドメインへのegressが
+# 全て403で拒否されている（環境側の問題。設定画面3箇所を確認したが利用者が触れる
+# 設定は存在しなかった。詳細はvaultのKNOWLEDGE.md 2026-09-10の項）。
+# 一方Actionsのegressは制限されておらず、github.comは遮断日でも到達できる
+# （遮断日でもルーチンはcommit/pushに成功していた）。そこで「外部サイトを
+# 取りに行く役」をここへ移し、ルーチンはリポジトリ内のファイルを読むだけにする。
+#
+# なぜ orphan ブランチに force-push するのか:
+# 記事本文をmainに毎日コミットすると履歴が永久に積み上がる（実測でインデックス
+# ページ1枚が生テキストで120KB。日次数百KB〜がそのまま year 単位で残る）。
+# ファイルを消しても git の履歴は縮まないため、履歴を持たない orphan ブランチを
+# 毎日まるごと置き換える。これで常に1日分しか存在しない。
+on:
+  schedule:
+    - cron: "50 16 * * *"   # 1:50 JST — キャプチャルーチン（2:00 JST）の10分前
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fetch-sources
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # brotli は quantumcomputingreport.com のために必須。
+      # 同サイトは Accept-Encoding: gzip を送っても content-encoding: br で返すため、
+      # brotli が無いとフィードが常に0件になる（2026-09-10に実測）。
+      - name: Install dependencies
+        run: pip install --quiet feedparser trafilatura requests brotli
+
+      - name: Fetch sources
+        id: fetch
+        run: |
+          DATE=$(date -u +%Y-%m-%d)
+          echo "date=$DATE" >> $GITHUB_OUTPUT
+          rm -rf sources-raw
+          python3 scripts/fetch_sources.py --date "$DATE" --out sources-raw
+
+      # 取得0件でもログだけは残す（原因調査に要るため）。
+      # fetch ステップが失敗しても、ここまで来ていれば push する。
+      - name: Publish to sources-raw branch
+        if: always() && hashFiles('sources-raw/fetch-log.md') != ''
+        run: |
+          DATE="${{ steps.fetch.outputs.date }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # 履歴を持たないブランチとして作り直し、毎日まるごと置き換える
+          git checkout --orphan sources-raw-tmp
+          git rm -rf --cached . >/dev/null 2>&1 || true
+          git add -f sources-raw
+          git commit -q -m "sources: raw fetch $DATE"
+          git push -f origin sources-raw-tmp:sources-raw
+          echo "pushed $(git rev-parse --short HEAD) to sources-raw"
