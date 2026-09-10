@@ -103,6 +103,21 @@ def slugify(text: str, maxlen: int = 60) -> str:
     return s[:maxlen].rstrip("-") or "untitled"
 
 
+def entry_summary(entry) -> str:
+    """フィードの要約テキスト（HTML除去済み）を返す。
+
+    本文抽出が効かないソースのフォールバック。Techmeme は集約サイトで
+    ページ本文がほぼ無く、trafilatura が200字未満しか取れない（GitHub Actions の
+    ランナーからだと特に顕著。2026-09-10に実測）。一方 RSS の description には
+    出典・見出し・リード文が300字前後入っており、これが実質的な本文にあたる。
+    """
+    raw = entry.get("summary") or entry.get("description") or ""
+    if not isinstance(raw, str):
+        raw = str(raw)
+    t = html.unescape(re.sub(r"<[^>]+>", " ", raw))
+    return re.sub(r"\s+", " ", t).strip()
+
+
 def entry_date(entry) -> dt.date | None:
     for key in ("published_parsed", "updated_parsed"):
         t = entry.get(key)
@@ -183,16 +198,23 @@ def main() -> int:
             title = clean_title(e.get("title") or "")
             if not url or not title:
                 continue
+            extraction = "full"
             try:
                 body = fetch_article_text(url)
             except Exception as ex:
                 log(f"[{prefix}] 本文取得失敗 {url}: {ex}")
-                continue
+                body = ""
             if len(body) < 200:
-                # 抽出できていない（ペイウォール・JS描画等）。要約だけでは
-                # Key Claim / Evidence を正確に書けないので落とす。
-                log(f"[{prefix}] 本文が短すぎるため除外 ({len(body)}字): {url}")
-                continue
+                # ページ本文が取れない（集約サイト・ペイウォール・JS描画等）。
+                # フィードの要約で代替する。要約すら短ければ諦める。
+                fallback = entry_summary(e)
+                if len(fallback) >= 200:
+                    body, extraction = fallback, "summary"
+                    log(f"[{prefix}] 本文が薄いため要約で代替 ({len(fallback)}字): {url}")
+                else:
+                    log(f"[{prefix}] 本文も要約も短すぎるため除外 "
+                        f"(本文{len(body)}字/要約{len(fallback)}字): {url}")
+                    continue
 
             truncated = len(body) > MAX_BODY_CHARS
             body = body[:MAX_BODY_CHARS]
@@ -209,6 +231,7 @@ def main() -> int:
                 f.write(f"published: {d.isoformat() if d else 'unknown'}\n")
                 f.write(f"chars: {len(body)}\n")
                 f.write(f"truncated: {str(truncated).lower()}\n")
+                f.write(f"extraction: {extraction}\n")
                 f.write("---\n\n")
                 f.write(body)
                 f.write("\n")
@@ -218,7 +241,7 @@ def main() -> int:
 
         row["saved"] = saved
         if saved == 0 and row["candidates"] > 0:
-            row["note"] = "候補はあったが本文を抽出できず0件"
+            row["note"] = "候補はあったが本文も要約も取れず0件"
         results.append(row)
 
     os.makedirs(day_dir, exist_ok=True)
