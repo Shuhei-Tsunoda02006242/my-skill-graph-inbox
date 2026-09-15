@@ -1,0 +1,34 @@
+---
+source: "The Quantum Insider"
+prefix: tqi-
+title: "CNM Joins Sandia’s CAMINO to Expand Quantum and Advanced Manufacturing Workforce Training"
+url: "https://thequantuminsider.com/2026/09/15/cnm-quantum-technician-training-camino-facility/"
+published: 2026-09-15
+chars: 6572
+truncated: false
+extraction: full
+---
+
+Insider Brief
+- Central New Mexico Community College is joining Sandia National Laboratories and other partners in the CAMINO Collaborative to expand advanced-manufacturing workforce training in New Mexico.
+- CNM plans to develop a facility on a 37-acre site near Sandia’s Science & Technology Park, bringing education, workforce training, research, entrepreneurship and industry together.
+- The site will include CNM’s Quantum Technician Bootcamp and Quantum Learning Lab, with programs supporting careers in quantum technologies, advanced energy, aerospace and national security.
+PRESS RELEASE — Central New Mexico Community College is joining Sandia National Laboratories and other community partners in the CAMINO Collaborative, a public-private initiative designed to strengthen New Mexico’s advanced-manufacturing ecosystem, expand access to high-quality careers and accelerate economic growth.
+CNM has committed to developing a state-of-the-art facility on a 37-acre site near Sandia’s publicly accessible Science & Technology Park along Route 66 and Eubank Boulevard. CNM is in the process of acquiring the land from Albuquerque Public Schools, another partner in the CAMINO Collaborative. The campus will bring learners, educators, researchers, entrepreneurs and industry leaders together in a shared environment where career exploration, education, workforce training, business development, entrepreneurship and employment are closely connected.
+“The CAMINO Collaborative represents a bold vision for New Mexico’s future, and CNM is proud to help make it a reality through our highly regarded workforce training and entrepreneurial support programs,” said CNM President Tracy Hartzler. “By bringing together education, industry, and entrepreneurs to work alongside Sandia leaders and engineers, we can create life-changing opportunities for New Mexicans while building the workforce and economy of the future.”
+Working with Sandia researchers, employers and industry partners, CNM will develop and adapt programs that prepare technicians for fields connected to advanced manufacturing and that align with the state’s economic development goals, such as advanced energy, quantum technologies, aerospace, national security and other emerging industries.
+Technicians play an increasingly important role in moving innovations from research laboratories into commercial production. They build, install, operate and maintain the systems that innovative companies need to expand. Many of these skilled technician careers offer annual salaries ranging from $70,000 to $95,000, along with robust benefits, and can be accessed through industry-focused workforce training programs completed in months rather than years.
+“The CAMINO Collaborative will connect New Mexicans directly to the industries and employers shaping the future of our economy,” Hartzler said. “Learners will be able to enter training with a clear understanding of the skills they will gain, the jobs available on the other side, and the opportunities to continue their education.”
+CNM’s Quantum Technician Bootcamp demonstrates how the model can work. Developed in partnership with Sandia, the immersive 10-week program prepares learners to build and maintain systems supporting quantum technologies. The program does not require prerequisites or previous experience, and financial assistance supported by the New Mexico Legislature can cover up to the full cost of eligible workforce-training programs.
+Graduates of the Quantum Technician Bootcamp are securing entry-level positions with salaries in the $80,000 range. They have been hired by employers ranging from local quantum companies Qunnect and Quantinuum to Sandia and the U.S. Space Force. The availability of skilled technicians has also been cited as a factor in quantum companies choosing to establish operations in Albuquerque.
+CNM’s nationally recognized Quantum Technician Bootcamp and Quantum Learning Lab, as well as other highly regarded advanced-manufacturing workforce training programs will relocate to the CAMINO site. The facility will include flexible training areas that allow CNM to respond quickly as technologies and employer needs evolve.
+“The strategic partnership between Sandia’s Center for Advanced Manufacturing and Innovation (CAMINO) and CNM exemplifies a shared commitment to cultivating a skilled and diverse workforce,” said Dr. Lonnie Love, a Sandia National Laboratories Fellow assigned to CAMINO. “By combining Sandia’s cutting-edge research and innovation with CNM’s educational expertise, this collaboration empowers the next generation of talent to meet the evolving challenges of national security and advanced technology sectors.”
+The campus will create opportunities for New Mexicans at every stage of their educational and professional journeys:
+- K-12 students from Albuquerque Public Schools, Rio Rancho Public Schools and districts across New Mexico will be able to explore emerging technologies and discover careers they may not have previously considered.
+- CNM learners will have access to accelerated workforce training that can lead quickly to quality employment. Learners can also earn college credit through these programs that can be applied toward additional credentials or degrees.
+- Current workers and career changers will be able to gain new skills aligned with specific industries and employment opportunities.
+- Employers will have a reliable workforce-development partner capable of quickly updating training as technologies and skill requirements evolve.
+- Entrepreneurs will have access to advanced equipment, prototyping technologies, business support and potential collaborators who can help move ideas into the marketplace.
+The CAMINO Collaborative and CNM will also draw on the manufacturing expertise of the New Mexico Manufacturing Extension Partnership, another key partner in the initiative. At the facility, CNM Ingenuity will provide entrepreneurial support, while a makerspace equipped with advanced technologies will give startups and established businesses the resources to test concepts, develop products, connect with collaborators and prepare for growth.
+A goal for the CAMINO Collaborative is to help New Mexico become a leader in frontier industries while making sure that the opportunities created in New Mexico stay in New Mexico. Technology may define the next era of economic growth, but it’s New Mexicans who will power it—when they have the training and pathways to put those technologies to work.
+CNM expects to break ground on the facility in summer 2027.

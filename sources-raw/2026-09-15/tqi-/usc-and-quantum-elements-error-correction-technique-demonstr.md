@@ -1,0 +1,22 @@
+---
+source: "The Quantum Insider"
+prefix: tqi-
+title: "USC And Quantum Elements’ Error Correction Technique Demonstrates Surface Code Scaling with Logical Qubits"
+url: "https://thequantuminsider.com/2026/09/15/usc-and-quantum-elements-error-correction-technique-demonstrates-surface-code-scaling-with-logical-qubits/"
+published: 2026-09-15
+chars: 4042
+truncated: false
+extraction: full
+---
+
+Insider Brief
+- Quantum Elements and USC demonstrated that surface codes can improve error protection on IBM Heron processors despite a mismatch between the code’s square-grid design and the hardware’s heavy-hex layout.
+- The researchers combined a depth-efficient surface code with dynamical decoupling to suppress errors that accumulated while qubits were idle.
+- The results suggest quantum processors may achieve error-correction gains without being designed around the precise geometry of a particular code.
+PRESS RELEASE — Quantum Elements, a provider of AI-powered digital twins for quantum computing developers, and the University of Southern California (USC) today announced the publication of a Nature Communications paper showing that the surface code can improve error protection even on a quantum processor whose physical layout does not naturally match the code. The authors were able to demonstrate logical qubits and achieved below-threshold performance on IBM Heron processors’ heavy-hex architecture, even though it is not optimized for surface codes.
+The peer-reviewed paper, Surface code scaling on heavy-hex superconducting quantum processors, co-authored by Daniel Lidar, Quantum Elements Chief Scientific Officer and Director of the USC Center for Quantum Information Science & Technology, and Quantum Elements quantum research scientist Arian Vezvaee, among others, outlines the use of the surface code, an error-correction method, on two IBM Heron-generation processors.
+The surface code is designed around a square grid of connected qubits. IBM Heron-generation processors use a more sparsely connected heavy-hex architecture. Mapping the code onto this hardware requires additional routing and creates periods when qubits sit idle and errors accumulate as the code grows. The researchers addressed this by combining a depth-efficient code with the dynamical decoupling approach that later became the foundation for Quantum Elements’ Qiskit Function, Orbit. This suppressed the damaging idle-time noise and enabled directional subthreshold scaling. When the code grew in one direction, it became more effective at protecting against the corresponding type of logical error. Professor Lidar helped develop the theoretical and practical foundations behind this error suppression method.
+The result is an important step toward more flexible fault-tolerant quantum systems. It shows that a processor does not have to be designed around the exact geometry of the surface code to receive the scaling benefits, meaning that the code has the potential to be adapted across a broader range of superconducting architectures.
+“Because a given error correcting code and hardware may not always match, we wanted to test the limits of making the surface code — designed for square lattices — work on IBM’s heavy-hex hardware,” said Professor Lidar. “We found that only by leveraging the dynamical decoupling techniques deployed in Quantum Elements’ Qiskit Function, Orbit, we were able to demonstrate the expected improvements as the surface code’s distance parameters increased. Hybrid decoupling-error correction approaches, such as what we demonstrated in this work, will likely continue to outperform either approach on its own in future quantum processors.”
+Quantum processors must meet a wide range of engineering requirements, not just the demands of a particular error-correcting code. If scalable error correction requires a processor’s physical layout to match the code, hardware developers would be forced to prioritize code compatibility over other design considerations. This would leave some processors with fewer options for achieving fault tolerance.
+“This shows the power of hybrid approaches to move us towards fault tolerant quantum computing.” said Izhar Medalsy, co-founder and CEO of Quantum Elements. “This is just the first step toward implementing entangled logical qubits — which we will reveal more details on soon – that will be another major advance toward achieving fault-tolerant quantum computing.”
