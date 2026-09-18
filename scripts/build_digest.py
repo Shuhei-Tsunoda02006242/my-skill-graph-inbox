@@ -135,15 +135,26 @@ CAGR_WORD_MAP = {
 
 def load_sources() -> dict[str, str]:
     """CLAUDE.mdのソーステーブルから prefix→ソース名 を読む。
-    ソースは自動追加されるため、固定のSOURCESは読めなかった場合のフォールバック。"""
+    ソースは自動追加されるため、固定のSOURCESは読めなかった場合のフォールバック。
+
+    `| prefix |` 見出しで始まるソーステーブルの中だけを読む。CLAUDE.md には
+    同じ `| `tc-` | ... |` 形の行が巡回ログの記入例にもあり、ファイル全体を走査すると
+    ソース名が「OK」「失敗」で上書きされる（2026-09-08〜17の配信で実際に発生）。"""
     sources = dict(SOURCES)
     try:
         text = open(os.path.join(os.path.dirname(__file__), "..", "CLAUDE.md")).read()
-        for m in re.finditer(r"^\|\s*`([a-z]+)-`\s*\|\s*([^|]+?)\s*\|",
-                             text, re.MULTILINE):
-            sources[m.group(1)] = m.group(2).strip()
     except OSError:
-        pass
+        return sources
+    lines = text.split("\n")
+    start = next((i for i, l in enumerate(lines) if l.startswith("| prefix |")), None)
+    if start is None:
+        return sources
+    for line in lines[start + 2:]:
+        if not line.startswith("|"):
+            break
+        m = re.match(r"^\|\s*`([a-z]+)-`\s*\|\s*([^|]+?)\s*\|", line)
+        if m:
+            sources[m.group(1)] = m.group(2).strip()
     return sources
 
 
