@@ -1,0 +1,116 @@
+{
+  "_comment": "量子週次ダイジェストの「実現までの距離」ダッシュボード用。値は必ず 00-Inbox のノート本文に出てくる数字のみを採用する（推定で埋めない）。source_note は根拠ノートのファイル名（拡張子なし）。",
+  "updated": "2026-09-20",
+  "indicators": [
+    {
+      "id": "logical_qubits",
+      "label": "論理量子ビット（誤り訂正済み・実証最大）",
+      "value": 48,
+      "display": "48個",
+      "unit": "個",
+      "direction": "up",
+      "as_of": "2026-07-02",
+      "source_note": "2026-07-02-tm-quantinuum-helios-98-qubit",
+      "source_detail": "Quantinuum Helios：98物理量子ビットを48論理にエンコード（Nature 2026-06）",
+      "patterns": [
+        "([0-9,]+)\\s*個の(?:完全に)?(?:誤り訂正|エラー訂正)された論理量子ビット",
+        "論理量子ビット[^0-9。]{0,8}([0-9,]+)\\s*個"
+      ],
+      "exclude_context": "目標|ロードマップ|計画|目指す|予定|構想|コンペ|賞金|202[7-9]年|20[3-9][0-9]年|Competition|コンペ|競う|賞金|ボーナス|分配|応募|締切|要件|条件",
+      "targets": [
+        {
+          "value": 100,
+          "label": "DOEコンペの一次目標（$100M）"
+        },
+        {
+          "value": 200,
+          "label": "DOEコンペの最終ボーナス"
+        },
+        {
+          "value": 1000,
+          "label": "Xanaduロードマップ（2031年）"
+        }
+      ]
+    },
+    {
+      "id": "physical_qubits",
+      "label": "物理量子ビット（完全接続の実証最大）",
+      "value": 1200,
+      "display": "1,200個超",
+      "unit": "個",
+      "direction": "up",
+      "as_of": "2026-06-18",
+      "source_note": "2026-06-18-tm-atom-computing-100m-quantum",
+      "source_detail": "Atom Computing AC1000：1,200量子ビット超を完全接続で実証",
+      "patterns": [
+        "([0-9,]+)\\s*量子ビット超?を完全接続",
+        "完全に接続された?([0-9,]+)\\s*(?:個の)?物理量子ビット"
+      ],
+      "exclude_context": "目標|ロードマップ|計画|目指す|予定|202[7-9]年|20[3-9][0-9]年|Competition|コンペ|競う|賞金|ボーナス|分配|応募|締切|要件|条件",
+      "targets": []
+    },
+    {
+      "id": "two_qubit_fidelity",
+      "label": "2量子ビットゲート忠実度（最高実証）",
+      "value": 99.921,
+      "display": "99.921%",
+      "unit": "%",
+      "direction": "up",
+      "as_of": "2026-07-02",
+      "source_note": "2026-07-02-tm-quantinuum-helios-98-qubit",
+      "source_detail": "Quantinuum Helios：誤り率 約7.9/10,000",
+      "patterns": [
+        "2\\s*量子ビット(?:の)?ゲート忠実度[^0-9]{0,6}([0-9.]+)\\s*%",
+        "2量子ビットゲート[^0-9]{0,10}([0-9.]+)\\s*%"
+      ],
+      "exclude_context": "目標|ロードマップ|計画|目指す|予定|Competition|コンペ|競う|賞金|ボーナス|分配|応募|締切|要件|条件",
+      "targets": []
+    },
+    {
+      "id": "physical_per_logical",
+      "label": "論理1個あたりの物理量子ビット数",
+      "value": 2.0,
+      "display": "約2.0個",
+      "unit": "個",
+      "direction": "down",
+      "as_of": "2026-07-02",
+      "source_note": "2026-07-02-tm-quantinuum-helios-98-qubit",
+      "source_detail": "Helios実測（98物理÷48論理）。方式により大きく異なり、超伝導の表面符号では桁違いに大きい",
+      "patterns": [],
+      "exclude_context": "",
+      "targets": []
+    },
+    {
+      "id": "logical_below_physical",
+      "label": "論理誤り率が物理誤り率を下回る（商用機）",
+      "value": 1,
+      "display": "達成済み",
+      "unit": "boolean",
+      "direction": "up",
+      "as_of": "2026-07-02",
+      "source_note": "2026-07-02-tm-quantinuum-helios-98-qubit",
+      "source_detail": "Quantinuum Heliosが商用システムとして初",
+      "patterns": [],
+      "exclude_context": "",
+      "targets": []
+    },
+    {
+      "id": "sampling_reduction",
+      "label": "誤り緩和によるサンプリング削減（最大）",
+      "value": 63,
+      "display": "63分の1",
+      "unit": "分の1",
+      "direction": "up",
+      "as_of": "2026-09-16",
+      "source_note": "2026-09-16-tqi-ibm-error-detection-mitigation-63x",
+      "source_detail": "IBM：誤り検出と誤り緩和の併用（プレプリント）",
+      "patterns": [
+        "サンプリング(?:回数)?を?[^0-9]{0,12}([0-9,]+)\\s*分の1",
+        "([0-9,]+)\\s*分の1に(?:削減|低減)"
+      ],
+      "exclude_context": "目標|ロードマップ|計画|目指す|予定|Competition|コンペ|競う|賞金|ボーナス|分配|応募|締切|要件|条件",
+      "targets": []
+    }
+  ],
+  "history": []
+}

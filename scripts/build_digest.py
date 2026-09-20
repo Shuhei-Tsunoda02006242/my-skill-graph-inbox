@@ -108,6 +108,10 @@ SIGNAL_BADGE_COLORS = {
 # 市場規模データ（vault側 scripts/generate_market_treemaps.py 実行時に自動同期される）
 MARKET_DATA_PATH = "assets/market/market-sizes.json"
 
+# 量子週次ダイジェスト「実現までの距離」ダッシュボード用データ（週次パス専用）
+MILESTONES_PATH = "docs/quantum-milestones.json"
+GLOSSARY_PATH = "docs/quantum-glossary.json"
+
 # landscape-position 先頭セグメント → market-sizes.json の domains キー
 DOMAIN_SEGMENT_TO_KEY = {
     "AI": "ai",
@@ -180,6 +184,9 @@ def parse_note(path: str, sources: dict[str, str]) -> dict:
     m = re.match(r"\d{4}-\d{2}-\d{2}-([a-z]+)-", os.path.basename(path))
     prefix = m.group(1) if m else ""
     return {
+        # 週次量子パス（指標更新検出・初出用語検出・お金/政策判定）専用。日次パスは未使用
+        "path": path,
+        "raw_text": text,
         "prefix": prefix,
         "source_name": sources.get(prefix, "その他"),
         "title": frontmatter_field("title", text),
@@ -669,30 +676,313 @@ def send_emails(groups: dict[str, list[dict]], claude_comments: dict[str, str]) 
             print(f"Sent: {subject}")
 
 
-def build_weekly_body(articles: list[dict], summary: str, today: str,
-                       market_data: dict | None = None, heatmap_available: bool = False) -> str:
-    """量子週次ダイジェストのplain本文（1行ヘッドライン形式）を組み立てる。"""
-    lines = [f"Frontier（量子） 週次ダイジェスト {today}（今週{len(articles)}件）", ""]
+def load_json(path: str) -> dict:
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def save_json(path: str, data: dict, trailing_newline: bool = True) -> None:
+    text = json.dumps(data, ensure_ascii=False, indent=2)
+    if trailing_newline:
+        text += "\n"
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(text)
+
+
+def _sentence_containing(text: str, pos: int) -> str:
+    """text内、posを含む一文を『。』か改行で区切って取り出す（前後の区切り文字は含めない）。"""
+    start = 0
+    for m in re.finditer(r"[。\n]", text):
+        if m.end() > pos:
+            return text[start:m.end()].strip()
+        start = m.end()
+    return text[start:].strip()
+
+
+def _parse_number(s: str) -> float:
+    return float(s.replace(",", ""))
+
+
+def _body_after_frontmatter(text: str) -> str:
+    """frontmatter（先頭の `---` 〜 `---`）を落とした本文を返す。"""
+    m = re.match(r"^---\n.*?\n---\n", text, re.DOTALL)
+    return text[m.end():] if m else text
+
+
+def format_indicator_value(unit: str, value: float) -> str:
+    """指標の value を unit に合わせて display 文字列に整形する。"""
+    is_int = abs(value - round(value)) < 1e-9
+    if unit == "%":
+        return f"{value:g}%"
+    num = f"{int(round(value)):,}" if is_int else f"{value:g}"
+    if unit == "個":
+        return f"{num}個"
+    if unit == "分の1":
+        return f"{num}分の1"
+    return f"{num}{unit}"
+
+
+def detect_milestone_update(indicator: dict, notes: list[dict]) -> dict | None:
+    """1指標について、今週のノート群から最良の更新候補を1つ返す（無ければNone）。
+    patterns が空の指標（手動更新のみ）は None を返す。"""
+    patterns = indicator.get("patterns") or []
+    if not patterns:
+        return None
+    direction = indicator.get("direction")
+    current = float(indicator["value"])
+    exclude_pattern = indicator.get("exclude_context") or ""
+    exclude_re = re.compile(exclude_pattern) if exclude_pattern else None
+
+    best = None
+    for note in notes:
+        # frontmatter は走査しない。title 行は1文が短く exclude_context の語（「コンペ」等）が
+        # 入らないため、本文なら除外できる将来目標・賞金条件の数字が素通りする
+        # （2026-09-18 のDOEコンペ記事が論理量子ビット48→100の更新候補として誤検出された）
+        text = _body_after_frontmatter(note.get("raw_text", ""))
+        for pat in patterns:
+            for m in re.finditer(pat, text):
+                if not m.groups():
+                    continue
+                try:
+                    value = _parse_number(m.group(1))
+                except (ValueError, IndexError):
+                    continue
+                if direction == "up" and not (value > current):
+                    continue
+                if direction == "down" and not (value < current):
+                    continue
+                sentence = _sentence_containing(text, m.start())
+                if exclude_re and exclude_re.search(sentence):
+                    continue
+                if best is None:
+                    better = True
+                elif direction == "up":
+                    better = value > best["value"]
+                else:
+                    better = value < best["value"]
+                if better:
+                    best = {"value": value, "sentence": sentence, "note": note}
+    return best
+
+
+def apply_milestone_updates(milestones: dict, quantum_notes: list[dict], today: str) -> list[dict]:
+    """今週のノート群から各指標の更新を検出し、milestones（メモリ上の辞書）を書き換える。
+    ファイルへの保存は行わない（呼び出し側がDRY_RUN次第で判断する）。
+    返り値はメール本文組み立て用の採用済み更新リスト。"""
+    updates = []
+    for indicator in milestones["indicators"]:
+        best = detect_milestone_update(indicator, quantum_notes)
+        if best is None:
+            continue
+        note = best["note"]
+        old_display = indicator["display"]
+        new_value = best["value"]
+        new_display = format_indicator_value(indicator["unit"], new_value)
+        filename = os.path.splitext(os.path.basename(note["path"]))[0]
+        date_m = re.match(r"(\d{4}-\d{2}-\d{2})-", filename)
+        as_of = date_m.group(1) if date_m else today
+
+        indicator["value"] = new_value
+        indicator["display"] = new_display
+        indicator["as_of"] = as_of
+        indicator["source_note"] = filename
+        indicator["source_detail"] = best["sentence"][:120]
+        milestones.setdefault("history", []).append({
+            "date": today,
+            "id": indicator["id"],
+            "from": old_display,
+            "to": new_display,
+            "note": filename,
+        })
+        updates.append({
+            "id": indicator["id"],
+            "label": indicator["label"],
+            "old_display": old_display,
+            "new_display": new_display,
+            "note": note,
+        })
+    return updates
+
+
+def detect_new_terms(glossary: dict, notes: list[dict], today: str, max_terms: int = 2) -> list[dict]:
+    """今週のノート本文に aliases が出てくる用語のうち、last_shown が未設定か180日以上前の
+    ものをJSON順で最大 max_terms 件選ぶ。選んだ用語の last_shown を today に書き換える
+    （メモリ上のみ。保存は呼び出し側がDRY_RUN次第で判断する）。"""
+    combined_text = "\n".join(n.get("raw_text", "") for n in notes)
+    today_date = datetime.strptime(today, "%Y-%m-%d").date()
+    selected = []
+    for term in glossary["terms"]:
+        if len(selected) >= max_terms:
+            break
+        last_shown = term.get("last_shown")
+        if last_shown:
+            try:
+                last_date = datetime.strptime(last_shown, "%Y-%m-%d").date()
+                if (today_date - last_date).days < 180:
+                    continue
+            except ValueError:
+                pass
+        if any(alias in combined_text for alias in term["aliases"]):
+            selected.append(term)
+    for term in selected:
+        term["last_shown"] = today
+    return selected
+
+
+_MONEY_RE = re.compile(r"\$\d|億円|CHIPS")
+
+
+def is_money_policy(note: dict) -> bool:
+    """landscape-positionに『資本』を含む、または本文・投資含意に金額表現を含む記事か判定する。"""
+    if "資本" in (note.get("position") or ""):
+        return True
+    return bool(_MONEY_RE.search(note.get("raw_text", "")))
+
+
+def classify_weekly_articles(quantum_notes: list[dict], updates: list[dict]) -> tuple[list[dict], list[dict]]:
+    """週次記事を「お金と政策」「その他」に振り分ける。指標更新の根拠になった記事
+    （距離を縮めた動きセクションで既に列挙済み）は両方から除く。"""
+    updated_urls = {u["note"]["url"] for u in updates}
+    remaining = [n for n in quantum_notes if n["url"] not in updated_urls]
+    money = [n for n in remaining if is_money_policy(n)]
+    money_urls = {n["url"] for n in money}
+    other = [n for n in remaining if n["url"] not in money_urls]
+    return money, other
+
+
+def weeks_since(as_of: str, today_date) -> str:
+    """as_of と今日の差÷7の週数文字列（0なら「今週更新」）。"""
+    try:
+        as_of_date = datetime.strptime(as_of, "%Y-%m-%d").date()
+    except ValueError:
+        return ""
+    weeks = (today_date - as_of_date).days // 7
+    return "今週更新" if weeks <= 0 else f"{weeks}週間"
+
+
+def min_weeks_number(indicators: list[dict], today_date) -> int:
+    weeks_list = []
+    for ind in indicators:
+        try:
+            as_of_date = datetime.strptime(ind["as_of"], "%Y-%m-%d").date()
+        except ValueError:
+            continue
+        weeks_list.append((today_date - as_of_date).days // 7)
+    return min(weeks_list) if weeks_list else 0
+
+
+def no_progress_line(indicators: list[dict], today_date) -> str:
+    """指標更新が0件だった週に出す1行。
+
+    「最短N週間」だけだと、直近更新がその週のうちだったときに『材料なし・0週間』と
+    並んで意味が通らない。最後に動いた指標とその日付を名指しする。"""
+    latest = None
+    for ind in indicators:
+        try:
+            as_of_date = datetime.strptime(ind["as_of"], "%Y-%m-%d").date()
+        except ValueError:
+            continue
+        if latest is None or as_of_date > latest[0]:
+            latest = (as_of_date, ind)
+    if latest is None:
+        return "今週は指標を動かした記事なし"
+    as_of_date, ind = latest
+    weeks = (today_date - as_of_date).days // 7
+    span = "今週" if weeks == 0 else f"{weeks}週間前"
+    return (f"今週は指標を動かした記事なし（最後に動いたのは「{ind['label']}」"
+            f"／{ind['as_of']}・{span}）")
+
+
+def build_target_line(indicators: list[dict]) -> str:
+    """logical_qubits の targets[0] から『目標線：…まで、あと約N倍』の1行を組み立てる。"""
+    indicator = next((i for i in indicators if i["id"] == "logical_qubits"), None)
+    if not indicator or not indicator.get("targets"):
+        return ""
+    target = indicator["targets"][0]
+    current = indicator["value"]
+    if not current:
+        return ""
+    label = re.sub(r"（[^）]*）", "", target["label"]).strip()
+    n = target["value"] / current
+    return f"目標線：{label}（{target['value']}{indicator['unit']}）まで、あと約{n:.1f}倍"
+
+
+def build_weekly_body(quantum_notes: list[dict], milestones: dict, updates: list[dict],
+                       glossary_terms: list[dict], summary: str, today: str,
+                       heatmap_available: bool = False) -> str:
+    """量子週次ダイジェストのplain本文（実現までの距離ダッシュボード形式）を組み立てる。"""
+    today_date = datetime.strptime(today, "%Y-%m-%d").date()
+    indicators = milestones["indicators"]
+    updates_by_id = {u["id"]: u for u in updates}
+
+    lines = [
+        f"Frontier（量子） 週次ダイジェスト {today}"
+        f"（今週{len(quantum_notes)}件・指標更新{len(updates)}件）",
+        "",
+        "■ 実現までの距離",
+    ]
+    for ind in indicators:
+        upd = updates_by_id.get(ind["id"])
+        bits = [ind["label"], ind["display"]]
+        if upd:
+            bits.append(f'{upd["old_display"]}→{upd["new_display"]}')
+        bits.append(weeks_since(ind["as_of"], today_date))
+        lines.append("・" + "｜".join(bits))
+    target_line = build_target_line(indicators)
+    if target_line:
+        lines.append(target_line)
+    lines.append("")
+
     if summary:
-        lines += ["🔭 今週の潮流", summary, ""]
-    for a in articles:
-        lines.append(f"・{a['title']}")
-        meta_bits = []
-        if a["position"]:
-            meta_bits.append(f"📍 {annotate_position(a['position'], market_data)}")
-        meta_bits.append(f"ソース: {a['source_name']}")
-        lines.append("  " + "｜".join(meta_bits))
-        lines.append(f"  🔗 {a['url']}")
+        lines += ["今週の総括", summary, ""]
+
+    lines.append(f"■ 距離を縮めた動き（{len(updates)}件）" if updates else "■ 距離を縮めた動き")
+    if not updates:
+        lines.append(
+            no_progress_line(indicators, today_date)
+        )
+    else:
+        for u in updates:
+            note = u["note"]
+            lines.append(f"・{note['title']}")
+            if note["claim"]:
+                lines.append(f"  {note['claim']}")
+            lines.append(f'  → {u["label"]}を{u["old_display"]}から{u["new_display"]}に更新')
+            lines.append(f"  🔗 {note['url']}")
+    lines.append("")
+
+    money, other = classify_weekly_articles(quantum_notes, updates)
+    lines.append(f"■ お金と政策（{len(money)}件）")
+    for n in money:
+        lines.append(f"・{n['title']}")
+        lines.append(f"  🔗 {n['url']}")
+    lines.append("")
+
+    lines.append("■ その他の動き")
+    for n in other:
+        lines.append(f"・{n['title']}")
+        lines.append(f"  🔗 {n['url']}")
+    lines.append("")
+
+    if glossary_terms:
+        lines.append("■ 今週の初出用語")
+        for t in glossary_terms:
+            lines.append(f"・{t['term']}: {t['definition']}")
         lines.append("")
+
     if heatmap_available:
         lines += ["🗺 市場規模ヒートマップは HTML表示で確認", ""]
     return "\n".join(lines) + "\n"
 
 
-def build_weekly_html_body(articles: list[dict], summary: str, today: str,
-                            market_data: dict | None = None, heatmap_html: str = "") -> str:
-    """量子週次ダイジェストのHTML本文（1行ヘッドライン形式）を組み立てる。"""
+def build_weekly_html_body(quantum_notes: list[dict], milestones: dict, updates: list[dict],
+                            glossary_terms: list[dict], summary: str, today: str,
+                            heatmap_html: str = "") -> str:
+    """量子週次ダイジェストのHTML本文（実現までの距離ダッシュボード形式）を組み立てる。"""
     accent = CATEGORIES["Frontier（量子）"]["accent"]
+    today_date = datetime.strptime(today, "%Y-%m-%d").date()
+    indicators = milestones["indicators"]
+    updates_by_id = {u["id"]: u for u in updates}
 
     parts = [
         '<div style="max-width:600px;margin:0 auto;'
@@ -702,43 +992,127 @@ def build_weekly_html_body(articles: list[dict], summary: str, today: str,
         'padding:16px;color:#ffffff;">'
         '<div style="font-size:20px;font-weight:bold;">Frontier（量子） 週次ダイジェスト</div>'
         f'<div style="font-size:13px;opacity:0.9;margin-top:4px;">'
-        f'{html.escape(today)}（今週{len(articles)}件）</div>'
+        f'{html.escape(today)}（今週{len(quantum_notes)}件・指標更新{len(updates)}件）</div>'
         "</div>",
     ]
 
+    # ■ 実現までの距離
+    ind_rows = []
+    for ind in indicators:
+        upd = updates_by_id.get(ind["id"])
+        arrow = (
+            f'{html.escape(upd["old_display"])}→<strong>{html.escape(upd["new_display"])}</strong>'
+            if upd else "—"
+        )
+        ind_rows.append(
+            "<tr>"
+            f'<td style="padding:6px 8px;border-bottom:1px solid #dadce0;font-size:13px;'
+            f'color:#202124;">{html.escape(ind["label"])}</td>'
+            f'<td style="padding:6px 8px;border-bottom:1px solid #dadce0;font-size:13px;'
+            f'text-align:right;color:#202124;white-space:nowrap;">{html.escape(ind["display"])}</td>'
+            f'<td style="padding:6px 8px;border-bottom:1px solid #dadce0;font-size:12px;'
+            f'text-align:right;color:#188038;white-space:nowrap;">{arrow}</td>'
+            f'<td style="padding:6px 8px;border-bottom:1px solid #dadce0;font-size:12px;'
+            f'text-align:right;color:#5f6368;white-space:nowrap;">'
+            f'{html.escape(weeks_since(ind["as_of"], today_date))}</td>'
+            "</tr>"
+        )
+    target_line = build_target_line(indicators)
+    parts.append(
+        '<div style="background-color:#ffffff;border-radius:8px;padding:16px;margin-top:12px;">'
+        '<div style="font-size:16px;font-weight:bold;color:#202124;">■ 実現までの距離</div>'
+        '<table style="width:100%;border-collapse:collapse;margin-top:8px;">'
+        '<tr style="background-color:#f8f9fa;">'
+        '<th style="padding:6px 8px;font-size:12px;color:#5f6368;text-align:left;">指標</th>'
+        '<th style="padding:6px 8px;font-size:12px;color:#5f6368;text-align:right;">現在値</th>'
+        '<th style="padding:6px 8px;font-size:12px;color:#5f6368;text-align:right;">前回→今週</th>'
+        '<th style="padding:6px 8px;font-size:12px;color:#5f6368;text-align:right;">最終更新</th>'
+        "</tr>" + "".join(ind_rows) + "</table>"
+        + (
+            f'<div style="font-size:12px;color:#5f6368;margin-top:8px;">{html.escape(target_line)}</div>'
+            if target_line else ""
+        )
+        + "</div>"
+    )
+
+    # 今週の総括
     if summary:
         parts.append(
             '<div style="background-color:#f8f9fa;border-radius:8px;padding:16px;'
             'margin-top:12px;">'
-            '<div style="font-size:13px;font-weight:bold;color:#5f6368;">🔭 今週の潮流</div>'
+            '<div style="font-size:13px;font-weight:bold;color:#5f6368;">今週の総括</div>'
             f'<div style="font-size:14px;color:#3c4043;line-height:1.6;margin-top:8px;">'
             f'{_esc_rich(summary)}</div>'
             "</div>"
         )
 
-    rows = []
-    for a in articles:
-        meta_bits = []
-        if a["position"]:
-            meta_bits.append(
-                f'📍 {html.escape(annotate_position(a["position"], market_data))}'
+    # ■ 距離を縮めた動き
+    heading = f"■ 距離を縮めた動き（{len(updates)}件）" if updates else "■ 距離を縮めた動き"
+    section = [
+        '<div style="background-color:#ffffff;border-radius:8px;padding:16px;margin-top:12px;">'
+        f'<div style="font-size:16px;font-weight:bold;color:#202124;">{html.escape(heading)}</div>'
+    ]
+    if not updates:
+        min_weeks = min_weeks_number(indicators, today_date)
+        section.append(
+            '<div style="font-size:14px;color:#5f6368;margin-top:8px;">'
+            f'{html.escape(no_progress_line(indicators, today_date))}</div>'
+        )
+    else:
+        for u in updates:
+            note = u["note"]
+            section.append(
+                '<div style="margin-top:12px;padding-top:12px;border-top:1px solid #dadce0;">'
+                f'<a href="{html.escape(note["url"], quote=True)}" '
+                f'style="color:{accent};text-decoration:none;font-size:15px;font-weight:bold;">'
+                f'{html.escape(note["title"])}</a>'
+                + (
+                    f'<div style="font-size:13px;color:#3c4043;margin-top:4px;">'
+                    f'{html.escape(note["claim"])}</div>' if note["claim"] else ""
+                )
+                + '<div style="font-size:13px;color:#188038;margin-top:4px;">'
+                f'→ {html.escape(u["label"])}を{html.escape(u["old_display"])}から'
+                f'{html.escape(u["new_display"])}に更新</div>'
+                "</div>"
             )
-        meta_bits.append(html.escape(a["source_name"]))
-        rows.append(
-            '<div style="background-color:#ffffff;border-bottom:1px solid #dadce0;'
-            'padding:12px 4px;">'
-            f'<a href="{html.escape(a["url"], quote=True)}" '
-            f'style="color:{accent};text-decoration:none;font-size:15px;font-weight:bold;'
-            'line-height:1.4;">'
-            f'{html.escape(a["title"])}</a>'
-            '<div style="font-size:12px;color:#5f6368;margin-top:4px;">'
-            f'{"｜".join(meta_bits)}</div>'
+    section.append("</div>")
+    parts.append("".join(section))
+
+    # ■ お金と政策 / ■ その他の動き
+    money, other = classify_weekly_articles(quantum_notes, updates)
+
+    def build_link_list(title: str, notes_list: list[dict]) -> str:
+        rows_html = "".join(
+            '<div style="padding:8px 0;border-bottom:1px solid #dadce0;">'
+            f'<a href="{html.escape(n["url"], quote=True)}" '
+            f'style="color:{accent};text-decoration:none;font-size:14px;">'
+            f'{html.escape(n["title"])}</a></div>'
+            for n in notes_list
+        )
+        return (
+            '<div style="background-color:#ffffff;border-radius:8px;padding:16px;margin-top:12px;">'
+            f'<div style="font-size:16px;font-weight:bold;color:#202124;">{html.escape(title)}</div>'
+            f'<div style="margin-top:4px;">{rows_html}</div>'
             "</div>"
         )
-    parts.append(
-        '<div style="background-color:#ffffff;border:1px solid #dadce0;'
-        'border-radius:8px;margin-top:12px;overflow:hidden;">' + "".join(rows) + "</div>"
-    )
+
+    parts.append(build_link_list(f"■ お金と政策（{len(money)}件）", money))
+    parts.append(build_link_list("■ その他の動き", other))
+
+    # ■ 今週の初出用語
+    if glossary_terms:
+        terms_html = "".join(
+            '<div style="margin-top:8px;">'
+            f'<div style="font-size:14px;font-weight:bold;color:#202124;">{html.escape(t["term"])}</div>'
+            f'<div style="font-size:13px;color:#3c4043;margin-top:2px;">{html.escape(t["definition"])}</div>'
+            "</div>"
+            for t in glossary_terms
+        )
+        parts.append(
+            '<div style="background-color:#f8f9fa;border-radius:8px;padding:16px;margin-top:12px;">'
+            '<div style="font-size:16px;font-weight:bold;color:#202124;">■ 今週の初出用語</div>'
+            + terms_html + "</div>"
+        )
 
     if heatmap_html:
         parts.append(heatmap_html)
@@ -747,18 +1121,18 @@ def build_weekly_html_body(articles: list[dict], summary: str, today: str,
     return "".join(parts)
 
 
-def send_weekly_quantum_email(articles: list[dict]) -> None:
+def send_weekly_quantum_email(quantum_notes: list[dict], milestones: dict, updates: list[dict],
+                               glossary_terms: list[dict], today: str) -> None:
     """量子週次ダイジェストを1通だけ送信する。"""
     dry_run = os.environ.get("DRY_RUN") == "1"
     # シークレット値に末尾改行が入っているとメールヘッダーが弾かれるため必ずstrip
     username = os.environ["GMAIL_USERNAME"].strip()
     password = os.environ.get("GMAIL_APP_PASSWORD", "").strip()
-    today = datetime.now(JST).strftime("%Y-%m-%d")
 
     market_data = load_market_data()
     include_heatmaps = os.environ.get("INCLUDE_HEATMAPS", "1") != "0"
 
-    summary = gemini_weekly_summary(articles)
+    summary = gemini_weekly_summary(quantum_notes)
 
     domain_key = CATEGORIES["Frontier（量子）"]["domain"]
     images: dict[str, bytes] = {}
@@ -781,9 +1155,16 @@ def send_weekly_quantum_email(articles: list[dict]) -> None:
 
     heatmap_html = build_heatmap_html(domain_keys, src_map)
 
-    subject = f"🔭 [Frontier（量子）] 週次ダイジェスト {today}（今週{len(articles)}件）"
-    body = build_weekly_body(articles, summary, today, market_data, bool(heatmap_html))
-    html_body = build_weekly_html_body(articles, summary, today, market_data, heatmap_html)
+    subject = (
+        f"🔭 [Frontier（量子）] 週次ダイジェスト {today}"
+        f"（今週{len(quantum_notes)}件・指標更新{len(updates)}件）"
+    )
+    body = build_weekly_body(
+        quantum_notes, milestones, updates, glossary_terms, summary, today, bool(heatmap_html)
+    )
+    html_body = build_weekly_html_body(
+        quantum_notes, milestones, updates, glossary_terms, summary, today, heatmap_html
+    )
 
     if dry_run:
         print("=" * 60)
@@ -872,16 +1253,38 @@ def run_weekly_quantum(paths: list[str], sources: dict[str, str]) -> None:
     notes = dedup_by_url(candidate_paths, sources)
     quantum_notes = [n for n in notes if categorize(n) == "Frontier（量子）"]
 
+    updates = []
     if not quantum_notes:
         print("No quantum articles this week")
     else:
-        send_weekly_quantum_email(quantum_notes)
+        dry_run = os.environ.get("DRY_RUN") == "1"
+        today = datetime.now(JST).strftime("%Y-%m-%d")
+
+        milestones = load_json(MILESTONES_PATH)
+        updates = apply_milestone_updates(milestones, quantum_notes, today)
+        if updates:
+            print(f"Milestone updates detected: {len(updates)}")
+            for u in updates:
+                print(f"  {u['id']}: {u['old_display']} -> {u['new_display']} ({u['note']['url']})")
+            if not dry_run:
+                save_json(MILESTONES_PATH, milestones, trailing_newline=True)
+        else:
+            print("Milestone updates detected: 0")
+
+        glossary = load_json(GLOSSARY_PATH)
+        glossary_terms = detect_new_terms(glossary, quantum_notes, today)
+        print(f"New glossary terms: {len(glossary_terms)}")
+        if glossary_terms and not dry_run:
+            save_json(GLOSSARY_PATH, glossary, trailing_newline=False)
+
+        send_weekly_quantum_email(quantum_notes, milestones, updates, glossary_terms, today)
 
     out = os.environ.get("GITHUB_OUTPUT")
     if out:
         with open(out, "a") as f:
             f.write(f"count={len(quantum_notes)}\n")
-    print(f"Built weekly quantum digest: {len(quantum_notes)} articles")
+    print(f"Built weekly quantum digest: {len(quantum_notes)} articles, "
+          f"{len(updates)} milestone updates")
 
 
 def main() -> None:

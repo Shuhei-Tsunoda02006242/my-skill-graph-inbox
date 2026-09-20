@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: weekly-quantum-digest
@@ -39,3 +39,22 @@ jobs:
           GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
         run: python3 scripts/build_digest.py
+
+      # 指標更新・初出用語表示があった週だけ docs/*.json に差分が出る（無い週は何もしない）。
+      # `git diff --quiet` はcheckout直後にまだgit管理下に無いファイル（未追跡）の
+      # 新規作成を検出できないため、未追跡も含めて拾える `git status --porcelain` を使う
+      - name: Commit updated quantum milestones/glossary
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          CHANGED=$(git status --porcelain -- docs/quantum-milestones.json docs/quantum-glossary.json)
+          if [ -z "$CHANGED" ]; then
+            echo "差分なし。スキップ"
+            exit 0
+          fi
+          git add docs/quantum-milestones.json docs/quantum-glossary.json
+          git commit -m "chore: 量子週次の指標・用語集を更新"
+          # 日次キャプチャが毎日mainへpushしているため、checkout時点のmainは
+          # ほぼ確実に古い。rebaseしてからでないとnon-fast-forwardで弾かれる
+          git pull --rebase origin main
+          git push origin main
