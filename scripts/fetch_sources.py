@@ -25,6 +25,7 @@ import html
 import os
 import re
 import sys
+import time
 import traceback
 
 import feedparser
@@ -35,7 +36,11 @@ UA = "Mozilla/5.0 (compatible; SkillGraphInbox/1.0; +https://github.com/Shuhei-T
 
 # 1ソースあたりの取得上限。ルーチン側は最大3件しか採らないが、
 # 重複スキップで候補が尽きると0件になるため余裕を持たせる。
-MAX_PER_SOURCE = 6
+# 2026-09-21に6→12へ引き上げ。同日の取得43件のうち13件（30%）が既出URLで、
+# FierceBiotechは6件中3件が前日分の再掲、残る3件が対象外となり採用0件。
+# Healthcareのメールが丸ごと消えた。枠が前日分の再掲で埋まると、
+# 重複を引いた後に残る新しい候補が数件しかなくなるため。
+MAX_PER_SOURCE = 12
 # 何日前までの記事を候補にするか。障害日のさかのぼり取得（CLAUDE.md参照）が
 # 前日分を拾えるよう、1日では足りない。
 LOOKBACK_DAYS = 3
@@ -43,6 +48,8 @@ LOOKBACK_DAYS = 3
 MAX_BODY_CHARS = 12000
 
 TIMEOUT = 30
+# 記事本文を取りに行く間隔（秒）。取得元に負荷を掛けず403を誘発しないため
+REQUEST_INTERVAL = 1.0
 
 
 def log(msg: str) -> None:
@@ -140,6 +147,10 @@ def fetch_feed(url: str) -> list:
 
 
 def fetch_article_text(url: str) -> str:
+    # 連続リクエストで弾かれるのを避けるため間隔を空ける。fiercebiotech.com は
+    # 短時間に多数取りに行くと以降すべて403を返すようになる（2026-09-21に実測）。
+    # MAX_PER_SOURCE を12へ上げてリクエスト数がほぼ倍になったため入れた。
+    time.sleep(REQUEST_INTERVAL)
     r = requests.get(url, headers={"User-Agent": UA}, timeout=TIMEOUT)
     r.raise_for_status()
     text = trafilatura.extract(
