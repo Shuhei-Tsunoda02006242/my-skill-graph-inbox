@@ -1,0 +1,25 @@
+---
+source: "The Quantum Insider"
+prefix: tqi-
+title: "Fairfax County Schools Plans Quantum Computer Program at High School"
+url: "https://thequantuminsider.com/2026/09/25/fairfax-county-schools-quantum-computer-high-school/"
+published: 2026-09-25
+chars: 4718
+truncated: false
+extraction: full
+---
+
+Insider Brief
+- Fairfax County Public Schools plans to install an operational quantum computer at Skyview High School, giving K-12 students hands-on access to quantum computing.
+- The system is expected to be installed in December, with student learning experiences beginning in spring 2027 through a planned quantum computing pathway.
+- FCPS, Connected DMV, FCEDA and XeedQ are developing the program as part of a broader effort to connect students with universities, researchers, federal laboratories and the regional quantum industry.
+PRESS RELEASE — Fairfax County Public Schools (FCPS) is making history through a groundbreaking partnership with Connected DMV and the Fairfax County Economic Development Authority (FCEDA) that will bring an operational quantum computer directly to students at Skyview High School, creating a first-of-its-kind opportunity for K-12 public education.
+This partnership creates a unique opportunity for FCPS students to work with an emerging science as it moves from research laboratories into fields such as cybersecurity, medicine, materials science, finance, logistics, and national security.
+The quantum computer planned for Skyview is about the size of a small refrigerator and is designed for learning. Students will have hands-on experience with a technology that operates very differently from the computers we use every day. They will explore fundamental quantum concepts, test problems such as finding the most efficient way to organize a schedule, and compare how a quantum computer approaches a problem with how a traditional computer would solve it. Along the way, students will learn not only what quantum computing can do, but also its current limitations.
+Students will develop skills in coding, mathematics, experimentation, data analysis, problem solving, communication, collaboration, and critical thinking.
+“Our responsibility is to prepare our students for their future and not our past. Their future is yet to be imagined with careers that do not yet exist,” said FCPS Superintendent Dr. Michelle C. Reid. “This initiative creates meaningful and authentic learning experiences that connect our students’ unique passions and talents with industry leaders, educators, and community partners. These are the kinds of opportunities that help students discover what is possible, build the skills and confidence to navigate an ever-changing world, and ultimately lead us into the future.”
+The system is expected to be installed in December, with student learning experiences beginning in spring 2027. The program will begin with a quantum computing pathway and may grow into a credit-bearing course with dual-enrollment opportunities and industry-recognized credentials.
+“Fairfax County Public Schools is taking a pioneering step by putting a real quantum computer in the hands of students,” said Dr. Gopalakrishnan Balasubramanian, Founder and CEO of XeedQ. “Quantum computing is a rapidly emerging technology, and it demands a refreshing approach to education. We cannot wait for quantum computing to mature and then teach the next generation how to use it. Students need to be part of the breakthroughs as they happen, learning on real hardware and understanding the technology from the inside. This is how we build the quantum workforce the United States needs, and we are proud to partner with FCPS to make that possible, and take this pioneering first step.”
+Skyview is also expected to become a regional hub for quantum learning. Through Connected DMV’s Potomac Quantum Innovation Center, FCPS and its partners are working to build connections with universities, researchers, federal laboratories, and other school systems across Virginia, Maryland, and the District of Columbia. The Fairfax County Economic Development Authority will help connect this work with Fairfax County’s business and technology community, creating opportunities for students to learn from industry leaders and gain exposure to the emerging careers and real-world applications of quantum technology.
+“Regions that lead in quantum will be the ones that build the talent first,” said George Thomas, President and CEO of the Fairfax County Economic Development Authority. “Putting a working quantum computer in a public high school gives Fairfax County students hands-on access to a technology most people only read about. The quantum companies growing in Greater Washington today will hire from this generation, and we intend to have them ready.”
+The initiative reflects FCPS’ commitment to 22nd century learning and to providing each and every student with meaningful opportunities to explore emerging technologies, develop real-world skills, and prepare for a future yet to be imagined.
