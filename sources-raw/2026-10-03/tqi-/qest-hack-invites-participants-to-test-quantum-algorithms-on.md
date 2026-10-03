@@ -1,0 +1,28 @@
+---
+source: "The Quantum Insider"
+prefix: tqi-
+title: "QEst Hack Invites Participants to Test Quantum Algorithms on Real Business Problems"
+url: "https://thequantuminsider.com/2026/10/02/qest-hack-invites-participants-to-test-quantum-algorithms-on-real-business-problems/"
+published: 2026-10-02
+chars: 5398
+truncated: false
+extraction: full
+---
+
+Insider Brief
+- Metrosert is inviting companies, students, researchers and other participants from the Nordic and Baltic countries to apply for QEst Hack 2026 in Tallinn from November 11–13.
+- Five companies will bring real business problems and data to the hackathon, where teams will test whether quantum algorithms could offer potential solutions.
+- Applications are open until October 11, with the event offering free participation, quantum computing guidance and access to international mentors and experts.
+PRESS RELEASE — Metrosert, Estonia’s Applied Research Centre and National Metrology Institute, invites Estonian companies as well as students, researchers and other interested participants from the Nordic and Baltic countries to apply for the QEst Hack 2026 quantum hackathon, taking place in Tallinn from 11 to 13 November.
+Five companies will be selected for the second edition of QEst Hack in Estonia. Each company will bring a complex business problem and its own data to the hackathon. They will be joined by individual participants and quantum experts from Estonia, Finland and Canada to explore whether quantum algorithms could offer a better way to solve these problems in the future.
+According to Kalev Kaarna, a member of the QEst Hack organising team and Business Development Manager in Metrosert’s sales team, Metrosert has consistently contributed to building Estonia’s quantum technology ecosystem and developing the country’s capabilities in recent years.
+“Estonia’s neighbouring countries are actively developing this field, and quantum technologies have already become a national technology and innovation priority in many European countries. To keep pace and avoid falling behind, Estonia must start building the necessary knowledge, experience and partnerships now,” Kaarna explained.
+“QEst Hack gives both companies and people who may become Estonia’s future quantum technology experts an opportunity to take a major practical step forward. They can work with real company problems and data under the guidance of international quantum experts and gain an understanding of the potential benefits of quantum algorithms. Estonia needs people with this kind of experience and companies that start exploring the field early if we want to be among the frontrunners in applying quantum technologies rather than merely becoming late adopters,” Kaarna said.
+Companies can bring a complex optimisation or simulation problem whose current solution is expensive or time-consuming and where even a small improvement could provide a significant competitive advantage. Potential problems may involve logistics and route planning, energy grid balancing, production planning, financial portfolios, material properties or drug discovery.
+“A ready-made quantum solution will certainly not emerge in two and a half days. However, a company will gain an initial practical understanding of whether it makes sense to explore solving its business problem with quantum algorithms and what would be needed for the next experiments,” said Kaarna.
+Teams will be formed around the participating companies, bringing together their IT, data and business specialists with students, researchers and other individual participants. Participants will receive an introduction to quantum computing and, with support from mentors, test quantum algorithms using a real company problem and a sample of its data.
+The inaugural QEst Hack, held last year, was won by Enefit, which continued exploring its problem through a pilot project after the hackathon. According to Kaarel Oja, Head of AI Systems and Prototyping at Enefit, winning QEst Hack 2025 enabled the company to move from a theoretical interest in quantum computing to practical experimentation.
+“The hackathon prize – a three-month collaboration with Université de Sherbrooke – enabled us to explore quantum computing applications in the energy sector using real business problems and data, without first having to spend years building new expertise, methodologies and technological capabilities. The collaboration helps us test the potential of quantum computing quickly and systematically, reduce innovation risk and make investment decisions based on evidence rather than assumptions. In essence, working together allowed us to achieve in months what could have taken years to build independently,” said Kaarel Oja.
+Companies, individual participants and mentors can apply for the hackathon until 11 October. Participation is free of charge, and the working language is English. Further information and application forms are available on the QEst Hack 2026 website.
+QEst Hack 2026 is organised by Metrosert in cooperation with BDA, IBM, IQM, the City of Sherbrooke in Canada and the Institut quantique at Université de Sherbrooke. The hackathon is supported by the Estonian Ministry of Economic Affairs and Communications.
+Metrosert is Estonia’s state-owned Applied Research Centre and National Metrology Institute, operating under the Ministry of Economic Affairs and Communications. As an applied research centre, Metrosert helps companies develop and test new technologies and strengthen their international competitiveness. As the national metrology institute, Metrosert supports Estonia’s quality infrastructure by maintaining and developing the national measurement standards and ensuring the international traceability of measurements.

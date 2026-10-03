@@ -1,0 +1,15 @@
+---
+source: "STAT News"
+prefix: sn-
+title: "STAT+: Pharmalittle: We’re reading about the 340B drug pilot program, an obesity drug disappointment, and more"
+url: "https://www.statnews.com/pharmalot/2026/10/02/340b-drug-pilot-program-boehringer-zealand-obesity-trial/?utm_campaign=rss"
+published: 2026-10-02
+chars: 2774
+truncated: false
+extraction: full
+---
+
+And so, another working week will soon come to a close. Not a moment too soon, yes? This is, you may recall, our treasured signal to daydream about weekend plans. Our agenda is still taking shape, but we plan to tidy up around the castle, promenade extensively with the official mascots, and escort Mrs. Pharmalot to a roadside tavern. We also hope to have time for another listening party, where the rotation will likely include this, this, this, this, this and this. And what about you? The world is at your fingertips, you know, so this might be a lovely time to enjoy the great outdoors as the seasons turn. If the weather fails to cooperate, you could gather with friends and play a board game — remember those? — or put on your chef’s hat and cook a good meal. You could also plan the rest of your life, before an AI bot does it for you. Well, whatever you do, have a grand time. But be safe. Enjoy, and see you soon. …
+An obesity drug from Boehringer Ingelheim and Zealand Pharma helped patients with diabetes shed as much as 13.1% of their weight, a disappointing result, Bloomberg News tells us. Boehringer has pitched the medicine as a way to help patients lose fat while preserving muscle, but without an edge, the drug becomes just one more contender in an increasingly crowded market dominated by Eli Lilly and Novo. Boehringer pushed back at the idea that the drug might only be a niche product, saying that upcoming studies in heart and liver health will more clearly show its potential.
+The upcoming midterm elections are setting the stage for unusually significant changes to key Senate committees that play an important role in health care, STAT explains. Both the finance and health committees could undergo major changes, though for different reasons. Of course, if Democrats take control of the Senate, they would get to run the committees, though the GOP membership changes could still influence the panels’ directions. Specifically, five or more of the Senate Finance Committee’s 14 Republicans are set to leave. And the outlook for the Senate’s Committee on Health, Education, Labor, and Pensions, or HELP, is even more difficult to predict with the departure of chairman Bill Cassidy.
+Novartis signed a licensing deal worth about $7.8 billion with Chinese biotech company Abogen to advance RNA-based therapy, Reuters says. Novartis will gain exclusive rights to Abogen’s experimental drug, ABO2203, and options to license other therapies based on Abogen’s RNA technology. It will also have the option to license additional experimental medicines developed using Abogen’s RNA platform. The drug is designed to treat autoimmune diseases by targeting B cells, a type of immune cell that causes disease in conditions like lupus and rheumatoid arthritis.
