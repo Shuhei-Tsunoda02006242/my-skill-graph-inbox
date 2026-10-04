@@ -1196,6 +1196,17 @@ def send_weekly_quantum_email(quantum_notes: list[dict], milestones: dict, updat
         print(f"Sent: {subject}")
 
 
+def is_memo(path: str) -> bool:
+    """iPhoneメモ（frontmatter source-type: memo、または *-memo.md）かを判定する。
+    メモはメール配信せず、sync-inbox.sh がローカル日記へ転記する。"""
+    if os.path.basename(path).endswith("-memo.md"):
+        return True
+    try:
+        return frontmatter_field("source-type", open(path, errors="ignore").read()) == "memo"
+    except OSError:
+        return False
+
+
 def dedup_by_url(paths: list[str], sources: dict[str, str]) -> list[dict]:
     """URL重複を除外してパース済みノートを返す。
     複数のキャプチャ経路（クラウドルーチン/ローカル/手動）が同一記事を
@@ -1295,7 +1306,16 @@ def main() -> None:
         run_weekly_quantum(paths, sources)
         return
 
-    notes = dedup_by_url(paths, sources)
+    # メモは日次メールの対象外（日記へ転記される）。除外しても .digest-state は
+    # ワークフロー側で進むため「処理済み」扱いになり再試行されない
+    mail_paths = []
+    for p in paths:
+        if is_memo(p):
+            print(f"Skipped memo: {p}")
+        else:
+            mail_paths.append(p)
+
+    notes = dedup_by_url(mail_paths, sources)
 
     # Frontier（量子）は日次配信の対象外。週次サマリー（WEEKLY_QUANTUM=1）側で拾うため
     # ここでは除くだけで、ノート自体は消失しない

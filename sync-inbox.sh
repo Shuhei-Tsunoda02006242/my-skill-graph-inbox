@@ -17,6 +17,11 @@ VAULT_INBOX="$VAULT/00-Inbox"
 LEDGER="$INBOX_DIR/.sync-ledger"
 GIT="/usr/bin/git"
 NOTIFIER="/opt/homebrew/bin/terminal-notifier"
+# iPhoneメモ（*-memo.md）は Vault ではなくローカル日記へ転記する（2026-10-04〜）。
+# テスト時は環境変数で差し替え可能。launchd は PATH が最小なので絶対パスで呼ぶ。
+DAILY_LOG_DIR="${DAILY_LOG_DIR:-/Users/rena/projects/daily-log}"
+PYTHON3="/usr/bin/python3"
+MEMO_TO_DIARY="$INBOX_DIR/scripts/memo_to_diary.py"
 
 log() {
     echo "$(date '+%Y-%m-%d %H:%M:%S') $*"
@@ -83,7 +88,8 @@ do_backfill() {
         mv "${tmp_cand}.filtered" "$tmp_cand"
     fi
 
-    comm -23 "$tmp_cand" "$tmp_vault" > "$tmp_targets" || true
+    # メモは Vault ではなく日記行きなので対象外
+    comm -23 "$tmp_cand" "$tmp_vault" | grep -v -e '-memo\.md$' > "$tmp_targets" || true
 
     local total
     total=$(wc -l < "$tmp_targets" | tr -d ' ')
@@ -150,27 +156,47 @@ do_normal() {
     list_inbox_basenames > "$tmp_inbox"
     comm -23 "$tmp_inbox" "$LEDGER" > "$tmp_new" || true
 
-    local count=0 bn
+    local count=0 memo_count=0 bn
     while IFS= read -r bn; do
         [ -z "$bn" ] && continue
-        if cp "$INBOX_DIR/00-Inbox/$bn" "$VAULT_INBOX/$bn"; then
-            printf '%s\n' "$bn" >> "$LEDGER"
-            count=$((count + 1))
-        fi
+        case "$bn" in
+            *-memo.md)
+                # メモ: Vaultへはコピーせず日記へ追記。書き込み成功後にだけ台帳へ載せる（失敗は次回再試行）
+                if "$PYTHON3" "$MEMO_TO_DIARY" "$INBOX_DIR/00-Inbox/$bn" "$DAILY_LOG_DIR/entries"; then
+                    printf '%s\n' "$bn" >> "$LEDGER"
+                    memo_count=$((memo_count + 1))
+                else
+                    log "WARN: メモの日記転記に失敗しました: $bn（次回再試行します）"
+                fi
+                ;;
+            *)
+                if cp "$INBOX_DIR/00-Inbox/$bn" "$VAULT_INBOX/$bn"; then
+                    printf '%s\n' "$bn" >> "$LEDGER"
+                    count=$((count + 1))
+                fi
+                ;;
+        esac
     done < "$tmp_new"
 
-    if [ "$count" -gt 0 ]; then
+    if [ "$count" -gt 0 ] || [ "$memo_count" -gt 0 ]; then
         sort -u -o "$LEDGER" "$LEDGER"
+        local msg=""
+        [ "$count" -gt 0 ] && msg="新着記事 ${count}件 → Vaultに追加済み"
+        if [ "$memo_count" -gt 0 ]; then
+            [ -n "$msg" ] && msg="$msg / "
+            msg="${msg}メモ ${memo_count}件 → 日記に転記済み"
+        fi
         if [ -x "$NOTIFIER" ]; then
             "$NOTIFIER" \
                 -title "Skill Graph Inbox" \
-                -message "新着記事 ${count}件 → Vaultに追加済み" \
+                -message "$msg" \
                 -sound default \
                 -open "obsidian://open?vault=My-Skill-Graph"
         fi
     fi
 
     log "新着 ${count}件"
+    log "メモ→日記 ${memo_count}件"
 
     if [ "$pull_failed" -eq 1 ]; then
         log "ERROR: git pull に失敗したままです（次回実行で再取得します）"
