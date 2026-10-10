@@ -1,0 +1,34 @@
+---
+source: "STAT News"
+prefix: sn-
+title: "Opinion: 50 years ago, my colleagues and I pursued basic research science that became revolutionary"
+url: "https://www.statnews.com/2026/10/09/robert-gallo-interleukin-2-human-retroviruses-immunotherapy-basic-science/?utm_campaign=rss"
+published: 2026-10-09
+chars: 6533
+truncated: false
+extraction: full
+---
+
+September marked 50 years since my colleagues and I published a paper describing what became known as interleukin-2, or IL-2, one of the first cytokines to be discovered and a protein essential to the growth and regulation of T cells. Science marked that anniversary with a perspective by renowned immunologists Rafi Ahmed and Steven Rosenberg examining the discovery. Their perspective prompted me to reflect on a question I’ve been asked many times over the years: What has been IL-2’s greatest legacy?
+My answer depends on how you define importance.
+From my perspective, IL-2 made possible the discovery of the first human retroviruses, including one that is the only known cause of a human leukemia, and ultimately, HIV. From that came the evidence that HIV causes AIDS and the development of the blood test that helped protect the blood supply.
+That said, many of my immunology colleagues may answer differently. They may say that IL-2’s greatest contribution was making it possible to grow human T cells and opening the door to modern cellular immunology and cancer immunotherapy.
+IL-2 has led to many important milestones, but to me, its larger lesson is about the nature of scientific discovery. We could not have known at the outset where this work would lead or its broader impact on the field, as is often the case with basic science. Many people who say they support science don’t understand the process and expect immediate results. But some of medicine’s greatest advances began with a question whose ultimate impact no one could have predicted.
+In the case of IL-2, we didn’t set out to treat cancer. We were hunting for growth factors, the signals that would let different kinds of human blood cells grow in a cell culture system so we could study them. Then we got human T cells to grow, and I knew we had reached a turning point. For the first time, we could watch these cells up close. T cells were not supposed to grow (cell division) for more than one cycle. What I couldn’t have told you was where it would lead.
+At the time, many scientists believed human retroviruses did not exist and that they existed only in animals. As noted, others believed T cells simply could not be grown continuously in culture. In fact, the very week our paper was accepted, a leading expert gave a lecture stating that everyone knew T cells could not be grown in culture.
+But we showed that they could. That is how science advances. One discovery makes the next one possible.
+For us, the next step led to the discovery of human T-cell leukemia virus-1 (HTLV-1), the first human retrovirus, followed by HTLV-2.
+HTLV-1 also provided the first proven demonstration that a virus could cause human leukemia and directly cause a normal cell to become a malignant cell. Without IL-2, those discoveries would have taken much longer and could not have been characterized nearly as well.
+Who could have imagined that an even more deadly infectious threat was literally right around the corner? That threat, of course, was AIDS. Our years of work with human T cells meant we weren’t starting completely from scratch to learn about and how to treat it. We already had the tools needed to identify a new human retrovirus, HIV, and establish it as the cause of AIDS.
+We could never have imagined what IL-2 would do years later.
+The ability to grow human T cells transformed cellular immunology. Steve Rosenberg recognized early that IL-2 could help harness the immune system against cancer, and he pioneered the field of cancer immunotherapy. His work, together with that of some others, launched modern cancer immunotherapy.
+Rafi Ahmed, one of the great immunologists of our time, went on to help define our understanding of T-cell memory and how the immune system responds over time to infection and vaccination. The field continued to grow in directions we never envisioned.
+We also could not have imagined that IL-2 would be the first of what became a vast field of interleukins and other cytokines derived from lymphocytes and regulating much of our immune responses as well as inflammation. The experimental approach we described in our original Science paper became a model for studying other human cytokines. Looking back, that may be as important as anything that came directly from our own work. Other scientists could use the same approach to pursue their own questions.
+None of this was what we set out to do. We were trying to answer a basic biological question. Basic studies led to clinical and translational advances that no one could have predicted.
+I worry about calls to direct research funding primarily toward work with immediate and obvious applications. You can’t just fund the obvious. The most consequential research is often about what is not obvious. If scientists must know the practical outcome before asking the question, they’ll never ask some of the most important questions.
+Science rarely moves in a straight line. Discoveries come from right field, left field, and sometimes way out in center field. If we support only what appears immediately useful, we risk overlooking the discoveries that will become the foundation for tomorrow’s medicine.
+I learned that lesson long before IL-2. As a boy, I visited my sister while she was dying of leukemia. I remember watching physicians take bone marrow biopsies and asking why they were putting her through them when they could not save her. Her doctors answered simply, “For the future.” I have never forgotten those words.
+I was young then. It took me years to understand what those words really meant. Only later did I see those doctors were saying that research does not always help patients right away. Sometimes years pass before anyone knows what a discovery will mean or where it will lead.
+IL-2 was like that. We knew it was important, but we couldn’t have pictured everything that came next, or how many other scientists would pick it up and run with it.
+Fifty years on, the lesson holds. The discoveries that will change medicine a generation from now are probably being chased today by people asking questions no one else sees the value of yet.
+Robert C. Gallo, M.D., is founding director of the University of South Florida’s Institute for Translational Virology & Innovation, director of the microbial oncology program at the Tampa General Hospital Cancer Institute, and co-founder and international scientific director of the Global Virus Network. He is best known for his pioneering discovery of human retroviruses, including HIV as the cause of AIDS.
