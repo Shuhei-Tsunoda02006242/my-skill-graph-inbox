@@ -9,7 +9,7 @@ companies-mentioned: [planqc, AQT Germany]
 investment-implication: "国費約$717M（約1,080億円）が中性原子・イオントラップ・超伝導の3方式に配分され、2030年までに最低2台の耐故障QPUを目指す。"
 signal-strength: moderate
 status: fleeting
-landscape-position: "Quantum > 資本/立地 > 政府Rlandscape-position: "Quantum > Computing > 国家プロジェクト/政策"D資金/補助金(CHIPS法等)"
+landscape-position: "Quantum > 資本/立地 > 政府R&D資金/補助金(CHIPS法等)"
 ---
 
 ## Key Claim

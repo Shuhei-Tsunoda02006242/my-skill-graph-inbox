@@ -9,7 +9,7 @@ companies-mentioned: [Eli Lilly, Gate Bioscience]
 investment-implication: "最大額が前回の約$856M（約1,280億円）から実質倍増し、SEC61を使う『分子ゲート』という新モダリティにBig Pharmaが追加投資している。"
 signal-strength: moderate
 status: fleeting
-landscape-position: "Biotech > 資本/Mlandscape-position: "Biotech > 創薬(Drug Discovery) > 新モダリティ"A > バイオIPO/ライセンス"
+landscape-position: "Biotech > 資本/M&A > バイオIPO/ライセンス"
 ---
 
 ## Key Claim

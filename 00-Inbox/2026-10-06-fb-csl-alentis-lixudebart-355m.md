@@ -9,7 +9,7 @@ companies-mentioned: [CSL, Alentis Therapeutics]
 investment-implication: "第2相段階の薬に3.55億ドルの前払いが付き、Claudin-1という新規標的の検証が進んだ。CSLは腎臓領域の強化を急いでいる。"
 signal-strength: moderate
 status: fleeting
-landscape-position: "Biotech > 資本/Mlandscape-position: "Biotech > 創薬(Drug Discovery) > 線維症/腎疾患"A > バイオIPO/ライセンス"
+landscape-position: "Biotech > 資本/M&A > バイオIPO/ライセンス"
 ---
 
 ## Key Claim

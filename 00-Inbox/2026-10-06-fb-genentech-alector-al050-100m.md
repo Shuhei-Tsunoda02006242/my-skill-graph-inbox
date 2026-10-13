@@ -9,7 +9,7 @@ companies-mentioned: [Genentech, Roche, Alector, Spur Therapeutics]
 investment-implication: "前臨床段階でも脳送達技術に大型の前払いが付き、Roche系が血液脳関門突破を神経変性疾患の最重要課題と見ていることを示す。Alectorの資金繰りが2029年まで延びた。"
 signal-strength: moderate
 status: fleeting
-landscape-position: "Biotech > 資本/Mlandscape-position: "Biotech > 創薬(Drug Discovery) > 神経変性疾患"A > バイオIPO/ライセンス"
+landscape-position: "Biotech > 資本/M&A > バイオIPO/ライセンス"
 ---
 
 ## Key Claim
