@@ -1,0 +1,28 @@
+---
+source: "STAT News"
+prefix: sn-
+title: "Opinion: I thought I knew why patients stopped taking their medicine. I was wrong"
+url: "https://www.statnews.com/2026/10/16/nonadherence-medication-stopped-identity-pharmacist-side-effects-prevent/?utm_campaign=rss"
+published: 2026-10-16
+chars: 5384
+truncated: false
+extraction: full
+---
+
+During my years as a clinical pharmacist, I thought I understood why patients stopped taking long-term medications — one of the biggest challenges in medicine. They forgot to take them, became frustrated with side effects, or didn’t fully understand their conditions. But over time, my clinical experience showed me that these explanations only told part of the story.
+I first noticed this pattern across very different medical specialties. In psychiatry, I saw patients with schizophrenia experience psychotic episodes after stopping their antipsychotics. Patients who abruptly discontinued their antidepressants often suffered withdrawal symptoms. Later, when I worked in a kidney transplant center, I encountered a surprisingly similar situation when patients stopped taking one or more of their immunosuppressants and developed acute rejection of their new kidneys. Colleagues in cardiology, primary care, and other specialties described similar experiences.
+The patients’ initial explanations were often familiar. After longer conversations, however, especially when patients’ guilt and shame lessened, they gave other explanations. I started to realize that “I forgot” was sometimes an easier answer, both for the patient and for the health care professional.
+Some people worried that they would become dependent on medication — not necessarily in the pharmacological sense, but because needing treatment every day felt like losing control over their own bodies. Others stopped medication temporarily to prove to themselves that they could still function without it. Research suggests that many factors leading people to discontinue treatment take root before the first dose, when they are still trying to understand what their illness and their medication will mean in their lives.
+In mental health care, I encountered people who believed that medication changed who they were. They didn’t mean the common adverse effects, such as sleepiness or weight gain. They described something harder to define: a feeling of being disconnected from themselves, as if an important part of their personality had changed.
+One case, in particular, stayed with me. He was a young man who had received a kidney transplant as a teenager. For years, he had taken his immunosuppressants correctly. At 23, he experienced his first episode of acute rejection.
+His initial explanation seemed simple. He had traveled for work and said he had forgotten to bring his medications. Later, during an informal conversation as we walked through the hallways of the hospital, a different explanation emerged. His girlfriend was pregnant, and he told me he felt he needed to “become a man.”
+At that moment, it became clear that the medication had taken on a meaning beyond its pharmacological function. For him, depending on a daily treatment seemed to conflict with the image of strength, autonomy, and responsibility that he associated with adulthood.
+This conversation changed the way I understood adherence. Medication can become entangled with the way people see themselves, and the kind of people they believe they need to be.
+Specifically, for men and younger patients, I noticed that needing a treatment could feel like admitting vulnerability, weakness, or limitation. And stopping it could become an attempt to regain a sense of control over the body and over one’s own life.
+Only later did I find research that helped explain what I had been seeing in practice. Studies on medication adherence have shown that people’s beliefs about medicines influence whether they take them as prescribed, including how they weigh their perceived need for treatment against their concerns. A 2024 systematic review on illness identity added another layer to this picture, showing that the way people integrate chronic illness into their sense of self was associated with whether they could manage their health problems and how they adapted to treatment. Research on preventing nonadherence likewise suggests that these beliefs need to be recognized early, potentially before the first prescription is written.
+These findings helped put words to something I had repeatedly observed in clinical practice. A patient can fully understand that a medication is necessary and still struggle with what taking it means. It can become a daily reminder that they are living with chronic illness, a symbol of dependence on something external to function, or a challenge to deeply held ideas about strength, control, and personal identity.
+Perhaps the problem is partly in the questions we ask. When we ask only “Did you have side effects?” or “Did you forget a dose?”, we may receive answers that are true but incomplete. We need to create space for more difficult questions: What does this medication mean to you? How do you feel about needing it every day? Is there a part of you that resists the idea of depending on this treatment?
+If we want to improve adherence to long-term treatments, we may need to change not only the answers we provide, but also the questions we ask. Explaining how a medication works will always be essential. But understanding what that medication has come to represent may be just as important.
+Sometimes, the biggest barrier between a patient and their treatment is not pharmacology.
+It is how they see themselves.
+Marcela Gottschald is a Brazilian journalist and pharmacist based in Argentina.
