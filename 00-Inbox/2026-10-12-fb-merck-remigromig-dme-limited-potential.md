@@ -10,6 +10,16 @@ investment-implication: "2024年に前払い$1.3B（約1,950億円）で買収�
 signal-strength: weak
 status: fleeting
 landscape-position: "Biotech > 資本/M&A > Pharma大型M&A"
+indication: "糖尿病黄斑浮腫（DME）"
+approach: ""
+players: "Merck"
+deal-type: ""
+deal-total-usd-m: ""
+deal-upfront-usd-m: ""
+deal-note: ""
+trial-phase: ""
+trial-result: ""
+trial-note: ""
 ---
 
 ## Key Claim

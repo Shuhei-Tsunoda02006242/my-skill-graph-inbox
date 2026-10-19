@@ -10,6 +10,16 @@ investment-implication: "未承認ペプチドの調剤が解禁されれば、H
 signal-strength: weak
 status: fleeting
 landscape-position: "Biotech > Development/Regulatory > FDA承認/審査高速化"
+indication: ""
+approach: ""
+players: ""
+deal-type: ""
+deal-total-usd-m: ""
+deal-upfront-usd-m: ""
+deal-note: ""
+trial-phase: ""
+trial-result: ""
+trial-note: ""
 ---
 
 ## Key Claim

@@ -10,6 +10,16 @@ investment-implication: "特許切れ後の成長源として期待される2品
 signal-strength: moderate
 status: fleeting
 landscape-position: "Biotech > Modality > 低分子"
+indication: "特発性肺線維症（IPF）"
+approach: ""
+players: "Bristol Myers Squibb"
+deal-type: ""
+deal-total-usd-m: ""
+deal-upfront-usd-m: ""
+deal-note: ""
+trial-phase: "3"
+trial-result: "mixed"
+trial-note: "admilparant120mg群は未達"
 ---
 
 ## Key Claim

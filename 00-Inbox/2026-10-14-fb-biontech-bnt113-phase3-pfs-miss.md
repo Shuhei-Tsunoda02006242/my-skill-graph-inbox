@@ -10,6 +10,16 @@ investment-implication: "8月のMerck/Moderna成功で上がった個別化が�
 signal-strength: moderate
 status: fleeting
 landscape-position: "Biotech > Modality > 核酸/mRNA"
+indication: "頭頸部がん（HPV16陽性）"
+approach: "mRNAがんワクチン"
+players: "BioNTech"
+deal-type: ""
+deal-total-usd-m: ""
+deal-upfront-usd-m: ""
+deal-note: ""
+trial-phase: "2/3"
+trial-result: "fail"
+trial-note: "PFS未達、OSは継続"
 ---
 
 ## Key Claim

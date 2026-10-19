@@ -10,6 +10,16 @@ investment-implication: "Lilly（Gate、$870M）に続きPfizerもSec61を標的
 signal-strength: moderate
 status: fleeting
 landscape-position: "Biotech > 資本/M&A > バイオIPO/ライセンス"
+indication: ""
+approach: "Sec61阻害"
+players: "Pfizer ← Enodia Therapeutics"
+deal-type: "license"
+deal-total-usd-m: "500"
+deal-upfront-usd-m: ""
+deal-note: "総額$500M超・前払い非公表"
+trial-phase: ""
+trial-result: ""
+trial-note: ""
 ---
 
 ## Key Claim

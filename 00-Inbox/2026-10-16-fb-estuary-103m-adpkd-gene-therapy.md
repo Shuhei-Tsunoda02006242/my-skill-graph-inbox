@@ -10,6 +10,16 @@ investment-implication: "$103M（約155億円）のうちシリーズAは$93M（
 signal-strength: moderate
 status: fleeting
 landscape-position: "Biotech > Modality > 遺伝子治療"
+indication: "多発性嚢胞腎（ADPKD）"
+approach: "遺伝子治療（AAV）"
+players: "Estuary Biotherapeutics"
+deal-type: "funding"
+deal-total-usd-m: ""
+deal-upfront-usd-m: "103"
+deal-note: "シリーズA"
+trial-phase: ""
+trial-result: ""
+trial-note: ""
 ---
 
 ## Key Claim

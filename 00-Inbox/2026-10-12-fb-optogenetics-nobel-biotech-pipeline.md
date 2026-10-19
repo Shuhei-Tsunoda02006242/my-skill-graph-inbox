@@ -10,6 +10,16 @@ investment-implication: ""
 signal-strength: weak
 status: fleeting
 landscape-position: "Biotech > Neurotech/BMI > 侵襲/低侵襲BMI"
+indication: "視覚障害"
+approach: "光遺伝学（遺伝子治療）"
+players: "MapLight Therapeutics, GenSight Biologics"
+deal-type: ""
+deal-total-usd-m: ""
+deal-upfront-usd-m: ""
+deal-note: ""
+trial-phase: ""
+trial-result: ""
+trial-note: ""
 ---
 
 ## Key Claim

@@ -1,0 +1,44 @@
+name: Weekly Healthcare Digest
+
+# Healthcare は日次では「💰 お金が動いた」「🧪 臨床の結果」の2つの表（1記事=1行）だけを
+# 送る。それ以外のヘルスケア記事（FDAの審査日程・規制・医療機器・BMI・政策など）は日次から
+# 外し、この土曜週次まとめ1通に集める。週次では病気別・アプローチ別に金額を集計した表、
+# 臨床結果の集計1行、その他の動き一覧、末尾にbiotechのヒートマップを出す。Geminiは使わない。
+# cronは金曜22:50 UTC = 土曜7:50 JST起動（量子の週次7:35とずらしている）。GitHub Actionsの
+# スケジュール遅延（50〜148分、日付をまたぐこともある）があっても、対象期間は実行時刻ではなく
+# 「JSTで今日より前（当日は含めない）の直近の金曜日」を end とした end-6日（土）〜end（金）の
+# ファイル名日付で決まるため、日曜にずれ込んでも同じ週を指す。金曜までなのは、ファイル名の
+# 日付Dのノートが D日17:00 UTC＝JSTでD+1日2:00にキャプチャされ、土曜日付のノートは
+# 土曜7:50 JSTの時点でまだ存在しないため（土曜までの窓だと翌週にも載らず永久に漏れる）。
+# .digest-state には依存しない。
+on:
+  schedule:
+    - cron: "50 22 * * 5"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: weekly-healthcare-digest
+  cancel-in-progress: false
+
+jobs:
+  send-weekly-healthcare-digest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install rsvg-convert (for heatmap PNG embedding)
+        run: sudo apt-get update && sudo apt-get install -y librsvg2-bin fonts-noto-cjk
+
+      - name: Build and send weekly healthcare digest
+        env:
+          WEEKLY_HEALTHCARE: "1"
+          GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: python3 scripts/build_digest.py

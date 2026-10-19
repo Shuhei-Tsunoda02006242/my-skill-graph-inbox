@@ -10,6 +10,16 @@ investment-implication: ""
 signal-strength: weak
 status: fleeting
 landscape-position: "Biotech > Development/Regulatory > FDA承認/審査高速化"
+indication: "ぶどう膜炎黄斑浮腫"
+approach: "IL-6阻害"
+players: "Roche"
+deal-type: ""
+deal-total-usd-m: ""
+deal-upfront-usd-m: ""
+deal-note: ""
+trial-phase: ""
+trial-result: ""
+trial-note: ""
 ---
 
 ## Key Claim

@@ -10,6 +10,16 @@ investment-implication: "William Blairが見込んでいたシェーグレン病
 signal-strength: weak
 status: fleeting
 landscape-position: "Biotech > Development/Regulatory > 臨床試験/CRO"
+indication: "シェーグレン病"
+approach: ""
+players: "Argenx"
+deal-type: ""
+deal-total-usd-m: ""
+deal-upfront-usd-m: ""
+deal-note: ""
+trial-phase: "3"
+trial-result: "fail"
+trial-note: "プラセボ上回れず早期中止"
 ---
 
 ## Key Claim

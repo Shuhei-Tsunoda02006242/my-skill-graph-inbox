@@ -10,6 +10,16 @@ investment-implication: "Neuralink共同創業者Max Hodak率いる同社のBCI�
 signal-strength: weak
 status: fleeting
 landscape-position: "Biotech > Neurotech/BMI > 侵襲/低侵襲BMI"
+indication: "Stargardt病"
+approach: "人工網膜（BCI）"
+players: "Science Corporation"
+deal-type: ""
+deal-total-usd-m: ""
+deal-upfront-usd-m: ""
+deal-note: ""
+trial-phase: ""
+trial-result: ""
+trial-note: ""
 ---
 
 ## Key Claim

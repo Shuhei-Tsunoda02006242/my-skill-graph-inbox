@@ -10,6 +10,16 @@ investment-implication: "$310M（約470億円）は2026年の欧州バイオで�
 signal-strength: moderate
 status: fleeting
 landscape-position: "Biotech > Modality > 低分子"
+indication: "先天性副腎過形成"
+approach: "MC2受容体拮抗薬"
+players: "OMass Therapeutics"
+deal-type: "funding"
+deal-total-usd-m: ""
+deal-upfront-usd-m: "310"
+deal-note: "シリーズC"
+trial-phase: ""
+trial-result: ""
+trial-note: ""
 ---
 
 ## Key Claim

@@ -10,6 +10,16 @@ investment-implication: "生命科学専業の大手VCが米欧向け$1.9B超と
 signal-strength: moderate
 status: fleeting
 landscape-position: "Biotech > 資本/M&A > バイオIPO/ライセンス"
+indication: ""
+approach: ""
+players: "OrbiMed"
+deal-type: "fund"
+deal-total-usd-m: ""
+deal-upfront-usd-m: "3000"
+deal-note: "新ファンド2本（アジア$1B超）"
+trial-phase: ""
+trial-result: ""
+trial-note: ""
 ---
 
 ## Key Claim

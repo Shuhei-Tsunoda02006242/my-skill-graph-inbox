@@ -10,6 +10,16 @@ investment-implication: "禁止の対象は買収などの所有権の移転で�
 signal-strength: moderate
 status: fleeting
 landscape-position: "Biotech > Geopolitics/Trade > 米中バイオ規制(BIOSECURE等)"
+indication: ""
+approach: ""
+players: ""
+deal-type: ""
+deal-total-usd-m: ""
+deal-upfront-usd-m: ""
+deal-note: ""
+trial-phase: ""
+trial-result: ""
+trial-note: ""
 ---
 
 ## Key Claim

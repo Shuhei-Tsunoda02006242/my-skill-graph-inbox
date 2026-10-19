@@ -8,17 +8,32 @@ Frontier（量子）は日次配信の対象外。WEEKLY_QUANTUM=1 で起動す�
 過去7日以内の量子ノートをスキャンして週次サマリー1通（1行ヘッドライン形式＋Gemini総括＋
 量子ヒートマップ）を送信する専用モードに切り替わる。
 
+Healthcare（2026-10-19〜）は日次では「💰 お金が動いた」「🧪 臨床の結果」の2つの表
+（1記事=1行、批評コメントとヒートマップ無し）だけを送る。それ以外のヘルスケア記事は
+WEEKLY_HEALTHCARE=1 で起動する土曜の週次まとめ1通（病気別・アプローチ別の金額集計＋
+ヒートマップ）に回る。表の元になる欄はノートの frontmatter（CLAUDE.md
+「Healthcare（Biotech）ノートの追加欄」）で、classify_healthcare() が振り分ける。
+
 Usage:
     build_digest.py <file1.md> [file2.md ...]              通常の日次カテゴリダイジェスト
     WEEKLY_QUANTUM=1 build_digest.py [file1.md ...]         週次量子ダイジェスト
         （パスを渡せばそれを対象にする＝テスト用。渡さなければ 00-Inbox/*.md を
         ファイル名の日付でスキャンし、過去7日以内かつFrontier（量子）カテゴリの
         ノートを対象にする。.digest-state には依存しない）
+    WEEKLY_HEALTHCARE=1 build_digest.py [file1.md ...]      週次Healthcareまとめ
+        （パスを渡せばそれを対象にする＝テスト用。渡さなければ「JSTで今日より前
+        （当日は含めない）の直近の金曜日」を end とし、end-6日（土）〜end（金）の
+        ファイル名日付のHealthcareノートを対象にする。ファイル名の日付Dのノートは
+        D日17:00 UTC＝JSTでD+1日2:00にキャプチャされるため、土曜日付のノートは日曜2:00
+        まで存在せず、土曜朝の週次に載せられない。実行時刻から窓を決めないので、
+        Actionsの遅延で日をまたいでも同じ週を指す。.digest-state には依存しない）
 
 環境変数:
 - GMAIL_USERNAME / GMAIL_APP_PASSWORD  SMTP認証情報（送受信とも同一アドレス）
-- GEMINI_API_KEY                       批評コメント/週次総括生成用（無くても継続）
+- GEMINI_API_KEY                       批評コメント/週次総括生成用（無くても継続。
+                                        Healthcareの日次・週次メールでは使わない）
 - WEEKLY_QUANTUM=1                     週次量子ダイジェストモードに切り替え
+- WEEKLY_HEALTHCARE=1                  週次Healthcareまとめモードに切り替え
 - DRY_RUN=1                            SMTP送信せず、件名・本文を標準出力するのみ
 - INCLUDE_HEATMAPS=0                   末尾ヒートマップ画像の埋め込みのみを無効化（📍市場規模
                                         注記は独立して継続。デフォルト有効。
@@ -38,7 +53,7 @@ import subprocess
 import sys
 import json
 import urllib.request
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from email.message import EmailMessage
 
 SOURCES = {
@@ -179,10 +194,36 @@ def section(names: list[str], text: str) -> str:
     return ""
 
 
+def _frontmatter_block(text: str) -> str:
+    """先頭の `---` 〜 `---` の中身を返す（無ければ空文字）。"""
+    m = re.match(r"---\n(.*?)\n---", text, re.DOTALL)
+    return m.group(1) if m else ""
+
+
+def _hc_field(key: str, frontmatter: str) -> str:
+    """Healthcare追加欄を1つ読む。キー無し・値が空なら空文字。
+    frontmatter_field と違い、値が空（`key:` だけ）のとき次の行を拾わない。
+    クォートの中身を返し、クォート無しの値は行末の `# コメント` を落とす
+    （テンプレートのコメントごと書き写されても値が壊れないように）。"""
+    m = re.search(rf"^{re.escape(key)}:[ \t]*(.*)$", frontmatter, re.MULTILINE)
+    if not m:
+        return ""
+    value = m.group(1).strip()
+    if value[:1] in ('"', "'"):
+        end = value.find(value[0], 1)
+        return (value[1:end] if end != -1 else value[1:]).strip()
+    return re.split(r"\s+#", value, maxsplit=1)[0].strip()
+
+
+def _frontmatter_has_key(frontmatter: str, keys: tuple[str, ...]) -> bool:
+    return any(re.search(rf"^{re.escape(k)}:", frontmatter, re.MULTILINE) for k in keys)
+
+
 def parse_note(path: str, sources: dict[str, str]) -> dict:
     text = open(path).read()
     m = re.match(r"\d{4}-\d{2}-\d{2}-([a-z]+)-", os.path.basename(path))
     prefix = m.group(1) if m else ""
+    fm = _frontmatter_block(text)
     return {
         # 週次量子パス（指標更新検出・初出用語検出・お金/政策判定）専用。日次パスは未使用
         "path": path,
@@ -196,6 +237,20 @@ def parse_note(path: str, sources: dict[str, str]) -> dict:
         "position": frontmatter_field("landscape-position", text),
         "claim": section(["主な主張", "Key Claim"], text),
         "my_take": section(["私の見解", "My Take"], text),
+        # Healthcare（Biotech）ノートの追加欄（2026-10-19〜）。金額は文字列のまま持ち、
+        # 数値化は parse_usd_m が行う（解釈できない値を無視するため）
+        "indication": _hc_field("indication", fm),
+        "approach": _hc_field("approach", fm),
+        "players": _hc_field("players", fm),
+        "deal_type": _hc_field("deal-type", fm),
+        "deal_total": _hc_field("deal-total-usd-m", fm),
+        "deal_upfront": _hc_field("deal-upfront-usd-m", fm),
+        "deal_note": _hc_field("deal-note", fm),
+        "trial_phase": _hc_field("trial-phase", fm),
+        "trial_result": _hc_field("trial-result", fm),
+        "trial_note": _hc_field("trial-note", fm),
+        # 値が空かどうかではなくキーの有無で判定する（空でも書いてあれば「記入済み」）
+        "has_hc_fields": _frontmatter_has_key(fm, ("indication", "deal-type", "trial-result")),
     }
 
 
@@ -585,6 +640,304 @@ def build_html_body(category: str, articles: list[dict], commentary: str,
     return "".join(parts)
 
 
+# ---------------------------------------------------------------------------
+# Healthcare（2026-10-19〜）: 「お金が動いた」「臨床の結果」の2表 + 週次まとめ
+# ---------------------------------------------------------------------------
+
+USD_JPY = 150  # 円の併記に使う概算レート（$1≒150円。CLAUDE.md の換算ルールと同じ）
+HC_BLANK = "—"
+HC_MONEY_TYPES = ("funding", "ipo", "license", "ma")
+# deal-note が空のときに2行目へ出す種類ラベル（fund は日次の表に出ないが週次一覧用に持つ）
+HC_DEAL_LABELS = {"funding": "資金調達", "ipo": "IPO", "license": "提携", "ma": "買収", "fund": "ファンド"}
+# trial-result → (記号, 語, 色)。mixed は白地で読める濃い黄（#f9ab00 はコントラスト不足）
+HC_RESULT_STYLE = {
+    "success": ("○", "達成", "#188038"),
+    "fail": ("✗", "未達", "#d93025"),
+    "mixed": ("△", "一部達成", "#b06000"),
+}
+HC_NO_KEY_LABEL = "（記載なし）"
+
+_HC_TH_STYLE = ("padding:6px 4px;font-size:11px;font-weight:bold;color:#5f6368;"
+                "text-align:left;border-bottom:2px solid #dadce0;"
+                "word-break:break-word;overflow-wrap:anywhere;")
+_HC_TD_STYLE = ("padding:8px 4px;font-size:13px;color:#202124;line-height:1.5;"
+                "vertical-align:top;border-bottom:1px solid #eceff1;"
+                "word-break:break-word;overflow-wrap:anywhere;")
+
+
+def classify_healthcare(note: dict) -> str:
+    """Healthcareノートを日次メールでの扱いで4つに分ける。
+    money: deal-type が funding/ipo/license/ma（お金と臨床の両方に当たるときも money を優先）
+    clinical: trial-result が空でない
+    missing: 追加欄のキーが1つも無い（キャプチャ側が新しい欄を書いていない）
+    other: それ以外（fund もここ。日次には出さず週次へ）"""
+    if (note.get("deal_type") or "").strip().lower() in HC_MONEY_TYPES:
+        return "money"
+    if (note.get("trial_result") or "").strip():
+        return "clinical"
+    if not note.get("has_hc_fields"):
+        return "missing"
+    return "other"
+
+
+def parse_usd_m(value) -> float | None:
+    """百万ドル単位の数値文字列（"103" / "1,160" 等）を float にする。
+    数値として解釈できない値・0以下は None（無視する。推測で補わない）。"""
+    try:
+        v = float(str(value).replace(",", "").strip())
+    except ValueError:
+        return None
+    if v != v or v in (float("inf"), float("-inf")) or v <= 0:
+        return None
+    return v
+
+
+def _trim_num(x: float, digits: int) -> str:
+    s = f"{x:.{digits}f}"
+    return s.rstrip("0").rstrip(".") if "." in s else s
+
+
+def fmt_usd_m(v: float) -> str:
+    """百万ドル → `$103M` / `$1.16B`（1000以上はB、小数2桁まで・末尾の0は削る）。"""
+    if v >= 1000:
+        return f"${_trim_num(v / 1000, 2)}B"
+    return f"${_trim_num(v, 2)}M"
+
+
+def fmt_jpy_approx(v: float) -> str:
+    """百万ドル → `約155億円` / `約1,740億円` / `約1.7兆円`（$1=150円、億円は四捨五入）。"""
+    oku = v * USD_JPY / 100  # 百万ドル×円レート÷1億
+    n = int(oku + 0.5)
+    if n >= 10000:
+        return f"約{_trim_num(oku / 10000, 1)}兆円"
+    if n < 1:
+        return "約1億円未満"
+    return f"約{n:,}億円"
+
+
+def fmt_usd_with_yen(v: float) -> str:
+    return f"{fmt_usd_m(v)}（{fmt_jpy_approx(v)}）"
+
+
+def hc_amount(note: dict) -> tuple[str, str]:
+    """money行の金額セル (1行目, 2行目)。
+    1行目は前払い・調達額（円併記）。総額が前払いと違えば「・総額最大$…」を足す。
+    前払いが無く総額だけなら「最大$…」。どちらも無ければ「—」。
+    2行目は deal-note、無ければ deal-type のラベル。"""
+    upfront = parse_usd_m(note.get("deal_upfront"))
+    total = parse_usd_m(note.get("deal_total"))
+    if upfront is not None:
+        line1 = fmt_usd_with_yen(upfront)
+        if total is not None and abs(total - upfront) > 1e-9:
+            line1 += f"・総額最大{fmt_usd_m(total)}"
+    elif total is not None:
+        line1 = f"最大{fmt_usd_with_yen(total)}"
+    else:
+        line1 = HC_BLANK
+    deal_type = (note.get("deal_type") or "").strip().lower()
+    line2 = (note.get("deal_note") or "").strip() or HC_DEAL_LABELS.get(deal_type, "")
+    return line1, line2
+
+
+def _hc_amount_sort_value(note: dict) -> float:
+    """並び順用。前払い（無ければ総額）。どちらも無ければ最後尾。"""
+    for key in ("deal_upfront", "deal_total"):
+        v = parse_usd_m(note.get(key))
+        if v is not None:
+            return v
+    return -1.0
+
+
+def norm_trial_phase(value: str) -> str:
+    """"3" / "第3相" / "2/3" → "3" / "2/3"。解釈できなければ空文字。"""
+    s = value or ""
+    m = re.search(r"([1-3])\s*[/／-]\s*([2-3])", s)
+    if m:
+        return f"{m.group(1)}/{m.group(2)}"
+    m = re.search(r"[1-4]", s)
+    return m.group(0) if m else ""
+
+
+def _trial_phase_rank(phase: str) -> float:
+    """相の高さ。"2/3" は 2 と 3 の間（2.5）。"""
+    if not phase:
+        return 0.0
+    if "/" in phase:
+        return float(phase.split("/")[1]) - 0.5
+    return float(phase)
+
+
+def hc_result(note: dict) -> tuple[str, str]:
+    """clinical行の結果セル (表示文字列, 色)。例: ("✗ 第3相 未達", "#d93025")。
+    trial-result が success/fail/mixed 以外なら、値をそのまま灰色で出す。"""
+    raw = (note.get("trial_result") or "").strip()
+    symbol, word, color = HC_RESULT_STYLE.get(raw.lower(), ("・", raw, "#5f6368"))
+    phase = norm_trial_phase(note.get("trial_phase") or "")
+    parts = [symbol, f"第{phase}相" if phase else "", word]
+    return " ".join(p for p in parts if p), color
+
+
+def split_healthcare(articles: list[dict]) -> dict[str, list[dict]]:
+    """Healthcareノートを money/clinical/other/missing に分け、表の並び順に整える。
+    money は前払い（無ければ総額）の大きい順、clinical は相の高い順（同順位は元の順）。"""
+    out: dict[str, list[dict]] = {"money": [], "clinical": [], "other": [], "missing": []}
+    for a in articles:
+        out[classify_healthcare(a)].append(a)
+    out["money"].sort(key=_hc_amount_sort_value, reverse=True)
+    out["clinical"].sort(
+        key=lambda a: _trial_phase_rank(norm_trial_phase(a.get("trial_phase") or "")),
+        reverse=True,
+    )
+    return out
+
+
+def hc_footnotes(other_count: int, missing_count: int) -> list[str]:
+    """日次Healthcareメール末尾の注記。"""
+    notes = []
+    if other_count > 0:
+        notes.append(f"その他のヘルスケア記事{other_count}件は土曜の週次まとめに回しました")
+    if missing_count > 0:
+        notes.append(
+            f"※ 分類欄が未記入の記事{missing_count}件も週次に回しました"
+            "（キャプチャ側が新しい欄を書いていない可能性）"
+        )
+    return notes
+
+
+def build_healthcare_body(money: list[dict], clinical: list[dict],
+                          other_count: int, missing_count: int) -> str:
+    """Healthcare日次メールのplain本文（2表を1記事1行で）。"""
+    lines = [f"Healthcare（{len(money) + len(clinical)}件）", "",
+             f"💰 お金が動いた（{len(money)}件）"]
+    if not money:
+        lines.append("該当なし")
+    for a in money:
+        amount, sub = hc_amount(a)
+        lines.append("・" + " | ".join([
+            a["indication"] or HC_BLANK, a["approach"] or HC_BLANK, amount,
+            a["players"] or HC_BLANK,
+        ]))
+        if sub:
+            lines.append(f"  {sub}")
+        lines.append(f"  🔗 {a['url']}")
+    lines += ["", f"🧪 臨床の結果（{len(clinical)}件）"]
+    if not clinical:
+        lines.append("該当なし")
+    for a in clinical:
+        result, _color = hc_result(a)
+        lines.append("・" + " | ".join([
+            a["indication"] or HC_BLANK, a["approach"] or HC_BLANK, result,
+            a["players"] or HC_BLANK,
+        ]))
+        if a["trial_note"]:
+            lines.append(f"  {a['trial_note']}")
+        lines.append(f"  🔗 {a['url']}")
+    footnotes = hc_footnotes(other_count, missing_count)
+    if footnotes:
+        lines += [""] + footnotes
+    return "\n".join(lines) + "\n"
+
+
+def _hc_who_html(note: dict, accent: str) -> str:
+    """「誰が」セル。記事URLへのリンクにする（空なら「—」）。"""
+    label = html.escape(note["players"] or HC_BLANK)
+    if not note["url"]:
+        return label
+    return (f'<a href="{html.escape(note["url"], quote=True)}" '
+            f'style="color:{accent};text-decoration:none;font-weight:bold;">{label}</a>')
+
+
+def _hc_sub_html(text: str) -> str:
+    """セル2行目の小さい灰色テキスト。"""
+    if not text:
+        return ""
+    return f'<div style="font-size:11px;color:#80868b;line-height:1.4;margin-top:2px;">{html.escape(text)}</div>'
+
+
+def _hc_table_html(columns: list[tuple[str, str]], rows: list[list[str]]) -> str:
+    """columns=(見出し, 幅%) / rows=セルのHTML。Gmail対応のためインラインstyleのみ。"""
+    head = "".join(
+        f'<th style="{_HC_TH_STYLE}width:{width};">{html.escape(label)}</th>'
+        for label, width in columns
+    )
+    body = "".join(
+        "<tr>" + "".join(f'<td style="{_HC_TD_STYLE}">{cell}</td>' for cell in row) + "</tr>"
+        for row in rows
+    )
+    return f'<table style="width:100%;table-layout:fixed;border-collapse:collapse;"><tr>{head}</tr>{body}</table>'
+
+
+def _hc_card_html(heading: str, inner: str) -> str:
+    return (
+        '<div style="background-color:#ffffff;border-radius:8px;padding:12px 8px;margin-top:12px;">'
+        f'<div style="font-size:16px;font-weight:bold;color:#202124;padding:0 4px 8px;">'
+        f'{html.escape(heading)}</div>{inner}</div>'
+    )
+
+
+_HC_EMPTY_HTML = '<div style="font-size:13px;color:#5f6368;padding:4px;">該当なし</div>'
+
+
+def _hc_header_html(accent: str, title: str, subtitle: str) -> str:
+    return (
+        '<div style="max-width:600px;margin:0 auto;'
+        "font-family:-apple-system,'Hiragino Sans',sans-serif;"
+        'background-color:#f1f3f4;padding:16px;">'
+        f'<div style="background-color:{accent};border-radius:8px 8px 0 0;'
+        'padding:16px;color:#ffffff;">'
+        f'<div style="font-size:20px;font-weight:bold;">{html.escape(title)}</div>'
+        f'<div style="font-size:13px;opacity:0.9;margin-top:4px;">{html.escape(subtitle)}</div>'
+        "</div>"
+    )
+
+
+def build_healthcare_html_body(money: list[dict], clinical: list[dict], today: str,
+                               other_count: int, missing_count: int) -> str:
+    """Healthcare日次メールのHTML本文。2つの表だけ（カード・批評・ヒートマップ無し）。
+    幅600px・インラインstyleのみ。スマホ幅では列が折り返して縦に伸びる前提の素直な表。"""
+    accent = CATEGORIES["Healthcare"]["accent"]
+    parts = [_hc_header_html(
+        accent, "Healthcare", f"{today}（{len(money) + len(clinical)}件）"
+    )]
+
+    money_rows = []
+    for a in money:
+        amount, sub = hc_amount(a)
+        money_rows.append([
+            html.escape(a["indication"] or HC_BLANK),
+            html.escape(a["approach"] or HC_BLANK),
+            f'<div style="font-weight:bold;">{html.escape(amount)}</div>{_hc_sub_html(sub)}',
+            _hc_who_html(a, accent),
+        ])
+    money_table = _hc_table_html(
+        [("病気", "24%"), ("アプローチ", "22%"), ("金額", "30%"), ("誰が", "24%")], money_rows
+    ) if money_rows else _HC_EMPTY_HTML
+    parts.append(_hc_card_html(f"💰 お金が動いた（{len(money)}件）", money_table))
+
+    clinical_rows = []
+    for a in clinical:
+        result, color = hc_result(a)
+        clinical_rows.append([
+            html.escape(a["indication"] or HC_BLANK),
+            html.escape(a["approach"] or HC_BLANK),
+            f'<div style="font-weight:bold;color:{color};">{html.escape(result)}</div>'
+            f'{_hc_sub_html(a["trial_note"])}',
+            _hc_who_html(a, accent),
+        ])
+    clinical_table = _hc_table_html(
+        [("病気", "24%"), ("アプローチ", "22%"), ("結果", "30%"), ("誰が", "24%")], clinical_rows
+    ) if clinical_rows else _HC_EMPTY_HTML
+    parts.append(_hc_card_html(f"🧪 臨床の結果（{len(clinical)}件）", clinical_table))
+
+    for text in hc_footnotes(other_count, missing_count):
+        parts.append(
+            f'<div style="font-size:12px;color:#5f6368;line-height:1.6;margin-top:12px;'
+            f'padding:0 4px;">{html.escape(text)}</div>'
+        )
+    parts.append("</div>")
+    return "".join(parts)
+
+
 def send_emails(groups: dict[str, list[dict]], claude_comments: dict[str, str]) -> None:
     dry_run = os.environ.get("DRY_RUN") == "1"
     # シークレット値に末尾改行が入っているとメールヘッダーが弾かれるため必ずstrip
@@ -606,6 +959,25 @@ def send_emails(groups: dict[str, list[dict]], claude_comments: dict[str, str]) 
 
     messages = []
     for category, articles in groups.items():
+        if category == "Healthcare":
+            # 専用の2表メール。批評コメント（Claude/Gemini）もヒートマップも付けない
+            hc = split_healthcare(articles)
+            rows = len(hc["money"]) + len(hc["clinical"])
+            print(f"[Healthcare] money={len(hc['money'])} clinical={len(hc['clinical'])} "
+                  f"other={len(hc['other'])} missing={len(hc['missing'])}")
+            if rows == 0 and not hc["missing"]:
+                print("[Healthcare] 資金・臨床結果が0件のため日次メールは送りません")
+                continue
+            subject = f"📥 [{category}] デイリーダイジェスト {today}（{rows}件）"
+            body = build_healthcare_body(
+                hc["money"], hc["clinical"], len(hc["other"]), len(hc["missing"])
+            )
+            html_body = build_healthcare_html_body(
+                hc["money"], hc["clinical"], today, len(hc["other"]), len(hc["missing"])
+            )
+            messages.append((subject, body, html_body, category, {}))
+            continue
+
         commentary = claude_comments.get(category)
         if commentary:
             label = "Claude"
@@ -642,6 +1014,10 @@ def send_emails(groups: dict[str, list[dict]], claude_comments: dict[str, str]) 
             category, articles, commentary, label, today, market_data, heatmap_html
         )
         messages.append((subject, body, html_body, category, images))
+
+    if not messages:
+        print("No emails to send")
+        return
 
     if dry_run:
         preview_dir = os.environ.get("TMPDIR", "/tmp")
@@ -1196,6 +1572,276 @@ def send_weekly_quantum_email(quantum_notes: list[dict], milestones: dict, updat
         print(f"Sent: {subject}")
 
 
+def healthcare_week_window(today: date) -> tuple[date, date]:
+    """週次Healthcareの対象期間 (start, end)。end は「today より前（当日は含めない）の
+    直近の金曜日」、start は end-6日（土〜金）。ファイル名の日付Dのノートは D日17:00 UTC
+    （JSTでD+1日2:00）にキャプチャされるため、土曜日付のノートは日曜2:00まで存在しない。
+    「土曜まで」の窓だと土曜朝の週次には載らず、翌週の窓からも外れて永久に漏れる。
+    そこで金曜までを対象にする。実行時刻ではなく日付だけで決めるので、土曜の定刻でも
+    Actionsの遅延（50〜148分）で日曜にずれ込んでも同じ週を指す。金曜に手動実行すると
+    前週の金曜が end になる。"""
+    days_back = (today.weekday() - 4) % 7 or 7  # 月=0 … 金=4 土=5 日=6
+    end = today - timedelta(days=days_back)
+    return end - timedelta(days=6), end
+
+
+def hc_group_key(value: str) -> str:
+    """集計のグループキー。「（」または「(」より前の部分（例: がん（HER2）→ がん）。
+    空なら「（記載なし）」にまとめる。"""
+    key = re.split(r"[（(]", (value or "").strip(), maxsplit=1)[0].strip()
+    return key or HC_NO_KEY_LABEL
+
+
+def aggregate_money(money_notes: list[dict], field: str) -> list[dict]:
+    """money のノートを field（indication / approach）で集計し、前払い・調達計の大きい順に返す。
+    upfront: 前払い・調達額の合計。total: 総額の合計（総額が無い案件は前払い額、
+    両方あれば大きい方を使う＝資金調達・IPOは調達額がそのまま総額。upfront 計を下回らない）。
+    どちらも非公表の案件は件数にだけ数える。合計に使う値が1件も無ければ None。"""
+    groups: dict[str, dict] = {}
+    for n in money_notes:
+        key = hc_group_key(n.get(field) or "")
+        g = groups.setdefault(key, {"key": key, "count": 0, "upfront": None, "total": None})
+        g["count"] += 1
+        up = parse_usd_m(n.get("deal_upfront"))
+        tot = parse_usd_m(n.get("deal_total"))
+        if up is not None:
+            g["upfront"] = (g["upfront"] or 0.0) + up
+        known = [v for v in (up, tot) if v is not None]
+        if known:
+            g["total"] = (g["total"] or 0.0) + max(known)
+    # 「（記載なし）」は金額に関係なく常に最後（病気・アプローチと無関係な取引が目立たないように）
+    return sorted(
+        groups.values(),
+        key=lambda g: (g["key"] != HC_NO_KEY_LABEL,
+                       g["upfront"] or 0.0, g["total"] or 0.0, g["count"]),
+        reverse=True,
+    )
+
+
+def hc_trial_counts(notes: list[dict]) -> dict[str, int]:
+    """臨床結果の集計。お金と臨床の両方に当たる記事（日次では money 優先）も数える。"""
+    counts = {"success": 0, "fail": 0, "mixed": 0, "other": 0}
+    for n in notes:
+        r = (n.get("trial_result") or "").strip().lower()
+        if not r:
+            continue
+        counts[r if r in HC_RESULT_STYLE else "other"] += 1
+    return counts
+
+
+def hc_trial_summary(counts: dict[str, int]) -> str:
+    """「○2 ✗3 △1」の1行。success/fail/mixed 以外の値があれば「他N」を足す。"""
+    s = " ".join(f"{HC_RESULT_STYLE[k][0]}{counts[k]}" for k in ("success", "fail", "mixed"))
+    return s + (f" 他{counts['other']}" if counts["other"] else "")
+
+
+def hc_leaf(position: str) -> str:
+    """landscape-position の末尾の葉。"""
+    return position.split(">")[-1].strip() if position else ""
+
+
+def _hc_agg_amount_html(v: float | None) -> str:
+    """集計表の金額セル。金額を主、円換算を小さい灰色の2行目に。"""
+    if v is None:
+        return HC_BLANK
+    return (f'<div style="font-weight:bold;">{html.escape(fmt_usd_m(v))}</div>'
+            f'{_hc_sub_html(fmt_jpy_approx(v))}')
+
+
+def _hc_agg_table_html(rows: list[dict], first_col: str) -> str:
+    table_rows = [[
+        html.escape(g["key"]),
+        str(g["count"]),
+        _hc_agg_amount_html(g["upfront"]),
+        _hc_agg_amount_html(g["total"]),
+    ] for g in rows]
+    return _hc_table_html(
+        [(first_col, "34%"), ("件数", "10%"), ("前払い・調達計", "28%"), ("総額計", "28%")],
+        table_rows,
+    )
+
+
+HC_AGG_CAPTION = (
+    "前払い・調達計は前払い金の合計（シリーズ調達とIPOは調達額）。"
+    "総額計はマイルストン込みの最大額の合計で、前払いしか分からない案件は前払い額を使う。"
+    "提携の総額の多くは後払いのため、実態に近いのは前払い・調達計。"
+)
+
+
+def _hc_agg_plain(rows: list[dict]) -> list[str]:
+    out = []
+    for g in rows:
+        up = fmt_usd_with_yen(g["upfront"]) if g["upfront"] is not None else HC_BLANK
+        tot = fmt_usd_with_yen(g["total"]) if g["total"] is not None else HC_BLANK
+        out.append(f"・{g['key']}｜{g['count']}件｜前払い・調達 {up}｜総額 {tot}")
+    return out
+
+
+def build_healthcare_weekly_body(hc_notes: list[dict], start: date, end: date,
+                                 heatmap_available: bool = False) -> str:
+    """Healthcare週次まとめのplain本文。"""
+    parts = split_healthcare(hc_notes)
+    money = parts["money"]
+    rest = [n for n in hc_notes if classify_healthcare(n) in ("other", "missing")]
+    lines = [f"Healthcare 週次まとめ {start}〜{end}（{len(hc_notes)}件）", "",
+             f"■ 💰 今週お金が集まった領域（{len(money)}件）"]
+    if not money:
+        lines.append("今週はお金が動いた記事なし")
+    else:
+        lines += ["【病気別】"] + _hc_agg_plain(aggregate_money(money, "indication"))
+        lines += ["【アプローチ別】"] + _hc_agg_plain(aggregate_money(money, "approach"))
+        lines.append(HC_AGG_CAPTION)
+    lines += ["", "■ 🧪 臨床結果", hc_trial_summary(hc_trial_counts(hc_notes)), "",
+              f"■ 📰 その他の動き（{len(rest)}件）"]
+    for n in rest:
+        meta = "・".join(x for x in (n["source_name"], hc_leaf(n["position"])) if x)
+        lines.append(f"・{n['title']}（{meta}）")
+        lines.append(f"  🔗 {n['url']}")
+    if parts["missing"]:
+        lines.append(f"※ うち分類欄が未記入: {len(parts['missing'])}件")
+    lines.append("")
+    if heatmap_available:
+        lines += ["🗺 市場規模ヒートマップは HTML表示で確認", ""]
+    return "\n".join(lines) + "\n"
+
+
+def build_healthcare_weekly_html_body(hc_notes: list[dict], start: date, end: date,
+                                      heatmap_html: str = "") -> str:
+    """Healthcare週次まとめのHTML本文。"""
+    accent = CATEGORIES["Healthcare"]["accent"]
+    parts = split_healthcare(hc_notes)
+    money = parts["money"]
+    rest = [n for n in hc_notes if classify_healthcare(n) in ("other", "missing")]
+    out = [_hc_header_html(
+        accent, "Healthcare 週次まとめ", f"{start}〜{end}（{len(hc_notes)}件）"
+    )]
+
+    # 💰 今週お金が集まった領域: 病気別・アプローチ別
+    if not money:
+        money_inner = '<div style="font-size:13px;color:#5f6368;padding:4px;">今週はお金が動いた記事なし</div>'
+    else:
+        sub_style = 'font-size:13px;font-weight:bold;color:#5f6368;padding:8px 4px 4px;'
+        money_inner = (
+            f'<div style="{sub_style}">病気別</div>'
+            + _hc_agg_table_html(aggregate_money(money, "indication"), "病気")
+            + f'<div style="{sub_style}margin-top:8px;">アプローチ別</div>'
+            + _hc_agg_table_html(aggregate_money(money, "approach"), "アプローチ")
+            + f'<div style="font-size:11px;color:#80868b;line-height:1.5;padding:8px 4px 0;">'
+              f'{html.escape(HC_AGG_CAPTION)}</div>'
+        )
+    out.append(_hc_card_html(f"💰 今週お金が集まった領域（{len(money)}件）", money_inner))
+
+    # 🧪 臨床結果: 「○2 ✗3 △1」の1行
+    counts = hc_trial_counts(hc_notes)
+    spans = " ".join(
+        f'<span style="color:{HC_RESULT_STYLE[k][2]};white-space:nowrap;">'
+        f'{HC_RESULT_STYLE[k][0]}{counts[k]}</span>'
+        for k in ("success", "fail", "mixed")
+    )
+    if counts["other"]:
+        spans += f' <span style="color:#5f6368;">他{counts["other"]}</span>'
+    out.append(_hc_card_html(
+        "🧪 臨床結果",
+        f'<div style="font-size:18px;font-weight:bold;padding:0 4px;">{spans}</div>',
+    ))
+
+    # 📰 その他の動き: other と missing を1行ずつ
+    rows_html = ""
+    for n in rest:
+        meta = "・".join(x for x in (n["source_name"], hc_leaf(n["position"])) if x)
+        title = html.escape(n["title"])
+        link = (f'<a href="{html.escape(n["url"], quote=True)}" '
+                f'style="color:{accent};text-decoration:none;font-size:14px;">{title}</a>'
+                if n["url"] else title)
+        rows_html += (
+            '<div style="padding:8px 4px;border-bottom:1px solid #eceff1;line-height:1.5;'
+            'word-break:break-word;overflow-wrap:anywhere;">'
+            f'{link}<span style="font-size:12px;color:#80868b;margin-left:6px;">'
+            f'{html.escape(meta)}</span></div>'
+        )
+    if parts["missing"]:
+        rows_html += (
+            '<div style="font-size:12px;color:#5f6368;padding:8px 4px 0;'
+            'word-break:break-word;overflow-wrap:anywhere;">'
+            f'※ うち分類欄が未記入: {len(parts["missing"])}件</div>'
+        )
+    out.append(_hc_card_html(
+        f"📰 その他の動き（{len(rest)}件）",
+        rows_html or '<div style="font-size:13px;color:#5f6368;padding:4px;">該当なし</div>',
+    ))
+
+    if heatmap_html:
+        out.append(heatmap_html)
+    out.append("</div>")
+    return "".join(out)
+
+
+def send_weekly_healthcare_email(hc_notes: list[dict], start: date, end: date) -> None:
+    """Healthcare週次まとめを1通だけ送信する（Geminiは使わない）。"""
+    dry_run = os.environ.get("DRY_RUN") == "1"
+    # シークレット値に末尾改行が入っているとメールヘッダーが弾かれるため必ずstrip
+    username = os.environ["GMAIL_USERNAME"].strip()
+    password = os.environ.get("GMAIL_APP_PASSWORD", "").strip()
+
+    market_data = load_market_data()
+    include_heatmaps = os.environ.get("INCLUDE_HEATMAPS", "1") != "0"
+
+    domain_key = CATEGORIES["Healthcare"]["domain"]
+    domain_keys = [domain_key] if (domain_key and market_data and include_heatmaps) else []
+    images: dict[str, bytes] = {}
+    for dk in domain_keys:
+        png_bytes = render_domain_heatmap_png(dk)
+        if png_bytes:
+            images[dk] = png_bytes
+
+    if dry_run:
+        # DRY_RUN時はプレビューHTMLに直接data URIを埋め込む
+        src_map = {
+            dk: "data:image/png;base64," + base64.b64encode(data).decode()
+            for dk, data in images.items()
+        }
+        if domain_keys and not images:
+            print("[DRY_RUN] Healthcare: ヒートマップ画像は変換できませんでした（rsvg-convert未導入等）")
+    else:
+        # 実送信時はCID参照にし、あとでadd_relatedする
+        src_map = {dk: f"cid:heatmap-{dk}" for dk in images}
+
+    heatmap_html = build_heatmap_html(domain_keys, src_map)
+
+    subject = f"📅 [Healthcare] 週次まとめ {start}〜{end}（{len(hc_notes)}件）"
+    body = build_healthcare_weekly_body(hc_notes, start, end, bool(heatmap_html))
+    html_body = build_healthcare_weekly_html_body(hc_notes, start, end, heatmap_html)
+
+    if dry_run:
+        print("=" * 60)
+        print(f"Subject: {subject}")
+        print("-" * 60)
+        print(body)
+        preview_dir = os.environ.get("TMPDIR", "/tmp")
+        preview_path = os.path.join(preview_dir, "digest_preview_healthcare_weekly.html")
+        with open(preview_path, "w", encoding="utf-8") as f:
+            f.write(html_body)
+        print(f"[DRY_RUN] HTML preview saved: {preview_path}")
+        return
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+        smtp.login(username, password)
+        msg = EmailMessage()
+        msg["Subject"] = subject
+        msg["From"] = f"Skill Graph Inbox <{username}>"
+        msg["To"] = username
+        msg.set_content(body, charset="utf-8")
+        msg.add_alternative(html_body, subtype="html")
+        if images:
+            html_part = msg.get_payload()[-1]
+            for dk, data in images.items():
+                html_part.add_related(
+                    data, maintype="image", subtype="png", cid=f"<heatmap-{dk}>"
+                )
+        smtp.send_message(msg)
+        print(f"Sent: {subject}")
+
+
 def is_memo(path: str) -> bool:
     """iPhoneメモ（frontmatter source-type: memo、または *-memo.md）かを判定する。
     メモはメール配信せず、sync-inbox.sh がローカル日記へ転記する。"""
@@ -1298,12 +1944,67 @@ def run_weekly_quantum(paths: list[str], sources: dict[str, str]) -> None:
           f"{len(updates)} milestone updates")
 
 
+def _note_file_date(path: str) -> date | None:
+    """ファイル名先頭の YYYY-MM-DD。読めなければ None。"""
+    m = re.match(r"(\d{4}-\d{2}-\d{2})-", os.path.basename(path))
+    if not m:
+        return None
+    try:
+        return datetime.strptime(m.group(1), "%Y-%m-%d").date()
+    except ValueError:
+        return None
+
+
+def run_weekly_healthcare(paths: list[str], sources: dict[str, str]) -> None:
+    """WEEKLY_HEALTHCARE=1 時のエントリーポイント。
+    argvにパスが渡されればそれを対象にする（テスト用。件名の期間は対象ノートの
+    ファイル名日付の最小〜最大）。無ければ healthcare_week_window() の期間
+    （JSTで今日より前の直近の金曜日 end と end-6日）のファイル名日付で 00-Inbox/*.md を
+    選ぶ（.digest-state には依存しない）。Healthcareノートが0件なら送信せず正常終了する。"""
+    import glob
+
+    start, end = healthcare_week_window(datetime.now(JST).date())
+    if paths:
+        candidate_paths = paths
+    else:
+        candidate_paths = []
+        for p in sorted(glob.glob("00-Inbox/*.md")):
+            file_date = _note_file_date(p)
+            if file_date and start <= file_date <= end:
+                candidate_paths.append(p)
+
+    notes = dedup_by_url(candidate_paths, sources)
+    hc_notes = [n for n in notes if categorize(n) == "Healthcare"]
+
+    if not hc_notes:
+        print(f"No healthcare articles this week ({start} to {end})")
+    else:
+        if paths:
+            dates = [d for d in (_note_file_date(n["path"]) for n in hc_notes) if d]
+            if dates:
+                start, end = min(dates), max(dates)
+        send_weekly_healthcare_email(hc_notes, start, end)
+
+    out = os.environ.get("GITHUB_OUTPUT")
+    if out:
+        with open(out, "a") as f:
+            f.write(f"count={len(hc_notes)}\n")
+    kinds = split_healthcare(hc_notes)
+    print(f"Built weekly healthcare digest: {len(hc_notes)} articles "
+          f"(money={len(kinds['money'])} clinical={len(kinds['clinical'])} "
+          f"other={len(kinds['other'])} missing={len(kinds['missing'])})")
+
+
 def main() -> None:
     paths = [p for p in sys.argv[1:] if os.path.isfile(p)]
     sources = load_sources()
 
     if os.environ.get("WEEKLY_QUANTUM") == "1":
         run_weekly_quantum(paths, sources)
+        return
+
+    if os.environ.get("WEEKLY_HEALTHCARE") == "1":
+        run_weekly_healthcare(paths, sources)
         return
 
     # メモは日次メールの対象外（日記へ転記される）。除外しても .digest-state は

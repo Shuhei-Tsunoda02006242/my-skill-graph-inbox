@@ -10,6 +10,16 @@ investment-implication: "MerckはKeytrudaが効く「熱い腫瘍」に絞って
 signal-strength: weak
 status: fleeting
 landscape-position: "Biotech > Modality > 核酸/mRNA"
+indication: "がん（メラノーマ・肺・腎・膀胱）"
+approach: "個別化mRNAがんワクチン"
+players: "Merck, Moderna"
+deal-type: ""
+deal-total-usd-m: ""
+deal-upfront-usd-m: ""
+deal-note: ""
+trial-phase: ""
+trial-result: ""
+trial-note: ""
 ---
 
 ## Key Claim

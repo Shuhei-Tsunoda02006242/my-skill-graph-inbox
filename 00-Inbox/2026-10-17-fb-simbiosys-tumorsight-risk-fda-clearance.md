@@ -10,6 +10,16 @@ investment-implication: ""
 signal-strength: weak
 status: fleeting
 landscape-position: "Biotech > Development/Regulatory > FDA承認/審査高速化"
+indication: "乳がん（HR陽性・HER2陰性）"
+approach: "AI再発リスク予測（乳房MRI）"
+players: "SimBioSys"
+deal-type: ""
+deal-total-usd-m: ""
+deal-upfront-usd-m: ""
+deal-note: ""
+trial-phase: ""
+trial-result: ""
+trial-note: ""
 ---
 
 ## Key Claim

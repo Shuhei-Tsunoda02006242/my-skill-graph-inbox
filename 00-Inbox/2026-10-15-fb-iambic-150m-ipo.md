@@ -10,6 +10,16 @@ investment-implication: "IPOでの調達は$150M（約230億円）。うち$75M�
 signal-strength: moderate
 status: fleeting
 landscape-position: "Biotech > 資本/M&A > バイオIPO/ライセンス"
+indication: "がん（HER2）"
+approach: "AI創薬（低分子）"
+players: "Iambic Therapeutics"
+deal-type: "ipo"
+deal-total-usd-m: ""
+deal-upfront-usd-m: "150"
+deal-note: "IPO（Nasdaq）"
+trial-phase: ""
+trial-result: ""
+trial-note: ""
 ---
 
 ## Key Claim

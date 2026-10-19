@@ -10,6 +10,16 @@ investment-implication: ""
 signal-strength: none
 status: fleeting
 landscape-position: "Biotech > Development/Regulatory > FDA承認/審査高速化"
+indication: "小児敗血症"
+approach: "血液浄化デバイス"
+players: "Efferon"
+deal-type: ""
+deal-total-usd-m: ""
+deal-upfront-usd-m: ""
+deal-note: ""
+trial-phase: ""
+trial-result: ""
+trial-note: ""
 ---
 
 ## Key Claim

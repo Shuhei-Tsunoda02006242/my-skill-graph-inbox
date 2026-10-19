@@ -10,6 +10,16 @@ investment-implication: "契約総額は最大約$1.16B（約1,700億円）だ�
 signal-strength: moderate
 status: fleeting
 landscape-position: "Biotech > 資本/M&A > バイオIPO/ライセンス"
+indication: "肥満"
+approach: "ALK7阻害（RNAi）"
+players: "Roche ← Rona Therapeutics"
+deal-type: "license"
+deal-total-usd-m: "1160"
+deal-upfront-usd-m: "100"
+deal-note: "独占ライセンス"
+trial-phase: ""
+trial-result: ""
+trial-note: ""
 ---
 
 ## Key Claim

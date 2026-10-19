@@ -10,6 +10,16 @@ investment-implication: "開発・商業化マイルストン最大$1.46B（約2
 signal-strength: moderate
 status: fleeting
 landscape-position: "Biotech > Tools/Platforms > AI創薬"
+indication: "MASH（代謝機能障害関連脂肪肝炎）"
+approach: "AI創薬（標的探索）"
+players: "AstraZeneca ← insitro"
+deal-type: "license"
+deal-total-usd-m: "1460"
+deal-upfront-usd-m: ""
+deal-note: "後ろ倒し型・マイルストン最大"
+trial-phase: ""
+trial-result: ""
+trial-note: ""
 ---
 
 ## Key Claim

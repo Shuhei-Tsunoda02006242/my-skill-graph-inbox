@@ -10,6 +10,16 @@ investment-implication: "評価額$2.8B（約4,200億円）。PEのエグジッ�
 signal-strength: moderate
 status: fleeting
 landscape-position: "Biotech > 資本/M&A > Pharma大型M&A"
+indication: ""
+approach: ""
+players: "BlackRock ← Welsh Carson"
+deal-type: "ma"
+deal-total-usd-m: ""
+deal-upfront-usd-m: "2800"
+deal-note: "診療所の過半持分"
+trial-phase: ""
+trial-result: ""
+trial-note: ""
 ---
 
 ## Key Claim

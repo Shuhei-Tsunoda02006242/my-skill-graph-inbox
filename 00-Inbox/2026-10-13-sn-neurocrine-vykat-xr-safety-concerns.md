@@ -10,6 +10,16 @@ investment-implication: "承認後18か月で死亡7件・入院約100件の報�
 signal-strength: weak
 status: fleeting
 landscape-position: "Biotech > Development/Regulatory > FDA承認/審査高速化"
+indication: "プラダー・ウィリー症候群"
+approach: ""
+players: "Neurocrine Biosciences"
+deal-type: ""
+deal-total-usd-m: ""
+deal-upfront-usd-m: ""
+deal-note: ""
+trial-phase: ""
+trial-result: ""
+trial-note: ""
 ---
 
 ## Key Claim

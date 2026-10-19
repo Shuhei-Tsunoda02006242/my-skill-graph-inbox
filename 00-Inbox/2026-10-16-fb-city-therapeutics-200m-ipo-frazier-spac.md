@@ -10,6 +10,16 @@ investment-implication: "$200M（約300億円）の上方修正IPOは、9月のA
 signal-strength: moderate
 status: fleeting
 landscape-position: "Biotech > 資本/M&A > バイオIPO/ライセンス"
+indication: ""
+approach: "RNAi"
+players: "City Therapeutics"
+deal-type: "ipo"
+deal-total-usd-m: ""
+deal-upfront-usd-m: "200"
+deal-note: "上方修正IPO"
+trial-phase: ""
+trial-result: ""
+trial-note: ""
 ---
 
 ## Key Claim
