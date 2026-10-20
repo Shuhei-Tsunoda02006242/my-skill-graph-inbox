@@ -31,6 +31,7 @@ import os
 import re
 import smtplib
 import sys
+import traceback
 import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -362,7 +363,10 @@ def send_email(results: dict[str, list[dict]], errors: dict[str, str]) -> int:
     msg.add_alternative(html_body, subtype="html")
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+        print("SMTP: connected")
+        print("SMTP: logging in")
         smtp.login(username, password)
+        print("SMTP: logged in")
         smtp.send_message(msg)
     print(f"Sent: {subject}")
     return total
@@ -393,5 +397,6 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        print(f"trending_mail failed: {e}", file=sys.stderr)
+        print(f"trending_mail failed: {type(e).__name__}: {e}", file=sys.stderr)
+        traceback.print_exc()
         sys.exit(1)

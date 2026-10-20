@@ -51,6 +51,7 @@ import re
 import smtplib
 import subprocess
 import sys
+import traceback
 import json
 import urllib.request
 from datetime import date, datetime, timedelta, timezone
@@ -1034,7 +1035,10 @@ def send_emails(groups: dict[str, list[dict]], claude_comments: dict[str, str]) 
         return
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+        print("SMTP: connected")
+        print("SMTP: logging in")
         smtp.login(username, password)
+        print("SMTP: logged in")
         for subject, body, html_body, category, images in messages:
             msg = EmailMessage()
             msg["Subject"] = subject
@@ -1555,7 +1559,10 @@ def send_weekly_quantum_email(quantum_notes: list[dict], milestones: dict, updat
         return
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+        print("SMTP: connected")
+        print("SMTP: logging in")
         smtp.login(username, password)
+        print("SMTP: logged in")
         msg = EmailMessage()
         msg["Subject"] = subject
         msg["From"] = f"Skill Graph Inbox <{username}>"
@@ -1825,7 +1832,10 @@ def send_weekly_healthcare_email(hc_notes: list[dict], start: date, end: date) -
         return
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+        print("SMTP: connected")
+        print("SMTP: logging in")
         smtp.login(username, password)
+        print("SMTP: logged in")
         msg = EmailMessage()
         msg["Subject"] = subject
         msg["From"] = f"Skill Graph Inbox <{username}>"
@@ -2051,5 +2061,6 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        print(f"build_digest failed: {e}", file=sys.stderr)
+        print(f"build_digest failed: {type(e).__name__}: {e}", file=sys.stderr)
+        traceback.print_exc()
         sys.exit(1)
