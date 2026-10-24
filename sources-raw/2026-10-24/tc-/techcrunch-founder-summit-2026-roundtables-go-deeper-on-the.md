@@ -1,0 +1,40 @@
+---
+source: "TechCrunch"
+prefix: tc-
+title: "TechCrunch Founder Summit 2026 roundtables: Go deeper on the challenges founders are solving right now"
+url: "https://techcrunch.com/2026/10/23/techcrunch-founder-summit-2026-roundtables-go-deeper-on-the-challenges-founders-are-solving-right-now/"
+published: 2026-10-23
+chars: 4513
+truncated: false
+extraction: full
+---
+
+TechCrunch Founder Summit 2026 is coming to SoWa Power Station in Boston on November 4, bringing founders, investors, and operators together for a full day of candid conversations, practical sessions, live pitching, networking, and smaller roundtables built for deeper discussion.
+The roundtables are where attendees can get especially specific. Bring your questions, share what you are seeing in your own company, and join experts and fellow founders tackling many of the same challenges, from enterprise sales and vertical strategy to AI, lean teams, and building a category that does not exist yet.
+Save 25% on your ticket today, and bring a colleague along for free with our limited BOGO deal.
+Six roundtables to look forward to at Founder Summit
+How to Build Events Strategy Before You Can Afford a Full-Time Events Team
+10:45 a.m. – 11:15 a.m. | Roundtable 2
+Alexandra Ames, founder and chief event strategist at Blueprint Lab, looks at how early-stage companies can use events strategically before they have the budget or headcount for a dedicated events team. Expect a practical conversation about choosing the right opportunities, defining what success looks like, and making limited resources work harder.
+Your First Vertical, and It Happens to Be the Hardest One
+11:30 a.m. – 12:00 p.m. | Roundtable 1
+Chirag Shah, partner at Define Ventures, explores what happens when the market with the biggest potential is also one of the hardest to enter. Founders navigating regulated industries, complex buyers, or specialized customers can compare notes on making that first major vertical bet.
+GraphRAG in Action: Stop Hallucinations with Knowledge Graphs
+11:30 a.m. – 12:00 p.m. | Roundtable 2
+Shishir Tewari, head of enterprise data engineering at Procore Technologies, gets into one of enterprise AI’s most persistent challenges: trust. The discussion will examine how knowledge graphs and GraphRAG can give AI systems stronger context and help founders build products that work more reliably in real-world organizations.
+The Enterprise AI Playbook: How to Close L’Oreal and Vodafone Before You Raise a Series A
+1:15 p.m. – 1:45 p.m. | Roundtable 2
+Merve Kitapci, managing partner and CGO of ADIN.AI, breaks down what it takes to win major enterprise customers early. From long buying cycles and multiple stakeholders to the credibility that comes with landing the right logo, this is a tactical conversation for founders selling into large organizations before they have a large sales team behind them.
+Build Something We Don’t Have a Word for Yet
+1:55 p.m. – 2:25 p.m. | Roundtable 2
+Andy Tang, partner at Draper Associates, leads a conversation for founders building something that does not fit neatly into an existing category. How do you explain it, sell it, and get investors to understand the opportunity when the market still needs vocabulary for what you are creating?
+Small but Mighty: How AI Lets Lean Teams Outship the Giants
+2:35 p.m. – 3:05 p.m. | Roundtable 1
+Linden Tibbets, CEO and founder of IFTTT, explores how smaller teams can use AI to increase their speed and output without simply adding headcount. For founders thinking about hiring, efficiency, and how to structure an AI-enabled company, the discussion gets directly into what lean teams may be able to do differently now.
+Roundtables are where the agenda becomes a conversation
+The value of these sessions is not just hearing how someone else approached a problem. It is the chance to ask the question that matters to your company, compare experiences with the people around the table, and leave with ideas you can put to work.
+And the roundtables are only one part of the day. Across the Build and Impact Stages, Founder Summit will also tackle product-market fit, hiring, founder leadership, fundraising, pitching, and what it takes to build and scale companies outside the Bay Area.
+Attendees can hear founder perspectives from leaders, such as Toast co-founder Steve Fredette, then see founders put their stories to the test during the live “So You Think You Can Pitch?” competition. A Networking Lounge with Braindate and a closing reception presented by Fidelity Private Shares create additional time to connect throughout the day.
+Take your seat at Founder Summit
+Remember, our event’s just around the corner on November 4 at SoWa Power Station in Boston.
+For a limited time, save 25% on your Founder Summit ticket and spend the day in the room with founders, investors, and operators tackling the same questions you are.
