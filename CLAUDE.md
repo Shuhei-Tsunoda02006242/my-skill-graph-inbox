@@ -23,6 +23,8 @@
 | `fb-` | FierceBiotech | `https://www.fiercebiotech.com/` | `https://www.fiercebiotech.com/rss/xml` | バイオテックM&A・FDA承認・臨床試験結果 |
 | `ek-` | Electrek | `https://electrek.co/` | `https://electrek.co/feed/` | エネルギー技術・EV・再生可能エネルギー・電力インフラ |
 | `tqi-` | The Quantum Insider | `https://thequantuminsider.com/` | `https://thequantuminsider.com/feed/` | 量子コンピューター・研究・PQC・上場/資金調達（qcr-の補完） |
+| `fia-` | Fusion Industry Association | `https://www.fusionindustryassociation.org/` | `https://www.fusionindustryassociation.org/feed/` | 核融合（政策・資金・業界団体発表） |
+| `tcf-` | TechCrunch Fusion | `https://techcrunch.com/tag/fusion-power/` | `https://techcrunch.com/tag/fusion-power/feed/` | 核融合スタートアップの資金調達・技術 |
 
 ---
 
@@ -213,6 +215,39 @@ Frontier（量子）は日次配信から外れ週次サマリーに集約され
 - 本文は **Key Claim中心に3行以内**で簡潔に書く（Evidence / Contextを詳細に掘り下げない）
 - 詳細な深掘りは不要。週次ダイジェストは1行ヘッドライン形式で潮流を見るためのものなので、個別記事の情報量より広く拾うことを優先する
 
+### 核融合ソース（fia-/tcf-）の軽量化ルール（2026-10-25〜）
+Fusion（核融合）は日次配信から外れ、土曜の週次1通に集約される。量子と同じ形で軽量化する。
+
+- `fia-`・`tcf-` は**1日合計最大3記事まで**（両ソース合わせて3件。個別ソースごとに3件ではない）
+- **枠は先着順で埋めない。** ソーステーブルの順に処理すると `fia-` が先に来るため、素朴に処理すると `fia-` が3件取った時点で `tcf-` が構造的に0件になる。必ず**両ソースの候補をいったん出し切ってから、重要度の高い順に3件を選ぶ**こと
+- `fia-` は **FIA ドメイン（`fusionindustryassociation.org`）の自社記事を優先**する。FIA のフィードには外部サイト（Reuters・FT・各国メディア等）の記事へのリンクが混ざっており、`url` のドメインで区別できる。**外部リンク記事は、`sources-raw` のファイルが `extraction: full`（本文が取れている）のときだけ採用する。** ペイウォールで本文が取れず `extraction: summary`（フィード要約）になった記事は採らない（Evidence を書く根拠が無く、推測で補うことになるため）
+- `tcf-` の記事は `tc-` と同じURLで出ることがある。重複チェック①（URL完全一致・全期間）でそのままスキップされるので、特別扱いは要らない
+- `tc-`/`tm-`/`ek-` など**他ソースから来た核融合の記事も、同じ扱い**にする。ソースに関係なく、核融合の記事の landscape-position は葉 `Energy > Generation > 核融合(Fusion)`（`docs/taxonomy.md`）にする。`build_digest.py` は landscape-position に `核融合` を含むノートを（第1セグメントが Energy でも）Fusion カテゴリに入れ、日次から外す
+- 本文は **Key Claim中心に3行以内**で簡潔に書く（週次は1行ヘッドライン＋表が中心）。ただし下の追加欄は必ず書く
+
+### Fusion（核融合）ノートの追加欄（2026-10-25〜）
+
+Fusion の週次メールは「💰 資金調達」の表・方式別の集計・政策/技術の一覧から成り、
+frontmatter の下記の欄から機械的に作られる（本文は読まれない）。そのため、
+**landscape-position に `核融合` を含むノートだけ**、`landscape-position:` の直後に次の欄を
+**必ずすべて書く**。該当しない欄も **キーは残して値を空文字（`""`）にする**。
+キーが無いノートは「未記入」と判定され、週次メール末尾に件数の注記が出る。
+
+```yaml
+fusion-approach: ""     # tokamak | stellarator | frc | inertial | z-pinch | magnetized-target | mirror | other | 空
+fusion-topic: ""        # funding | policy | tech | supply-chain | other
+players: ""             # 主役の企業・機関
+deal-type: ""           # funding | ipo | ma | grant | 空
+deal-upfront-usd-m: ""  # 実際の調達額・交付額（百万ドル）。非公表なら空
+deal-note: ""           # 例: シリーズB / DOEマイルストン
+```
+
+- **記事に書いてあることだけを入れる。** 記事に無い値は空にする（推測で埋めない）。方式（tokamak 等）を、記事に書かれていない知識で補わない
+- 金額はドル以外なら概算でドルに換算する。既存ルールのとおり、`Evidence / Context` にも同じ数字を入れる
+- `deal-*` は**その記事で新たに動いたお金**だけ。過去の取引への言及は入れない。`deal-type` が空でない記事は「資金調達」の表に出て、`fusion-topic` に関係なく政策/技術の一覧には出ない
+- `players` は Healthcare と同じキー名。核融合ノートでは主役の企業・機関（提携・買収は「買い手 ← 売り手」）
+- 値の書き換えに sed を使わない（「frontmatterの値を書き直すときは sed を使わない」を参照）
+
 ---
 
 ## 巡回ログ（毎回必ず出力する）
@@ -319,9 +354,10 @@ Author: `Claude <noreply@anthropic.com>`
 | Climate & Energy | Energy | `ek-` | 日次 |
 | Healthcare | Biotech | `sn-`, `is-`, `fb-` | 日次（資金・臨床結果のみ1行）＋週次（土曜） |
 | Frontier（量子） | Quantum | `qcr-`, `tqi-` | **週次（土曜8:00 JST前後）** |
+| Fusion（核融合） | （第1セグメントを問わず、landscape-position に `核融合` / `Fusion` を含むもの。Energy より優先） | `fia-`, `tcf-` | **週次（土曜8:05 JST起動）** |
 | その他 | （どれにも該当しない/position無し） | 不明なprefix | 日次 |
 
-Frontier（量子）だけは日次配信から外れ、`weekly-quantum-digest.yml` が土曜朝に週次1通としてまとめて送る（詳細は次節）。
+Frontier（量子）と Fusion（核融合）は日次配信から外れ、それぞれ `weekly-quantum-digest.yml`・`weekly-fusion-digest.yml` が土曜朝に週次1通としてまとめて送る（詳細は次節と `docs/mail-delivery.md`）。
 
 ---
 
@@ -331,7 +367,8 @@ Frontier（量子）だけは日次配信から外れ、`weekly-quantum-digest.y
 キャプチャの動作には影響しないため、ここには要点のみ置く:
 
 - 日次ダイジェストは毎朝7:35 JST起動（実配信8:00前後）、カテゴリごとに1通
-- Frontier（量子）だけは土曜7:35 JST起動の週次1通
+- Frontier（量子）は土曜7:35 JST起動の週次1通
+- Fusion（核融合）は土曜8:05 JST起動の週次1通。資金調達の表・方式別の集計・政策/技術の一覧（Geminiとヒートマップは無し）。表は上記「Fusion（核融合）ノートの追加欄」から作られる
 - Healthcare は日次では「お金が動いた」「臨床の結果」の2表（1記事=1行）だけ。それ以外の記事は土曜7:50 JST起動の週次1通にまとまる。表は上記「Healthcare（Biotech）ノートの追加欄」から作られる
 - 本文組み立て・SMTP送信とも `scripts/build_digest.py` が実施
 
@@ -346,6 +383,8 @@ Frontier（量子）だけは日次配信から外れ、`weekly-quantum-digest.y
 | Quantum Computing Report | quantum |
 | FierceBiotech | biotech |
 | Electrek | energy |
+| Fusion Industry Association | energy |
+| TechCrunch Fusion | energy |
 
 ---
 

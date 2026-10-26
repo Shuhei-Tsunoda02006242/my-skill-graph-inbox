@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """キャプチャノートからカテゴリ別ダイジェスト（+ Gemini批評コメント）を組み立てて、
 カテゴリ（Sequoia Capital風アレンジ5分類: AI/Hardware（半導体）/Climate & Energy/
-Healthcare/Frontier（量子）/その他）ごとに1通ずつメール送信する（2026-07-18〜、
-以前はソース別グルーピングだった）。
+Healthcare/Frontier（量子）/Fusion（核融合）/その他）ごとに1通ずつメール送信する
+（2026-07-18〜、以前はソース別グルーピングだった）。
 
 Frontier（量子）は日次配信の対象外。WEEKLY_QUANTUM=1 で起動すると、日次処理の代わりに
 過去7日以内の量子ノートをスキャンして週次サマリー1通（1行ヘッドライン形式＋Gemini総括＋
@@ -13,6 +13,11 @@ Healthcare（2026-10-19〜）は日次では「💰 お金が動いた」「🧪
 WEEKLY_HEALTHCARE=1 で起動する土曜の週次まとめ1通（病気別・アプローチ別の金額集計＋
 ヒートマップ）に回る。表の元になる欄はノートの frontmatter（CLAUDE.md
 「Healthcare（Biotech）ノートの追加欄」）で、classify_healthcare() が振り分ける。
+
+Fusion（核融合、2026-10-25〜）は量子と同じく日次配信の対象外。landscape-position に
+「核融合」か「Fusion」を含むノートは第1セグメント（Energy）より優先してここに入る。
+WEEKLY_FUSION=1 で起動する土曜の週次1通（資金調達の表・方式別の集計・政策/技術の一覧）に回る。
+非上場の会社が多く市場タイルが無いので、Geminiもヒートマップも使わない。
 
 Usage:
     build_digest.py <file1.md> [file2.md ...]              通常の日次カテゴリダイジェスト
@@ -28,12 +33,17 @@ Usage:
         まで存在せず、土曜朝の週次に載せられない。実行時刻から窓を決めないので、
         Actionsの遅延で日をまたいでも同じ週を指す。.digest-state には依存しない）
 
+    WEEKLY_FUSION=1 build_digest.py [file1.md ...]          週次Fusion（核融合）まとめ
+        （対象期間の決め方はHealthcare週次と同じ。healthcare_week_window() を共有する。
+        Fusionノートが0件なら送信せず、件数0をログに出して正常終了する）
+
 環境変数:
 - GMAIL_USERNAME / GMAIL_APP_PASSWORD  SMTP認証情報（送受信とも同一アドレス）
 - GEMINI_API_KEY                       批評コメント/週次総括生成用（無くても継続。
                                         Healthcareの日次・週次メールでは使わない）
 - WEEKLY_QUANTUM=1                     週次量子ダイジェストモードに切り替え
 - WEEKLY_HEALTHCARE=1                  週次Healthcareまとめモードに切り替え
+- WEEKLY_FUSION=1                      週次Fusion（核融合）まとめモードに切り替え
 - DRY_RUN=1                            SMTP送信せず、件名・本文を標準出力するのみ
 - INCLUDE_HEATMAPS=0                   末尾ヒートマップ画像の埋め込みのみを無効化（📍市場規模
                                         注記は独立して継続。デフォルト有効。
@@ -65,6 +75,8 @@ SOURCES = {
     "qcr": "Quantum Computing Report",
     "fb": "FierceBiotech",
     "ek": "Electrek",
+    "fia": "Fusion Industry Association",
+    "tcf": "TechCrunch Fusion",
 }
 GEMINI_MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"]
 JST = timezone(timedelta(hours=9))
@@ -78,6 +90,7 @@ CATEGORIES = {
     "Climate & Energy": {"accent": "#e37400", "domain": "energy"},
     "Healthcare": {"accent": "#c5221f", "domain": "biotech"},
     "Frontier（量子）": {"accent": "#7627bb", "domain": "quantum"},
+    "Fusion（核融合）": {"accent": "#00838f", "domain": None},
     "その他": {"accent": "#5f6368", "domain": None},
 }
 CATEGORY_ORDER = list(CATEGORIES.keys())
@@ -89,6 +102,7 @@ CATEGORY_SLUG = {
     "Climate & Energy": "climate-energy",
     "Healthcare": "healthcare",
     "Frontier（量子）": "quantum",
+    "Fusion（核融合）": "fusion",
     "その他": "other",
 }
 
@@ -111,7 +125,14 @@ PREFIX_FALLBACK_CATEGORY = {
     "ek": "Climate & Energy",
     "qcr": "Frontier（量子）",
     "tqi": "Frontier（量子）",
+    "fia": "Fusion（核融合）",
+    "tcf": "Fusion（核融合）",
 }
+
+# 核融合ノートの判定。landscape-position にこれが含まれれば第1セグメントより優先して
+# Fusion に入れる（tc-/tm-/ek- 経由の核融合記事も Energy ではなくここに来る）。
+# 「Fusion」は英単語の途中（Infusion 等）に誤一致しないよう、直前が英字でない場合だけ数える
+FUSION_POSITION_RE = re.compile(r"核融合|(?<![A-Za-z])Fusion")
 
 # シグナル強度バッジの配色（背景色, 文字色）
 SIGNAL_BADGE_COLORS = {
@@ -252,6 +273,11 @@ def parse_note(path: str, sources: dict[str, str]) -> dict:
         "trial_note": _hc_field("trial-note", fm),
         # 値が空かどうかではなくキーの有無で判定する（空でも書いてあれば「記入済み」）
         "has_hc_fields": _frontmatter_has_key(fm, ("indication", "deal-type", "trial-result")),
+        # Fusion（核融合）ノートの追加欄（2026-10-25〜）。players / deal-type / deal-upfront-usd-m /
+        # deal-note は上の Healthcare 欄と同じキーなので deal_type 等をそのまま共有する
+        "fusion_approach": _hc_field("fusion-approach", fm),
+        "fusion_topic": _hc_field("fusion-topic", fm),
+        "has_fusion_fields": _frontmatter_has_key(fm, ("fusion-approach", "fusion-topic")),
     }
 
 
@@ -260,6 +286,8 @@ def categorize(note: dict) -> str:
     landscape-position の第1セグメントを優先し、無ければソースprefixでフォールバック、
     どちらも該当しなければ「その他」。"""
     position = note.get("position", "")
+    if position and FUSION_POSITION_RE.search(position):
+        return "Fusion（核融合）"
     if position:
         top = position.split(">")[0].strip()
         category = SEGMENT_TO_CATEGORY.get(top)
@@ -1852,6 +1880,229 @@ def send_weekly_healthcare_email(hc_notes: list[dict], start: date, end: date) -
         print(f"Sent: {subject}")
 
 
+# ---------------------------------------------------------------------------
+# Fusion（核融合、2026-10-25〜）: 土曜の週次1通だけ（日次なし・Gemini無し・ヒートマップ無し）
+# 表のスタイルは Healthcare の _hc_* ヘルパーをそのまま使う。
+# ---------------------------------------------------------------------------
+
+FUSION_CATEGORY = "Fusion（核融合）"
+FUSION_MONEY_TYPES = ("funding", "ipo", "ma", "grant")
+FUSION_DEAL_LABELS = {"funding": "資金調達", "ipo": "IPO", "ma": "M&A", "grant": "助成"}
+FUSION_UNKNOWN = "不明"
+FUSION_TOPIC_LABELS = {
+    "policy": "政策", "tech": "技術", "supply-chain": "サプライチェーン",
+    "funding": "資金", "other": "その他",
+}
+
+
+def fusion_group_key(value: str) -> str:
+    """方式別集計のグループキー。空は「不明」。"""
+    return (value or "").strip().lower() or FUSION_UNKNOWN
+
+
+def classify_fusion(note: dict) -> str:
+    """Fusionノートを週次メールでの扱いで分ける。
+    money: deal-type が funding/ipo/ma/grant（資金調達の表に出る）
+    policy: fusion-topic が policy（お金の記事でないもの）
+    tech: それ以外（tech / supply-chain / other / 空。追加欄が未記入のものもここ）"""
+    if (note.get("deal_type") or "").strip().lower() in FUSION_MONEY_TYPES:
+        return "money"
+    if (note.get("fusion_topic") or "").strip().lower() == "policy":
+        return "policy"
+    return "tech"
+
+
+def split_fusion(notes: list[dict]) -> dict[str, list[dict]]:
+    """money / policy / tech に分ける。money は調達額の大きい順（非公表は最後）。"""
+    out: dict[str, list[dict]] = {"money": [], "policy": [], "tech": []}
+    for n in notes:
+        out[classify_fusion(n)].append(n)
+    out["money"].sort(key=lambda n: parse_usd_m(n.get("deal_upfront")) or -1.0, reverse=True)
+    return out
+
+
+def fusion_amount(note: dict) -> str:
+    """資金調達の表の金額セル。非公表（空・解釈不能）は「—」。"""
+    v = parse_usd_m(note.get("deal_upfront"))
+    return fmt_usd_with_yen(v) if v is not None else HC_BLANK
+
+
+def fusion_deal_cell(note: dict) -> str:
+    """種別セル。deal-note があればそれ、無ければ deal-type のラベル。"""
+    deal_type = (note.get("deal_type") or "").strip().lower()
+    return (note.get("deal_note") or "").strip() or FUSION_DEAL_LABELS.get(deal_type, "")
+
+
+def aggregate_fusion_approach(notes: list[dict]) -> list[dict]:
+    """fusion-approach ごとの件数と調達額（deal-upfront-usd-m）の合計。
+    金額の大きい順、同額は件数順。「不明」は金額に関係なく最後。
+    金額が1件も無いグループの合計は None。"""
+    groups: dict[str, dict] = {}
+    for n in notes:
+        key = fusion_group_key(n.get("fusion_approach") or "")
+        g = groups.setdefault(key, {"key": key, "count": 0, "upfront": None})
+        g["count"] += 1
+        up = parse_usd_m(n.get("deal_upfront"))
+        if up is not None:
+            g["upfront"] = (g["upfront"] or 0.0) + up
+    return sorted(
+        groups.values(),
+        key=lambda g: (g["key"] != FUSION_UNKNOWN, g["upfront"] or 0.0, g["count"]),
+        reverse=True,
+    )
+
+
+def fusion_footnotes(missing_count: int) -> list[str]:
+    """週次Fusionメール末尾の注記（Healthcareの hc_footnotes に相当）。"""
+    if missing_count > 0:
+        return [f"※ 追加欄が未記入のノート{missing_count}件"
+                "（キャプチャ側が核融合の追加欄を書いていない可能性。方式は「不明」、"
+                "政策・技術の区別は付けられないため下の一覧に入れています）"]
+    return []
+
+
+def _fusion_topic_label(note: dict) -> str:
+    t = (note.get("fusion_topic") or "").strip().lower()
+    return FUSION_TOPIC_LABELS.get(t, t)
+
+
+def _fusion_list_meta(note: dict) -> str:
+    """一覧1行の補足。方式・主役・話題ラベルを「・」でつなぐ。"""
+    approach = (note.get("fusion_approach") or "").strip()
+    return "・".join(x for x in (
+        note.get("players") or "", approach, _fusion_topic_label(note), note.get("source_name") or "",
+    ) if x)
+
+
+def build_fusion_weekly_body(notes: list[dict], start: date, end: date) -> str:
+    """Fusion週次まとめのplain本文。"""
+    parts = split_fusion(notes)
+    missing = [n for n in notes if not n.get("has_fusion_fields")]
+    lines = [f"Fusion（核融合）週次まとめ {start}〜{end}（{len(notes)}件）", "",
+             f"■ 💰 資金調達（{len(parts['money'])}件）"]
+    if not parts["money"]:
+        lines.append("今週は資金が動いた記事なし")
+    for n in parts["money"]:
+        lines.append("・" + " | ".join([
+            n["players"] or HC_BLANK, fusion_deal_cell(n) or HC_BLANK, fusion_amount(n),
+        ]))
+        lines.append(f"  {n['title']}")
+        lines.append(f"  🔗 {n['url']}")
+    lines += ["", "■ 方式別（件数・調達額）"]
+    for g in aggregate_fusion_approach(notes):
+        amt = fmt_usd_with_yen(g["upfront"]) if g["upfront"] is not None else HC_BLANK
+        lines.append(f"・{g['key']}｜{g['count']}件｜{amt}")
+    for heading, key in (("🏛 政策・規制", "policy"), ("🔬 技術・その他", "tech")):
+        lines += ["", f"■ {heading}（{len(parts[key])}件）"]
+        if not parts[key]:
+            lines.append("該当なし")
+        for n in parts[key]:
+            meta = _fusion_list_meta(n)
+            lines.append(f"・{n['title']}" + (f"（{meta}）" if meta else ""))
+            lines.append(f"  🔗 {n['url']}")
+    footnotes = fusion_footnotes(len(missing))
+    if footnotes:
+        lines += [""] + footnotes
+    return "\n".join(lines) + "\n"
+
+
+def _fusion_list_html(notes: list[dict], accent: str) -> str:
+    """政策・技術の一覧（1記事=1行）。"""
+    if not notes:
+        return _HC_EMPTY_HTML
+    out = ""
+    for n in notes:
+        title = html.escape(n["title"])
+        link = (f'<a href="{html.escape(n["url"], quote=True)}" '
+                f'style="color:{accent};text-decoration:none;font-size:14px;">{title}</a>'
+                if n["url"] else title)
+        out += (
+            '<div style="padding:8px 4px;border-bottom:1px solid #eceff1;line-height:1.5;'
+            'word-break:break-word;overflow-wrap:anywhere;">'
+            f'{link}<span style="font-size:12px;color:#80868b;margin-left:6px;">'
+            f'{html.escape(_fusion_list_meta(n))}</span></div>'
+        )
+    return out
+
+
+def build_fusion_weekly_html_body(notes: list[dict], start: date, end: date) -> str:
+    """Fusion週次まとめのHTML本文（ヒートマップ無し）。"""
+    accent = CATEGORIES[FUSION_CATEGORY]["accent"]
+    parts = split_fusion(notes)
+    missing = [n for n in notes if not n.get("has_fusion_fields")]
+    out = [_hc_header_html(
+        accent, "Fusion（核融合）週次まとめ", f"{start}〜{end}（{len(notes)}件）"
+    )]
+
+    money_rows = [[
+        _hc_who_html(n, accent),
+        html.escape(fusion_deal_cell(n) or HC_BLANK),
+        f'<div style="font-weight:bold;">{html.escape(fusion_amount(n))}</div>',
+    ] for n in parts["money"]]
+    money_table = _hc_table_html(
+        [("誰が", "34%"), ("種別", "30%"), ("金額", "36%")], money_rows
+    ) if money_rows else _HC_EMPTY_HTML
+    out.append(_hc_card_html(f"💰 資金調達（{len(parts['money'])}件）", money_table))
+
+    approach_rows = [[
+        html.escape(g["key"]), str(g["count"]), _hc_agg_amount_html(g["upfront"]),
+    ] for g in aggregate_fusion_approach(notes)]
+    out.append(_hc_card_html("方式別", _hc_table_html(
+        [("方式", "40%"), ("件数", "20%"), ("調達額", "40%")], approach_rows
+    )))
+
+    out.append(_hc_card_html(
+        f"🏛 政策・規制（{len(parts['policy'])}件）", _fusion_list_html(parts["policy"], accent)))
+    out.append(_hc_card_html(
+        f"🔬 技術・その他（{len(parts['tech'])}件）", _fusion_list_html(parts["tech"], accent)))
+
+    for text in fusion_footnotes(len(missing)):
+        out.append(
+            f'<div style="font-size:12px;color:#5f6368;line-height:1.6;margin-top:12px;'
+            f'padding:0 4px;">{html.escape(text)}</div>'
+        )
+    out.append("</div>")
+    return "".join(out)
+
+
+def send_weekly_fusion_email(notes: list[dict], start: date, end: date) -> None:
+    """Fusion週次まとめを1通だけ送信する（Geminiもヒートマップも使わない）。"""
+    dry_run = os.environ.get("DRY_RUN") == "1"
+    # シークレット値に末尾改行が入っているとメールヘッダーが弾かれるため必ずstrip
+    username = os.environ["GMAIL_USERNAME"].strip()
+    password = os.environ.get("GMAIL_APP_PASSWORD", "").strip()
+
+    subject = f"📅 [Fusion] 週次まとめ {start}〜{end}（{len(notes)}件）"
+    body = build_fusion_weekly_body(notes, start, end)
+    html_body = build_fusion_weekly_html_body(notes, start, end)
+
+    if dry_run:
+        print("=" * 60)
+        print(f"Subject: {subject}")
+        print("-" * 60)
+        print(body)
+        preview_dir = os.environ.get("TMPDIR", "/tmp")
+        preview_path = os.path.join(preview_dir, "digest_preview_fusion_weekly.html")
+        with open(preview_path, "w", encoding="utf-8") as f:
+            f.write(html_body)
+        print(f"[DRY_RUN] HTML preview saved: {preview_path}")
+        return
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+        print("SMTP: connected")
+        print("SMTP: logging in")
+        smtp.login(username, password)
+        print("SMTP: logged in")
+        msg = EmailMessage()
+        msg["Subject"] = subject
+        msg["From"] = f"Skill Graph Inbox <{username}>"
+        msg["To"] = username
+        msg.set_content(body, charset="utf-8")
+        msg.add_alternative(html_body, subtype="html")
+        smtp.send_message(msg)
+        print(f"Sent: {subject}")
+
+
 def is_memo(path: str) -> bool:
     """iPhoneメモ（frontmatter source-type: memo、または *-memo.md）かを判定する。
     メモはメール配信せず、sync-inbox.sh がローカル日記へ転記する。"""
@@ -2005,6 +2256,48 @@ def run_weekly_healthcare(paths: list[str], sources: dict[str, str]) -> None:
           f"other={len(kinds['other'])} missing={len(kinds['missing'])})")
 
 
+def run_weekly_fusion(paths: list[str], sources: dict[str, str]) -> None:
+    """WEEKLY_FUSION=1 時のエントリーポイント。Healthcare週次と同じ窓
+    （healthcare_week_window(): JSTで今日より前の直近の金曜日 end と end-6日）の
+    ファイル名日付で 00-Inbox/*.md を選ぶ（.digest-state には依存しない）。
+    argvにパスが渡されればそれを対象にする（テスト用。件名の期間は対象ノートの
+    ファイル名日付の最小〜最大）。Fusionノートが0件なら送信せず、件数0をログに出して
+    正常終了する。"""
+    import glob
+
+    start, end = healthcare_week_window(datetime.now(JST).date())
+    if paths:
+        candidate_paths = paths
+    else:
+        candidate_paths = []
+        for p in sorted(glob.glob("00-Inbox/*.md")):
+            file_date = _note_file_date(p)
+            if file_date and start <= file_date <= end:
+                candidate_paths.append(p)
+
+    notes = dedup_by_url(candidate_paths, sources)
+    fusion_notes = [n for n in notes if categorize(n) == FUSION_CATEGORY]
+
+    if not fusion_notes:
+        print(f"No fusion articles this week ({start} to {end}): count=0, no mail sent")
+    else:
+        if paths:
+            dates = [d for d in (_note_file_date(n["path"]) for n in fusion_notes) if d]
+            if dates:
+                start, end = min(dates), max(dates)
+        send_weekly_fusion_email(fusion_notes, start, end)
+
+    out = os.environ.get("GITHUB_OUTPUT")
+    if out:
+        with open(out, "a") as f:
+            f.write(f"count={len(fusion_notes)}\n")
+    kinds = split_fusion(fusion_notes)
+    missing = sum(1 for n in fusion_notes if not n["has_fusion_fields"])
+    print(f"Built weekly fusion digest: {len(fusion_notes)} articles "
+          f"(money={len(kinds['money'])} policy={len(kinds['policy'])} "
+          f"tech={len(kinds['tech'])} missing={missing})")
+
+
 def main() -> None:
     paths = [p for p in sys.argv[1:] if os.path.isfile(p)]
     sources = load_sources()
@@ -2015,6 +2308,10 @@ def main() -> None:
 
     if os.environ.get("WEEKLY_HEALTHCARE") == "1":
         run_weekly_healthcare(paths, sources)
+        return
+
+    if os.environ.get("WEEKLY_FUSION") == "1":
+        run_weekly_fusion(paths, sources)
         return
 
     # メモは日次メールの対象外（日記へ転記される）。除外しても .digest-state は
@@ -2033,11 +2330,16 @@ def main() -> None:
     quantum_notes = [n for n in notes if categorize(n) == "Frontier（量子）"]
     if quantum_notes:
         print(f"Skipped for weekly: {len(quantum_notes)} quantum articles")
-    daily_notes = [n for n in notes if categorize(n) != "Frontier（量子）"]
+    # Fusion（核融合）も同様に日次の対象外（週次 WEEKLY_FUSION=1 側で拾う）
+    fusion_notes = [n for n in notes if categorize(n) == FUSION_CATEGORY]
+    if fusion_notes:
+        print(f"Skipped for weekly: {len(fusion_notes)} fusion articles")
+    daily_notes = [n for n in notes
+                   if categorize(n) not in ("Frontier（量子）", FUSION_CATEGORY)]
 
     groups: dict[str, list[dict]] = {}
     for category in CATEGORY_ORDER:
-        if category == "Frontier（量子）":
+        if category in ("Frontier（量子）", FUSION_CATEGORY):
             continue
         matched = [n for n in daily_notes if categorize(n) == category]
         if matched:

@@ -27,6 +27,7 @@ import re
 import sys
 import time
 import traceback
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 import feedparser
 import requests
@@ -50,6 +51,28 @@ MAX_BODY_CHARS = 12000
 TIMEOUT = 30
 # 記事本文を取りに行く間隔（秒）。取得元に負荷を掛けず403を誘発しないため
 REQUEST_INTERVAL = 1.0
+
+
+# URLからトラッキング情報を落として記録するソース（prefix、ハイフン無し）。
+# 重複チェックは記事URLの完全一致（CLAUDE.md「重複チェック」）なので、記録するURLの形が
+# 揺れると同じ記事を二重に採ってしまう。FIA(fia-)は外部記事へのリンクに
+# `?mc_cid=..&mc_eid=..#new_tab&utm_source=rss&utm_medium=rss&utm_campaign=..` のように
+# 追跡用の値を付ける（utm_* がフラグメントの中に入っていることもある。2026-10-25に実測）。
+# 既存ソースには適用しない: STAT の既存ノートは `?utm_campaign=rss` 付きのURLで記録済みで、
+# 正規化すると過去ノートとの完全一致が外れ、二重キャプチャになるため。
+CANONICAL_URL_PREFIXES = {"fia", "tcf"}
+_TRACKING_PARAM_RE = re.compile(r"^(utm_.*|mc_cid|mc_eid|fbclid|gclid)$", re.IGNORECASE)
+
+
+def canonical_url(url: str) -> str:
+    """追跡用クエリ(utm_* / mc_cid / mc_eid / fbclid / gclid)とフラグメントを落とす。
+    フラグメントは丸ごと捨てる（`#new_tab&utm_source=rss` のように追跡値が入り込み、
+    かつ記事の同一性には使われないため）。記事の同一性を決めるクエリ（例: ft.com の
+    `?syn-...=1`）は残す。"""
+    parts = urlsplit(url)
+    query = [(k, v) for k, v in parse_qsl(parts.query, keep_blank_values=True)
+             if not _TRACKING_PARAM_RE.match(k)]
+    return urlunsplit((parts.scheme, parts.netloc, parts.path, urlencode(query), ""))
 
 
 def log(msg: str) -> None:
@@ -209,6 +232,8 @@ def main() -> int:
             title = clean_title(e.get("title") or "")
             if not url or not title:
                 continue
+            if prefix.rstrip("-") in CANONICAL_URL_PREFIXES:
+                url = canonical_url(url)
             extraction = "full"
             try:
                 body = fetch_article_text(url)

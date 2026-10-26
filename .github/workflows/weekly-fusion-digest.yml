@@ -1,0 +1,42 @@
+name: Weekly Fusion Digest
+
+# Fusion（核融合）は日次では送らず、この土曜週次まとめ1通に集める。中身は
+# 「💰 資金調達」の表（調達額の大きい順）、方式別（tokamak 等）の件数と調達額の集計、
+# 政策・規制と技術の一覧。核融合は非上場の会社が多く市場タイルが無いので、
+# ヒートマップは付けない。Geminiも使わない（rsvg / fonts のインストールも不要）。
+# cronは金曜23:05 UTC = 土曜8:05 JST起動（量子の7:35、Healthcareの7:50とずらしている）。
+# GitHub Actionsのスケジュール遅延（50〜148分、日付をまたぐこともある）があっても、
+# 対象期間は実行時刻ではなく「JSTで今日より前（当日は含めない）の直近の金曜日」を end とした
+# end-6日（土）〜end（金）のファイル名日付で決まるため、日曜にずれ込んでも同じ週を指す
+# （Healthcare週次と同じ窓。healthcare_week_window() を共有している）。金曜までなのは、
+# ファイル名の日付Dのノートが D日17:00 UTC＝JSTでD+1日2:00にキャプチャされ、土曜日付の
+# ノートは土曜8:05 JSTの時点でまだ存在しないため（土曜までの窓だと翌週にも載らず永久に漏れる）。
+# .digest-state には依存しない。対象0件の週は送信せず、ログに件数0を出して正常終了する。
+on:
+  schedule:
+    - cron: "5 23 * * 5"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: weekly-fusion-digest
+  cancel-in-progress: false
+
+jobs:
+  send-weekly-fusion-digest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build and send weekly fusion digest
+        env:
+          WEEKLY_FUSION: "1"
+          GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: python3 scripts/build_digest.py
