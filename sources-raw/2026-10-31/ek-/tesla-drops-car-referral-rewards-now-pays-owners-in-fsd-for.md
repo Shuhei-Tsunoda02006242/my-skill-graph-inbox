@@ -1,0 +1,35 @@
+---
+source: "Electrek"
+prefix: ek-
+title: "Tesla drops car referral rewards, now pays owners in FSD for referrals"
+url: "https://electrek.co/2026/10/30/tesla-referral-program-fsd-car-rewards-dropped/"
+published: 2026-10-30
+chars: 5201
+truncated: false
+extraction: full
+---
+
+Tesla has launched a new referral program in the US that pays owners in Full Self-Driving (Supervised) instead of rewarding car sales. A referred owner gets one free month of FSD, and the referrer gets a free month or a $99 Tesla Credit if that person starts paying.
+At the same time, Tesla’s Refer and Earn terms no longer list any vehicle as a qualifying purchase for buyer or referrer rewards. Buy a Tesla with a friend’s code today and neither of you gets anything.
+How the FSD referral works
+To share a link, you need to be paying for FSD (Supervised) monthly or own it outright from before Tesla stopped selling it, according to Tesla’s FSD referral support page. Owners who got FSD through a one-year grant can’t participate. The link lives under “Refer and Earn” in the Tesla app, version 4.62.0 or later.
+The person on the other end has to own a registered Tesla with compatible hardware, can’t have paid for FSD in the past 12 months, and can’t have bought it outright. There’s also a catch for recent buyers: anyone who got a free FSD trial with a new car is locked out of referral links until 12 months after that trial ends.
+If the friend converts, subscribers get a free month and outright owners get a $99 credit, the same as one month of the subscription. Credits expire after 12 months and can’t be cashed out. Tesla caps it at 12 rewards per calendar year, so the most anyone can earn is a year of FSD or $1,188 in credits.
+Tesla’s own pages don’t quite agree on timing. The FSD page says the referrer is rewarded when the friend subscribes during the trial, while the main Refer and Earn page says after it.
+Cars are out
+The bigger change is buried in Tesla’s Refer and Earn page. Buyer benefits now apply to solar panels only. Referrer benefits cover solar, first demo drives (up to 30 over an account’s lifetime) and the new FSD referral.
+Model 3, Model Y and Cybertruck only show up under loyalty benefits, for existing owners buying another Tesla product. Model S and Model X aren’t listed at all.
+Tesla didn’t announce the change. The page is stamped “Updated February 24, 2026,” so it’s unclear exactly when vehicles came off the list.
+That’s quite a turn for a program that was always about moving cars. When Tesla brought the referral program back in August 2024, a buyer got $1,000 off a Model S, X, Y or 3, and the referrer got $500 in credit. Tesla has killed and revived the program several times over the past decade, but cars were always at the center of it. Not anymore.
+The metric that matters
+Tesla stopped selling FSD outright on February 14, and new US customers can now only subscribe at $99 a month. In its Q3 shareholder letter, Tesla reported 1.74 million active FSD subscriptions, up 67% year-over-year, a count that includes past upfront buyers and excludes free trials.
+That’s the exact metric in Elon Musk’s 2025 CEO Performance Award, which includes a milestone of 10 million active FSD subscriptions. It’s the reason Tesla started disclosing the number in January in the first place.
+The free month a friend receives doesn’t count toward that total. A paid conversion does, and that’s precisely the event the new program pays for.
+Electrek’s Take
+Top comment by Indy
+The only way I would ever pay for FSD is if Tesla covered full comprehensive insurance for my vehicle and accepted all liability. Otherwise, it's a gamble with my (and others') life.
+That they seem to prioritize this sham service (Just call it Assisted Driving for honesty sake?) versus improving the cars or lowering prices, tells me enough not to look at Tesla for my next vehicle.
+This is a cheap program for Tesla and one directly built on what’s arguably now its main business: selling FSD. Tesla used to hand out $1,000 discounts to drive referrals. Now it gives away a month of software that’s already sitting in the car, and the referrer gets either more of that same software or a credit that can only be spent at Tesla. In exchange, Tesla gets a $99-a-month subscriber.
+The recipient has to already own a Tesla, so the program doesn’t add a single car to the fleet. It’s built to mine the existing fleet for subscriptions. Tesla had sold about 8.9 million vehicles by the end of 2025, and only 1.74 million are paying for FSD, so there’s plenty of room. At Q3’s pace, we estimated 10 million subscriptions is still about eight years away.
+So Tesla stopped paying for referrals that require selling a car, and started paying for the ones that move the number in Musk’s pay package. We think that tells you a lot about where the company’s priorities are right now.
+If you’re driving an EV, powering it with home solar can cut your fuel costs to nearly zero. With electricity rates up almost 10% last year and expected to keep climbing, going solar is one of the best ways to protect yourself against rising costs. And with lease and PPA options, you can do it with zero upfront cost and start saving immediately. If you want to find the best deal, check out EnergySage. It’s a free service with hundreds of pre-vetted installers competing for your business, so you save 20 to 30% compared to going it alone. No sales calls until you pick an installer. Get your free quotes here.

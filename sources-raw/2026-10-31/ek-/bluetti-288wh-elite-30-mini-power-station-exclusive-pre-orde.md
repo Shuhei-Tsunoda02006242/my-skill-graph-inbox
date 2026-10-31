@@ -1,0 +1,88 @@
+---
+source: "Electrek"
+prefix: ek-
+title: "Bluetti 288Wh Elite 30 Mini power station exclusive pre-order deals, Aventon Abound SR + LR cargo e-bikes first savings, more"
+url: "https://electrek.co/2026/10/30/bluetti-288wh-elite-30-mini-power-station-aventon-abound-sr-lr-cargo-e-bikes-more/"
+published: 2026-10-30
+chars: 10305
+truncated: false
+extraction: full
+---
+
+We’ve got two big first-time deals leading our end-of-the-week Green Deals edition, starting with Bluetti’s pre-order launch of the Elite 30 Mini 288Wh Portable Power Station and bundles starting from an exclusive $237. Right behind that is Aventon’s Early Bird Black Friday Access deals, which have provided the first savings on its Abound SR and Abound LR Cargo e-bikes starting from $1,899, and others from $1,799. From there, we have an off-season deal for a new low on Greenworks’ 40V 10-inch Cordless Tiller/Cultivator kit, savings on Anker’s SoloCam S340 Solar Security Camera, some Birdfy smart bird house deals, and more. There’s also the hangover deals from across this week at the bottom of the page, like yesterday’s EcoFlow flash sale lineup that ends tonight, Segway’s Mileage Club member deals, and more.
+Head below for other New Green Deals we’ve found today and, of course, Electrek’s best EV buying and leasing deals. Also, check out the new Electrek Tesla Shop for the best deals on Tesla accessories.
+Bluetti’s new 288Wh Elite 30 Mini power station gets exclusive pre-order launch savings to start from $237
+Bluetti has officially launched its new Elite 30 Mini Portable Power Station for pre-order, and rather than pay the full $250 price, you can instead score it down at $237.49 shipped, after using our exclusive code 9TO5TOYS5OFF at checkout. While the discount isn’t the largest that we’ve seen new models launch with in the past, the $13 markdown is far better than grabbing one at full price like others will have to do. Shipping is expected to begin sometime in early November.
+***Note: We have added our exclusive savings to the prices you see below, so be sure to use the code 9TO5TOYS5OFF at checkout, unless you want to purchase at full price.
+Three options for Bluetti’s Elite 30 Mini:
+- Elite 30 Mini (288Wh) power station: $237 (Reg. $250)
+- Elite 30 Mini with a 60W solar panel: $332 (Reg. $250)
+- Elite 30 Mini with a 100W solar panel: $408 (Reg. $430)
+Aventon early Black Friday sale offers first discounts on Abound SR + LR smart cargo e-bikes starting from $1,899, more
+After a long period of seeing no sales from Aventon, the brand has launched its Early Bird Black Friday deals with up to $200 savings and some FREE gear on e-bikes. What’s notable here, is that we’re seeing the very first cash savings on the Abound SR Smart Compact Cargo e-bike with a FREE foldable lock ($65 value) down at $1,799 shipped, while the Abound LR Smart Cargo e-bike gets the same free gear down at $1,899 shipped. These models have been on the market for quite a while with $1,899 and $1,999 full price tags, but it hasn’t been until now that we’re finally see some actual savings beyond the rare free gear bundled on. You’re getting $165 total savings during this sale, landing them at new all-time low prices.
+Greenworks’ 40V 10-inch cordless tiller/cultivator kit gets off-season deal at a new $190 low (Reg. $300)
+Amazon is offering an off-season deal for Greenworks’ 40V 10-inch Cordless Electric Tiller/Cultivator with a 4.0Ah battery down at $189.99 shipped. Down from $300, we’ve seen it keeping down to $200 since September, which fell further to this rate during Prime Day at the top of the month, where is has remained since. The deal here gives you $110 savings, marking a new all-time low.
+Expand or start your security setup with Anker’s SoloCam S340 3K dual-lens solar camera down at $140 (Reg. $200)
+Amazon has a bunch of Anker eufy deals running in its official Amazon storefront, with options like the SoloCam S340 3K Dual-Lens Solar Security Camera down at $139.98 shipped, and you can find multi-cam kits available on the same page. Down from $200, this single-cam unit has mostly been kept above $160 with discounts in 2026, though there have been some falls to $140, $120, and the $110 low over the year. You’re getting a $60 markdown here that lands it at the third-lowest price we have tracked in 2026, giving you solid savings to expand your existing setup or have specified security watching over a particular spot. Of course, you can find other models for less in the official Amazon storefront here, but many rely on HomeBase 2 hubs rather than the upgraded HomeBase 3 hubs.
+Birdfy’s Nest smart bird house kits invite visitors and let you admire them starting from $112 (Up to $40 off)
+If you’re doing early holiday shopping or live in a region that doesn’t see the bird population leave for winter, Birdfy’s official Amazon storefront is offering its Nest Bird House with Camera, Solar Panel, and lifetime AI Bird ID down at $141.99 shipped. Down from $180, in 2026 we’ve seen discounts mostly keeping the costs above $150, though it has fallen as low as $133. The deal here gives you this package with $38 savings, landing it just $9 above the annual low. Of course, there are the options to grab its upgraded model with dual cameras down at $279.99 shipped from $320, or you can get the base setup with no solar panel down at $111.99 shipped, after clipping the on-page coupon.
+Best Fall EV deals!
+- Segway Xyber Electric Bike: $2,300 (Reg. $3,300)
+- Monarc Marker All-Terrain e-bike w/ 2x batteries (120 miles of travel): $1,999 (Reg. $2,807)
+- Lectric XPedition2 35Ah Cargo e-bike w/ $694 bundle: $1,999 (Reg. $2,693)
+- Velotric Nomad 2 Off-Road e-bike with FREE extra battery: $1,999 (Reg. $2,549)
+- Monarc Tracer Commuter e-bike w/ 2x batteries (130 miles of travel): $1,899 (Reg. $2,707)
+- Segway Myon Electric Bike: $1,800 (Reg. $2,000)
+- Tenways Wayfarer e-bike w/ $375 bundle: $1,799 (Reg. $2,199)
+- Lectric XPedition2 26Ah Cargo e-bike w/ $545 bundle: $1,799 (Reg. $2,344)
+- ENGWE E26 3.0 Full Suspension e-bike w/ 343 bundle: $1,799 (Reg. $2,399)
+- Velotric Summit 1 Versatile e-bike: $1,699 (Reg. $1,999)
+- Lectric XPeak2 Long-Range Off-Road e-bike w/ up to $365 bundle: $1,699 (Reg. $2,064)
+- Yozma IN 10 Pro Electric Mini Dirt Bike (use code 9TO5TOYS100): $1,699 (Reg. $2,399)
+- ENGWE M20 3.0 Dual-Battery Moped e-bike: $1,699 (Reg. $2,499)
+- Navee UT5 Ultra X SuperScooter (use code UT5U20): $1,600 (Reg. $2,500)
+- Tenways CGO600 Pro Chain-Drive Commuter e-bike w/ $118 bundle: $1,599 (Reg. $1,899)
+- Segway Xafari Electric Bike: $1,500 (Reg. $2,400)
+- Velotric Discover 2 Step-Thru Comfort Commuter e-bike: $1,499 (Reg. $1,999)
+- Segway GT3 SuperScooter: $1,400 (Reg. $1,900)
+- Yozma IN 11 Stunt-Ready Electric Dirt Bike (use code 9TO5TOYS100): $1,399 (Reg. $1,599)
+- Lectric XPedition2 13Ah Cargo e-bike w/ $346 bundle: $1,399 (Reg. $1,745)
+- ENGWE M20 3.0 Single-Battery Moped e-bike: $1,399 (Reg. $1,999)
+- Lectric XPress2 Long-Range e-bike w/ $336 bundle: $1,399 (Reg. $1,735)
+- Lectric XP4 750 LR Folding Utility e-bikes w/ $453 bundle: $1,299 (Reg. $1,752)
+- Lectric XPeak2 Standard Off-Road e-bike w/ $336 bundle (new low): $1,299 (Reg. $1,835)
+- Segway Max G3 Plus Electric Scooter: $1,200 (Reg. $1,500)
+- Heybike Hybrid Longest Range Commuter e-bike (use code 9T5T500): $1,199 (Reg. $1,699)
+- Heybike ALPHA Mid-Drive All-Terrain e-bike (use code 9TO5TOYS200): $1,099 (Reg. $1,799)
+- Heybike Mars 3.0 Folding Fat Tire e-bike (new low): $1,099 (Reg. $1,199)
+- Lectric XP Lite3 JW LR Belt-Drive e-bike w/ $356 bundle (new model): $1,099 (Reg. $1,455)
+- Heybike Venus Lightweight Cruiser e-bike (use code 9T5T500): $999 (Reg. $1,499)
+- Yozma IN 10 Electric Mini Dirt Bike (use code 9TO5TOYS100): $999 (Reg. $1,599)
+- Lectric XP4 Standard Folding Utility e-bikes w/ $79 bundle: $999 (Reg. $1,078)
+- Lectric XP Lite3 Long-range Folding e-bike w/ $257 bundle (new model): $999 (Reg. $1,256)
+- Heybike Ranger S 2.0 Folding e-bike w/ $89 bundle (use code 9T5T100): $899 (Reg. $1,199)
+- Heybike Mars 2.5 Folding e-bike with $89 bundle (use code 9T5T100): $799 (Reg. $999)
+- Segway Max G2 Electric Scooter: $700 (Reg. $1,400)
+- ENGWE L16 Single-Battery Utility e-bike w/ $99 bundle: $649 (Reg. $1,299)
+- Segway E3 Go Electric Scooter (launch deal): $550 (Reg. $650)
+- Segway S2 Kids Self-Balancing Scooter: $400 (Reg. $450)
+Best new Green Deals landing this week
+The savings this week are also continuing to a collection of other markdowns. To the same tune as the offers above, these all help you take a more energy-conscious approach to your routine. Winter means you can lock in even better off-season price cuts on electric tools for the lawn while saving on EVs and tons of other gear.
+- EcoFlow’s final Halloween flash sale drops DELTA 3 Ultra 3,072Wh power station to $1,299 ($300 off), more from $959
+- Anker launches ‘world’s longest-lasting 5kWh’ power station at up to $2,150 off for 9to5 readers
+- Bluetti Halloween Sale cuts $600 off ‘world’s smallest 3kWh power station’ for $1,099, more from $465
+- Exclusively save up to $526 on Anker’s refurb SOLIX F3800 3,840Wh power station + bundle from $1,463
+- Segway members can score one of the best prices ever on the F3 e-scooter at $200+ off, more
+- This Segway superscooter zooms at up to 31 MPH and it’s currently down at $1,499 (Reg. $1,700)
+- Yozma’s latest IN 11 electric dirt bike with wheelie assist gets FREE gift box at exclusive new $1,399 low ($499 savings)
+- Lectric launches XP Lite3 folding e-bikes with up to $356 FREE gear starting from $799
+- Save your arms this winter with EGO’s 56V 12-inch cordless electric snow shovel, now $299 ($60 off)
+- Jackery’s Halloween Sale drops HomePower 2000 Plus v2 + 2x 200W solar panels to $1,479 ($360 off), more from $199
+- Upgrade to Anker’s SOLIX E10 whole-home backup system at best prices starting from exclusive $3,799 + FREE gifts
+- Get up to $907 early Black Friday savings on Tenways e-bikes: 37-pound CGO600 Pro commuter at $1,499 low, more
+- Major 46% price drop hits new Baseus security cam with dual 3K design, solar power, spotlight, more at $150
+- No microwave? No problem. East Oak’s battery-powered lunch boxes are currently on sale from $54
+- Make cuts up to 11 feet off the ground with Greenworks’ 40V 8-inch cordless pole saw kit down at $137 (Reg. $180)
+- Autel’s AC Home level 2 50A EV MaxiCharger provides up to 37 miles per hour from $426 (Reg. $569)
+- Expand your 60V Greenworks arsenal with this 20-inch cordless snow blower + 4.0Ah battery at a new $464 low, more
+- Electrified Weekly – Heybike 100-mile Hybrid commuter e-bike $500 off, Segway E3 Go e-scooter launch, Anker + EcoFlow sales, more

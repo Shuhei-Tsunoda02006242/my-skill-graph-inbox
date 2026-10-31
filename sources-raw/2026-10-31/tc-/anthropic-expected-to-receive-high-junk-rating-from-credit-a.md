@@ -1,0 +1,17 @@
+---
+source: "TechCrunch"
+prefix: tc-
+title: "Anthropic expected to receive high ‘junk’ rating from credit agencies following IPO, FT report says"
+url: "https://techcrunch.com/2026/10/30/anthropic-expected-to-receive-high-junk-rating-from-credit-agencies-following-ipo-report-says/"
+published: 2026-10-30
+chars: 1290
+truncated: false
+extraction: full
+---
+
+Anthropic is expected to receive a high “junk” rating from credit rating agencies following its initial public offering, according to a report from the Financial Times.
+The FT says the investment giant Blackstone, the anchor investor in a recent $63 billion deal to finance Anthropic’s chips, told investors in the deal that it expects the AI lab to receive a “high” junk rating after its IPO. Previously, the FT notes, Blackstone had said the opposite: that the Claude maker would receive an investment-grade rating (indicating low risk for lenders) before 2027 rolls around.
+Now Blackstone expects double B range rating, the top tier of speculative “junk” grade, according to the reporting.
+TechCrunch reached out to Anthropic and Blackstone but both declined to comment.
+Blackstone’s forecast is just a prediction, but naturally, a high junk rating would make it more difficult and costlier for Anthropic to raise the money to keep funding its massive spending that has undergirded its business. The lab has been on a spending spree, racking up large compute power deals throughout the past 12 months, which has worried investors.
+Anthropic officially filed to go public earlier this week, kicking off a wave of speculation about how the massive IPO would impact the broader AI industry.
