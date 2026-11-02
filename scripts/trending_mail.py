@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""はてなブックマーク・Qiita・Zenn・Hacker News・Product Hunt の人気記事を取得し、
+"""はてなブックマーク・Qiita・Zenn・note・Product Hunt の人気記事を取得し、
 モバイルで読みやすいHTMLメール1通として送信する（トレンドダイジェスト）。
 
 仕様の出所: dotfiles/claude/commands/trending.md（取得先URL・抽出ルール・除外ルール）。
@@ -11,7 +11,7 @@ Xトレンド・YouTubeはローカル専用の取得手段（opencli／ブラ�
 - Qiita: https://qiita.com/popular-items/feed.atom (Atom) 上位15件
   author が sumomoo/prumnn の記事は除外（ユーザー指定。除外分は繰り上げない）
 - Zenn: https://zenn.dev/feed (RSS) 上位15件
-- Hacker News: topstories.json → item/{id}.json を個別取得 上位10件
+- note: https://note.com/rss (RSS 2.0。注目記事は10件のみ返る。いいね数なし) 上位10件
 - Product Hunt: https://www.producthunt.com/feed (Atom。RSSで返る可能性にも両対応) 上位10件
 
 あるソースの取得に失敗しても他は続行し、メール本文に「〇〇: 取得失敗」と明記する。
@@ -26,6 +26,7 @@ Xトレンド・YouTubeはローカル専用の取得手段（opencli／ブラ�
 """
 
 import html
+import http.client
 import json
 import os
 import re
@@ -44,6 +45,7 @@ UA = "Mozilla/5.0 (compatible; TrendingMailBot/1.0; +https://github.com/Shuhei-T
 NS_RSS1 = "http://purl.org/rss/1.0/"
 NS_HATENA = "http://www.hatena.ne.jp/info/xmlns#"
 NS_ATOM = "http://www.w3.org/2005/Atom"
+NS_NOTE = "https://note.com"
 
 def load_exclusions() -> set[str]:
     """除外authorを trending-exclusions.json から読む（このファイルが唯一の正）。
@@ -133,24 +135,22 @@ def fetch_zenn(limit: int = 15) -> list[dict]:
     return results
 
 
-def fetch_hn(limit: int = 10) -> list[dict]:
-    """Hacker News トップストーリー。ID配列取得後、個別取得（計 limit+1 リクエスト）。"""
-    ids = json.loads(fetch_bytes("https://hacker-news.firebaseio.com/v0/topstories.json"))[:limit]
+def fetch_note(limit: int = 10) -> list[dict]:
+    """note 注目記事。RSS 2.0形式（10件のみ返る）。descriptionは記事本文HTMLの冒頭で、
+    末尾に「続きをみる」リンクが付くため、切り詰めの前に除去する。"""
+    data = fetch_bytes("https://note.com/rss")
+    root = ET.fromstring(data)
+    channel = root.find("channel")
+    items = channel.findall("item") if channel is not None else []
     results = []
-    for hid in ids:
-        item = json.loads(
-            fetch_bytes(f"https://hacker-news.firebaseio.com/v0/item/{hid}.json")
-        )
-        title = (item.get("title") or "").strip()
-        if not title:
+    for item in items[:limit]:
+        title = (item.findtext("title") or "").strip()
+        url = (item.findtext("link") or "").strip()
+        if not (title and url):
             continue
-        url = item.get("url") or f"https://news.ycombinator.com/item?id={hid}"
-        results.append({
-            "title": title,
-            "url": url,
-            "score": item.get("score"),
-            "comments": item.get("descendants"),
-        })
+        author = (item.findtext(f"{{{NS_NOTE}}}creatorName") or "").strip()
+        raw = re.sub(r"<a\b[^>]*>\s*続きをみる\s*</a>", "", item.findtext("description") or "")
+        results.append({"title": title, "url": url, "author": author, "description": strip_html(raw)})
     return results
 
 
@@ -194,7 +194,7 @@ SOURCE_DEFS = [
     ("hatena", "📰 はてなブックマーク", fetch_hatena),
     ("qiita", "💻 Qiita", fetch_qiita),
     ("zenn", "📝 Zenn", fetch_zenn),
-    ("hackernews", "🔥 Hacker News", fetch_hn),
+    ("note", "📗 note", fetch_note),
     ("producthunt", "🚀 Product Hunt", fetch_producthunt),
 ]
 
@@ -207,25 +207,21 @@ def fetch_all() -> tuple[dict[str, list[dict]], dict[str, str]]:
         try:
             results[key] = fetch_fn()
         except (urllib.error.URLError, urllib.error.HTTPError, ET.ParseError,
-                json.JSONDecodeError, TimeoutError, OSError) as e:
+                json.JSONDecodeError, TimeoutError, OSError,
+                http.client.HTTPException) as e:
             errors[key] = f"{type(e).__name__}: {e}"
             print(f"{label}: 取得失敗 ({errors[key]})", file=sys.stderr)
     return results, errors
 
 
 def fmt_meta(key: str, article: dict) -> str:
-    """ソースごとのメタ情報（はてブ数/HNスコア・コメント数/Qiitaのauthor）を1行に整形する。"""
+    """ソースごとのメタ情報（はてブ数/Qiita・noteのauthor）を1行に整形する。"""
     if key == "hatena":
         return f"{article['count']}users" if article.get("count") is not None else ""
     if key == "qiita":
         return f"by @{article['author']}" if article.get("author") else ""
-    if key == "hackernews":
-        bits = []
-        if article.get("score") is not None:
-            bits.append(f"▲{article['score']}")
-        if article.get("comments") is not None:
-            bits.append(f"{article['comments']}コメント")
-        return " · ".join(bits)
+    if key == "note":
+        return f"by {article['author']}" if article.get("author") else ""
     return ""
 
 

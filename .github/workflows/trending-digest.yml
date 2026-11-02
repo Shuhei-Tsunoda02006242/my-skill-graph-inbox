@@ -1,6 +1,6 @@
 name: Trending Digest Email
 
-# はてなブックマーク・Qiita・Zenn・Hacker News・Product Hunt の人気記事一覧を
+# はてなブックマーク・Qiita・Zenn・note・Product Hunt の人気記事一覧を
 # モバイル向けHTMLメール1通にまとめて送信する（外出先から携帯でトレンドを読むため）。
 # cronは22:45 UTC = 7:45 JST起動。daily-digest.yml（22:35 UTC = 7:35 JST）と
 # 同じsend-digestランナー混雑帯を避けるため10分ずらしている。
