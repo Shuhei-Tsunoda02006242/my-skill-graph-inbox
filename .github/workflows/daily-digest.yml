@@ -5,20 +5,35 @@ name: Daily Digest Email
 # 量子（Frontier）は日次配信から分離し、weekly-quantum-digest.yml が土曜週次で扱う
 # （検出自体は量子ノートも拾うが、build_digest.py内でカテゴリ判定して日次送信から除外する）。
 # キャプチャルーチン（クラウドルーチン）は毎朝2:08〜2:15 JSTに完了済み
-# （2026-08-19に7:13頃から02:00 JSTへ移動）。配信はその5時間半後を狙う。
+# （2026-08-19に7:13頃から02:00 JSTへ移動）。
 #
-# cronを2本持たせている。GitHub Actionsのスケジュール実行は優先度が低く、
-# 混雑時は遅延・脱落するため（通常は15〜22分の遅延だが、2026-08-26の回は
-# 4時間54分遅れて12:29 JST着になり「朝メールが来ない」事象が発生した）。
-#   1本目 22:35 UTC = 7:35 JST … 本命
-#   2本目 23:20 UTC = 8:20 JST … 保険
-# 2本目は安全に空振りする。以降の全ステップが `if: count != '0'` で
-# ガードされており、本命が成功していれば .digest-state が進んでいるため
-# 検出0件となり何も送信しない（concurrency も効くので競合もしない）。
+# 主経路は push トリガー（2026-11-03変更）。キャプチャはノート・巡回ログ・
+# 批評コメントを1回のpushでmainへ上げるので、その直後に配信が起動する。
+# 変更理由: schedule実行が連日2.5〜3時間遅れて起動し（10月下旬は
+# 10:20〜11:06 JST着）、朝メールが朝に届かなくなったため。
+# pushのpathsは 00-Inbox/** と digests/*-commentary.md のみ。
+# botの .digest-state / .alert-state 更新はGITHUB_TOKENのpushなので
+# ワークフローを再起動せず、pathsにも合致しない（ループしない）。
+# 注意: キャプチャが複数pushに分割された場合（ノート→後からcommentary）、
+# 最初のpushで送信されるため批評コメントはGeminiフォールバックになる。
+#
+# cronは2本とも保険に格下げした。GitHub Actionsのスケジュール実行は優先度が低く、
+# 混雑時は遅延・脱落するため（2026-08-26の回は4時間54分遅れた）。
+#   22:35 UTC = 7:35 JST … 保険
+#   23:20 UTC = 8:20 JST … 保険
+# push経路が成功していれば .digest-state が進んでいるため、cronは検出0件となり
+# 安全に空振りする（以降の全ステップが `if: count != '0'` でガードされている）。
+# push実行とcron実行は concurrency で直列化されるので競合もしない。
 # 検出0件のときは、巡回ログを見て「本当に取得失敗だったのか」を判定し、
 # 異常な0件のときだけ通知メールを送る（2026-09-08追加。egress遮断による
 # 0件が月3〜4回起きているのに、こちらから気づく手段が無かったため）。
+# 失敗判定はpush起動では行わない（ノートだけのpushで誤発報しないため）。
 on:
+  push:
+    branches: [main]
+    paths:
+      - "00-Inbox/**"
+      - "digests/*-commentary.md"
   schedule:
     - cron: "35 22 * * *"
     - cron: "20 23 * * *"
@@ -55,7 +70,7 @@ jobs:
           echo "Detected $COUNT file(s): $FILES"
 
       # ここから0件時の通知。0件は必ずしも異常ではない点に注意する——
-      # 保険cron（8:20 JST）は本命cronが送信に成功した後も常に0件になるため、
+      # 保険cronは push経路が送信に成功した後も常に0件になるため、
       # 巡回ログ digests/YYYY-MM-DD-sources.md を見て理由を判定し、
       # 本当に異常なときだけ通知する。.alert-state で同日の二重送信も防ぐ。
       # 巡回ログの日付Dは「直近のキャプチャ実行日(UTC)」であって date -u の今日ではない。
@@ -68,7 +83,7 @@ jobs:
       # という二重の不具合になる。17:00 UTC を境に日付を決めることでズレを消す。
       - name: Detect capture failure
         id: failure
-        if: steps.files.outputs.count == '0'
+        if: steps.files.outputs.count == '0' && github.event_name != 'push'
         run: |
           if [ "$(date -u +%H)" -ge 17 ]; then
             D=$(date -u +%Y-%m-%d)
@@ -88,7 +103,7 @@ jobs:
             echo "All sources failed on $D"
             echo "reason=all-failed" >> $GITHUB_OUTPUT
           else
-            # 巡回ログに成功行がある＝取得はできていた。本命送信後の保険cron等
+            # 巡回ログに成功行がある＝取得はできていた。送信後の保険cron等
             echo "Capture succeeded on $D; nothing to alert"
             echo "reason=" >> $GITHUB_OUTPUT
           fi
