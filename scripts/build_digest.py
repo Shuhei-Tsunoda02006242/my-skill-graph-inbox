@@ -263,7 +263,9 @@ def parse_note(path: str, sources: dict[str, str]) -> dict:
         # 数値化は parse_usd_m が行う（解釈できない値を無視するため）
         "indication": _hc_field("indication", fm),
         "approach": _hc_field("approach", fm),
-        "players": _hc_field("players", fm),
+        # 旧ノートは「買い手 ← 売り手」で書かれている。表示は「お金の流れ 元→先」に統一するため
+        # 読み込み時に ← を → へ正規化する（買い手が先頭の順序は維持。ノート本体は書き換えない）(2026-11-04)
+        "players": _hc_field("players", fm).replace("←", "→"),
         "deal_type": _hc_field("deal-type", fm),
         "deal_total": _hc_field("deal-total-usd-m", fm),
         "deal_upfront": _hc_field("deal-upfront-usd-m", fm),
