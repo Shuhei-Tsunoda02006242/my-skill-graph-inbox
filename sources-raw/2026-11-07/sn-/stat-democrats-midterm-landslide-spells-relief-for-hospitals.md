@@ -1,0 +1,14 @@
+---
+source: "STAT News"
+prefix: sn-
+title: "STAT+: Democrats’ midterm landslide spells relief for hospitals"
+url: "https://www.statnews.com/2026/11/06/why-democrats-midterm-landslide-helps-hospital-industry/?utm_campaign=rss"
+published: 2026-11-06
+chars: 791
+truncated: false
+extraction: full
+---
+
+The political environment is about to get friendlier for hospitals.
+With Democrats gaining control of the House and Senate, hospitals will not have to worry about Republican-led efforts to cut Medicaid payments further. In fact, Democrats have explicit goals to prioritize measures that are financially beneficial to the hospital industry.
+Within the first 100 hours of the next Congress, which starts in January, Democrats want to advance policies that would reverse Medicaid cuts outlined in President Trump’s tax law and “permanently restore” the enhanced subsidies for Affordable Care Act plans that expired earlier this year, according to a memo from party leaders. Democrats even plan to block a niche drug discount model, despised by hospitals, that the Trump administration proposed.

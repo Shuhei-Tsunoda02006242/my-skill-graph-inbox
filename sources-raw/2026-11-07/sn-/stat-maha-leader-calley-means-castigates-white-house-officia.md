@@ -1,0 +1,17 @@
+---
+source: "STAT News"
+prefix: sn-
+title: "STAT+: MAHA leader Calley Means castigates White House officials as bending to industry"
+url: "https://www.statnews.com/2026/11/06/calley-means-joe-rogan-trump-maha-agenda-derailed-by-corporate-influence/?utm_campaign=rss"
+published: 2026-11-06
+chars: 1064
+truncated: false
+extraction: full
+---
+
+WASHINGTON — The Trump administration’s MAHA agenda has been derailed by corporate interests and the influence of money, a recently departed administration official told the podcaster Joe Rogan in a recording released Friday.
+Calley Means, a key Make America Healthy Again leader who worked in the White House and highest levels of the federal health agencies until last month, said top White House officials were altering policies in response to industry influence and funding.
+Means pointed to the fight over glyphosate, an herbicide many MAHA advocates argued causes grave health consequences. He recounted an “almost violent reaction” from industry groups that pressured agencies against researching or restricting the substance. He said a White House official later presented Means with a policy to boost its production — noting it was “not up for discussion.”
+This article is exclusive to STAT+ subscribers
+Unlock this article — plus daily intelligence on Capitol Hill and the life sciences industry — by subscribing to STAT+.
+Already have an account? Log in
