@@ -1,0 +1,18 @@
+# 取得ログ 2026-11-14
+
+GitHub Actions（`fetch-sources.yml`）による取得結果。巡回ログの「取得」列はこの表をそのまま使ってよい。
+
+| prefix | ソース | 取得 | 候補 | 保存 | 備考 |
+|--------|--------|------|------|------|------|
+| `tc-` | TechCrunch | OK | 20 | 12 |  |
+| `tm-` | Techmeme | OK | 15 | 12 |  |
+| `sn-` | STAT News | OK | 20 | 12 |  |
+| `is-` | IEEE Spectrum Neuro | OK | 0 | 0 |  |
+| `qcr-` | Quantum Computing Report | OK | 10 | 10 |  |
+| `fb-` | FierceBiotech | OK | 25 | 12 |  |
+| `ek-` | Electrek | OK | 40 | 12 |  |
+| `tqi-` | The Quantum Insider | OK | 10 | 10 |  |
+| `fia-` | Fusion Industry Association | OK | 3 | 3 |  |
+| `tcf-` | TechCrunch Fusion | OK | 0 | 0 |  |
+
+合計 83件を保存。取得失敗ソース: なし
