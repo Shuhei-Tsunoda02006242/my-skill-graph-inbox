@@ -1,0 +1,17 @@
+---
+source: "STAT News"
+prefix: sn-
+title: "STAT+: Is MAHA’s think tank in the tank? Tax filings show low reserves"
+url: "https://www.statnews.com/2026/11/20/maha-institute-tax-filings-rfk-jr-health-agenda-spending/?utm_campaign=rss"
+published: 2026-11-20
+chars: 846
+truncated: false
+extraction: full
+---
+
+WASHINGTON —The MAHA Institute, a nonprofit “think tank” launched to support Robert F. Kennedy Jr.’s health agenda, burned over $1 million in 2025, leaving it with little cash on hand to continue operating, tax documents obtained by STAT show.
+The group started 2025 with nearly $1.3 million in its coffers, but ended the year with just $171,000, per its latest IRS return, filed this week. That 86% drop was hardly offset by the group’s revenue, which was just shy of $67,000 for the year.
+“To have lost over $1 million is pretty notable to me,” said Brian Mittendorf, a professor at Ohio State University who specializes in nonprofit accounting.
+This article is exclusive to STAT+ subscribers
+Unlock this article — plus daily intelligence on Capitol Hill and the life sciences industry — by subscribing to STAT+.
+Already have an account? Log in

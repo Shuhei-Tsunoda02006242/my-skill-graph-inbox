@@ -1,0 +1,14 @@
+---
+source: "STAT News"
+prefix: sn-
+title: "STAT+: Medicare pilot will test ‘food is medicine’ and other lifestyle programs to counter chronic diseases"
+url: "https://www.statnews.com/2026/11/20/kennedy-food-is-medicine-maha-elevate-pilot/?utm_campaign=rss"
+published: 2026-11-20
+chars: 753
+truncated: false
+extraction: full
+---
+
+WASHINGTON — Department of Health and Human Services officials announced Friday that 15 groups around the U.S. will test how well nutrition, exercise, and other lifestyle programs work to improve Medicare patients’ health and save the government money.
+The MAHA ELEVATE program aims to generate evidence over the next several years that preventive efforts, such as cooking classes and nutrition coaching for people with chronic conditions, is worthy of Medicare coverage.
+The U.S. spends trillions of dollars per year on health care, most of which goes toward treating chronic diseases. However, Medicare does not cover many of the lifestyle interventions that could help people improve their condition or keep them from getting sick in the first place.

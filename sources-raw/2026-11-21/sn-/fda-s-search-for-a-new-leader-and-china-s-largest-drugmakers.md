@@ -1,0 +1,15 @@
+---
+source: "STAT News"
+prefix: sn-
+title: "FDA’s search for a new leader, and China’s largest drugmakers"
+url: "https://www.statnews.com/2026/11/20/new-fda-commissioner-summit-lung-cancer-drug-readout-loud-podcast/?utm_campaign=rss"
+published: 2026-11-20
+chars: 1072
+truncated: false
+extraction: full
+---
+
+On this week’s episode of “The Readout LOUD”: The FDA is once again searching for a new leader, a closely tracked lung cancer drug suffers an FDA rejection, and China’s largest drugmakers ranked.
+We invite you to listen to this pre-Thanksgiving episode of your favorite biotech podcast, where our attention turns to D.C. The Trump administration withdrew the nomination of Heidi Overton to become the next FDA commissioner hours before a pivotal Senate committee vote. STAT’s D.C. correspondent Margaret Manto joins us to explain why Overton was tossed and who might be next in line to run the FDA.
+We’ll also chatter away about this week’s news, including the FDA’s rejection of a lung cancer drug from the U.S.-based biotech Summit Therapeutics and the Chinese drug maker Akeso. And speaking of China, STAT just launched a new index ranking China’s largest drugmakers. We’ll discuss how the list was made and why tracking Chinese biotech has become so important.
+Make sure to subscribe to “The Readout LOUD” on Apple Podcasts, Spotify, or wherever you get your podcasts.
